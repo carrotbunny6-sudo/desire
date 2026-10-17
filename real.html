@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LINE Messenger — Miller Family Fellowship (Cute Edition)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Rounded, Modern & Cute -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            fredoka: ['Fredoka', 'sans-serif'],
+            nunito: ['Nunito', 'sans-serif'],
+            quicksand: ['Quicksand', 'sans-serif'],
+          },
+          colors: {
+            line: {
+              green: '#06C755',
+              greenSoft: '#E8F9EE',
+              greenBubble: '#98F5A6',
+              sky: '#8CABD9',
+              pastelSky: '#CFE2F7',
+              cream: '#FFFDF9',
+              pink: '#FF8FAB',
+              pinkSoft: '#FFE5EC',
+              yellow: '#FFD166',
+              brown: '#8D5B4C',
+              dark: '#1E293B'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Nunito', 'Quicksand', sans-serif;
+    }
+
+    h1, h2, h3, .font-cute {
+      font-family: 'Fredoka', 'Nunito', sans-serif;
+    }
+
+    /* Custom Cute Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(6, 199, 85, 0.35);
+      border-radius: 9999px;
+      border: 2px solid transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(6, 199, 85, 0.65);
+    }
+
+    /* Cute Pastel LINE Chat Wallpaper */
+    .line-chat-wallpaper {
+      background-color: #C7DCF5;
+      background-image:
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 24%),
+        radial-gradient(circle at 82% 15%, rgba(255, 230, 240, 0.45) 0%, rgba(255, 230, 240, 0) 22%),
+        radial-gradient(circle at 50% 78%, rgba(220, 252, 231, 0.4) 0%, rgba(220, 252, 231, 0) 28%),
+        radial-gradient(#ffffff 1.25px, transparent 1.25px),
+        radial-gradient(#ffffff 1.25px, #C7DCF5 1.25px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+      background-position: 0 0, 0 0, 0 0, 0 0, 14px 14px;
+    }
+
+    .line-chat-wallpaper.theme-sakura {
+      background-color: #FCE4EC;
+      background-image:
+        radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.5) 0%, transparent 25%),
+        radial-gradient(#ffffff 1.3px, transparent 1.3px),
+        radial-gradient(#ffffff 1.3px, #FCE4EC 1.3px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
+      background-position: 0 0, 0 0, 14px 14px;
+    }
+
+    .line-chat-wallpaper.theme-mint {
+      background-color: #D8F3DC;
+      background-image:
+        radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.5) 0%, transparent 25%),
+        radial-gradient(#ffffff 1.3px, transparent 1.3px),
+        radial-gradient(#ffffff 1.3px, #D8F3DC 1.3px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
+      background-position: 0 0, 0 0, 14px 14px;
+    }
+
+    /* Message Bubble Tails */
+    .bubble-left {
+      position: relative;
+      border-radius: 20px 20px 20px 6px;
+      box-shadow: 0 3px 10px -2px rgba(15, 23, 42, 0.08);
+    }
+    .bubble-right {
+      position: relative;
+      background: linear-gradient(135deg, #9BF8A9 0%, #7AE582 100%);
+      border-radius: 20px 20px 6px 20px;
+      box-shadow: 0 3px 10px -2px rgba(6, 199, 85, 0.18);
+    }
+
+    /* Pop-in Animation for Messages */
+    @keyframes messagePop {
+      0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.95);
+      }
+      70% {
+        transform: translateY(-2px) scale(1.01);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .animate-message-pop {
+      animation: messagePop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* Typing Dots Animation */
+    @keyframes typingBounce {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-5px);
+      }
+    }
+    .typing-dot-1 { animation: typingBounce 1.1s infinite 0s; }
+    .typing-dot-2 { animation: typingBounce 1.1s infinite 0.18s; }
+    .typing-dot-3 { animation: typingBounce 1.1s infinite 0.36s; }
+
+    /* Floating Cute Bounce */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-4px) rotate(2deg); }
+    }
+    .animate-float-cute {
+      animation: floatSlow 3.2s ease-in-out infinite;
+    }
+
+    /* Highlight Selection Styling */
+    ::selection {
+      background-color: #FFD166;
+      color: #1E293B;
+    }
+
+    /* Button Tactile Feel */
+    .btn-cute {
+      transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-cute:hover {
+      transform: translateY(-2px);
+    }
+    .btn-cute:active {
+      transform: translateY(1px) scale(0.97);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 via-sky-50 to-pink-50 h-screen w-screen overflow-hidden flex flex-col select-text text-slate-800">
+
+  <!-- FLOATING HIGHLIGHT-TO-SEARCH POPOVER -->
+  <div id="highlightSearchPopover" class="fixed z-50 hidden items-center gap-2 bg-white/95 backdrop-blur-md border-2 border-line-green shadow-xl rounded-full px-3.5 py-1.5 transition-all duration-150">
+    <span class="w-6 h-6 rounded-full bg-line-green text-white flex items-center justify-center text-xs shadow-sm">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </span>
+    <button id="highlightSearchBtn" class="text-xs font-bold text-slate-700 hover:text-line-green flex items-center gap-1.5 pr-1">
+      <span>Search Web for:</span>
+      <span id="highlightSearchQuery" class="text-emerald-600 underline max-w-[180px] truncate font-cute"></span>
+      <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
+    </button>
+    <button id="highlightCloseBtn" class="text-slate-400 hover:text-rose-500 text-xs px-1" title="Dismiss">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- TOP MAC/DESKTOP APP WINDOW HEADER BAR -->
+  <header class="h-12 bg-white/90 backdrop-blur-md border-b border-emerald-100 px-4 flex items-center justify-between shrink-0 z-30 shadow-sm">
+    <!-- Left Window Controls & Brand -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1.5">
+        <span class="w-3.5 h-3.5 rounded-full bg-rose-400 inline-block border border-rose-500/30"></span>
+        <span class="w-3.5 h-3.5 rounded-full bg-amber-400 inline-block border border-amber-500/30"></span>
+        <span class="w-3.5 h-3.5 rounded-full bg-emerald-400 inline-block border border-emerald-500/30"></span>
+      </div>
+      <div class="h-5 w-[1px] bg-slate-200 mx-1"></div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-2xl bg-line-green flex items-center justify-center text-white font-cute font-bold text-sm shadow-sm tracking-tighter">
+          LINE
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-cute font-bold text-slate-800 text-sm tracking-wide">LINE Desktop</span>
+            <span class="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full border border-pink-200">Ultra-Cute Friends Edition</span>
+          </div>
+          <p class="text-[10px] text-slate-500 leading-none">Highlight any word anywhere to search the web instantly</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Narrative Phase & Live Clock Status -->
+    <div class="hidden md:flex items-center gap-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 px-4 py-1.5 rounded-full border border-emerald-200/70 shadow-inner">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-line-green animate-ping"></span>
+        <span id="headerClockBadge" class="font-cute font-bold text-xs text-emerald-700 bg-white px-2.5 py-0.5 rounded-full shadow-sm border border-emerald-100">5:00 PM</span>
+      </div>
+      <span class="text-slate-300">|</span>
+      <div class="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+        <i id="headerPhaseIcon" class="fa-solid fa-hands-praying text-emerald-600"></i>
+        <span id="headerPhaseTitle" class="font-cute">Phase 1: Praying at Home Before Departure</span>
+      </div>
+      <span class="text-slate-300">|</span>
+      <span id="headerMessageCounter" class="text-xs font-bold text-sky-700 bg-sky-100/80 px-2.5 py-0.5 rounded-full">0 / 260 Messages</span>
+    </div>
+
+    <!-- Right Quick Sound & Theme Controls -->
+    <div class="flex items-center gap-2">
+      <!-- Notification Tone Selector -->
+      <div class="flex items-center bg-slate-100 rounded-full px-2.5 py-1 border border-slate-200">
+        <i class="fa-solid fa-music text-emerald-600 text-xs mr-1.5"></i>
+        <select id="toneSelect" class="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer" title="Choose Classic LINE Notification Tone">
+          <option value="variety">Tone: Classic LINE Variety (Auto)</option>
+          <option value="xylophone">Tone: LINE Xylophone Chime</option>
+          <option value="bell">Tone: Cony Crystal Bell</option>
+          <option value="pop">Tone: Brown Bubble Pop</option>
+          <option value="melody">Tone: Sally Happy Melody</option>
+          <option value="whistle">Tone: Leonard Cheerful Chirp</option>
+        </select>
+      </div>
+
+      <!-- Test Tone Button -->
+      <button id="testSoundBtn" class="btn-cute bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold px-2.5 py-1.5 rounded-full border border-amber-200 flex items-center gap-1" title="Test LINE Notification Chime">
+        <i class="fa-solid fa-bell"></i>
+        <span class="hidden xl:inline">Ring</span>
+      </button>
+
+      <!-- Audio Mute Toggle -->
+      <button id="muteToggleBtn" class="btn-cute bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-200 flex items-center gap-1.5" title="Toggle Typing & Notification Sounds">
+        <i id="muteIcon" class="fa-solid fa-volume-high"></i>
+        <span id="muteLabel" class="hidden sm:inline">Sound ON</span>
+      </button>
+
+      <!-- Wallpaper Switcher -->
+      <button id="themeSwitchBtn" class="btn-cute bg-pink-100 hover:bg-pink-200 text-pink-700 text-xs font-bold px-2.5 py-1.5 rounded-full border border-pink-200 flex items-center gap-1" title="Switch Cute LINE Wallpaper">
+        <i class="fa-solid fa-palette"></i>
+        <span id="themeNameLabel" class="hidden lg:inline">Sky</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN DESKTOP WORKSPACE -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- FAR LEFT GREEN LINE NAVIGATION RAIL -->
+    <aside class="w-16 bg-gradient-to-b from-[#06C755] to-[#05A847] text-white flex flex-col items-center py-4 justify-between shrink-0 shadow-lg z-20">
+      <div class="flex flex-col items-center gap-4 w-full">
+        <!-- Active User Avatar (OYR / Caroline) -->
+        <div class="relative group cursor-pointer" id="navProfileBtn" title="Viewing as OYR (Caroline Lin, 31, Malaysian Chinese New Believer)">
+          <div id="myRailAvatar" class="w-11 h-11 rounded-2xl bg-white p-0.5 shadow-md overflow-hidden border-2 border-yellow-300"></div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-300 border-2 border-[#06C755] rounded-full"></span>
+        </div>
+
+        <!-- Nav Icons -->
+        <button data-tab="chats" class="rail-tab-btn w-11 h-11 rounded-2xl bg-white/25 flex flex-col items-center justify-center gap-0.5 shadow-inner btn-cute" title="Group Chat & Roster">
+          <i class="fa-solid fa-comment-dots text-lg"></i>
+          <span class="text-[9px] font-bold">Chat</span>
+        </button>
+
+        <button data-tab="members" class="rail-tab-btn w-11 h-11 rounded-2xl hover:bg-white/15 flex flex-col items-center justify-center gap-0.5 btn-cute" title="10 Fellowship Members">
+          <i class="fa-solid fa-user-group text-base"></i>
+          <span class="text-[9px] font-bold">10 Folks</span>
+        </button>
+
+        <button data-tab="attributes" class="rail-tab-btn w-11 h-11 rounded-2xl hover:bg-white/15 flex flex-col items-center justify-center gap-0.5 btn-cute" title="Attributes of God Illuminated">
+          <i class="fa-solid fa-book-bible text-base"></i>
+          <span class="text-[9px] font-bold">God's Glory</span>
+        </button>
+
+        <button data-tab="culinary" class="rail-tab-btn w-11 h-11 rounded-2xl hover:bg-white/15 flex flex-col items-center justify-center gap-0.5 btn-cute" title="Malaysian Chinese & Baptist Meal Ingredients">
+          <i class="fa-solid fa-bowl-rice text-base"></i>
+          <span class="text-[9px] font-bold">Dinner</span>
+        </button>
+      </div>
+
+      <!-- Bottom Cute Mascot Mini SVG -->
+      <div class="flex flex-col items-center gap-3">
+        <button id="perspectiveToggleBtn" class="w-11 h-11 rounded-2xl bg-white/20 hover:bg-white/30 flex flex-col items-center justify-center p-1 btn-cute text-center" title="Switch Bubble Alignment Perspective">
+          <i class="fa-solid fa-repeat text-xs"></i>
+          <span class="text-[8px] font-bold leading-tight mt-0.5">POV: OYR</span>
+        </button>
+        <div class="w-10 h-10 rounded-full bg-white/90 p-1 shadow-md animate-float-cute" title="Brown Bear">
+          <svg viewBox="0 0 64 64" class="w-full h-full">
+            <circle cx="16" cy="18" r="9" fill="#8D5B4C"/>
+            <circle cx="16" cy="18" r="5" fill="#5D3A2F"/>
+            <circle cx="48" cy="18" r="9" fill="#8D5B4C"/>
+            <circle cx="48" cy="18" r="5" fill="#5D3A2F"/>
+            <circle cx="32" cy="34" r="22" fill="#8D5B4C"/>
+            <ellipse cx="32" cy="39" rx="9" ry="7.5" fill="#F5E6D3"/>
+            <circle cx="25" cy="30" r="2.6" fill="#1E1E1E"/>
+            <circle cx="39" cy="30" r="2.6" fill="#1E1E1E"/>
+            <ellipse cx="32" cy="36" rx="3" ry="2.2" fill="#3E2723"/>
+            <path d="M32 38.2 L32 42 M29 43.5 Q32 41.5 35 43.5" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="19" cy="35" rx="3.5" ry="2" fill="#FF8FAB" opacity="0.6"/>
+            <ellipse cx="45" cy="35" rx="3.5" ry="2" fill="#FF8FAB" opacity="0.6"/>
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- LEFT SIDEBAR: CHAT LIST, CHAPTER TIMELINE & PARTICIPANTS -->
+    <aside class="w-80 bg-white/95 border-r border-slate-200/80 flex flex-col shrink-0 z-10">
+      <!-- Sidebar Header -->
+      <div class="p-3.5 border-b border-slate-100 bg-gradient-to-r from-emerald-50/70 to-pink-50/50">
+        <div class="flex items-center justify-between mb-2">
+          <h2 id="leftSidebarTitle" class="font-cute font-bold text-base text-slate-800 flex items-center gap-1.5">
+            <span>Miller Family Fellowship</span>
+            <span class="bg-line-green text-white text-[10px] px-2 py-0.5 rounded-full">10</span>
+          </h2>
+          <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">3-Hr Verbatim</span>
+        </div>
+
+        <!-- Search Messages Input -->
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input id="chatFilterInput" type="text" placeholder="Filter rendered messages or topics..." class="w-full pl-8 pr-7 py-1.5 bg-white border border-slate-200 rounded-full text-xs focus:outline-none focus:border-line-green transition" />
+          <button id="clearFilterBtn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Sidebar Tab Views -->
+      <div class="flex-1 overflow-y-auto p-3 space-y-3" id="leftSidebarContent">
+        <!-- TAB 1: CHATS & STORY ARC CHAPTERS (Default) -->
+        <div id="tab-chats" class="space-y-3">
+          <!-- Pinned Active Group Card -->
+          <div class="p-3 rounded-2xl bg-gradient-to-br from-emerald-50 via-teal-50/60 to-white border-2 border-line-green shadow-sm">
+            <div class="flex items-center gap-2.5">
+              <div class="w-12 h-12 rounded-2xl bg-white p-1 shadow-sm border border-emerald-100 shrink-0 flex items-center justify-center">
+                <!-- Cute LINE Friends Trio SVG -->
+                <svg viewBox="0 0 80 80" class="w-full h-full">
+                  <circle cx="26" cy="46" r="18" fill="#8D5B4C"/>
+                  <circle cx="15" cy="32" r="6" fill="#8D5B4C"/>
+                  <circle cx="37" cy="32" r="6" fill="#8D5B4C"/>
+                  <ellipse cx="26" cy="50" rx="7" ry="5.5" fill="#F5E6D3"/>
+                  <circle cx="21" cy="43" r="2" fill="#111"/>
+                  <circle cx="31" cy="43" r="2" fill="#111"/>
+                  <circle cx="56" cy="48" r="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+                  <ellipse cx="50" cy="24" rx="4.5" ry="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+                  <ellipse cx="62" cy="24" rx="4.5" ry="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+                  <ellipse cx="50" cy="24" rx="2.2" ry="8" fill="#FFCCD5"/>
+                  <ellipse cx="62" cy="24" rx="2.2" ry="8" fill="#FFCCD5"/>
+                  <circle cx="52" cy="46" r="1.8" fill="#111"/>
+                  <circle cx="60" cy="46" r="1.8" fill="#111"/>
+                  <circle cx="42" cy="24" r="11" fill="#FFD166"/>
+                  <ellipse cx="42" cy="26" rx="4.5" ry="2.5" fill="#FB8500"/>
+                  <circle cx="39" cy="22" r="1.5" fill="#111"/>
+                  <circle cx="45" cy="22" r="1.5" fill="#111"/>
+                </svg>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="font-cute font-bold text-sm text-slate-800 truncate">Miller Family Fellowship</span>
+                  <span id="sidebarLatestTime" class="text-[10px] font-bold text-emerald-700">5:00 PM</span>
+                </div>
+                <p id="sidebarLatestPreview" class="text-xs text-slate-600 truncate mt-0.5">Click Play or Step 1-by-1 to begin!</p>
+                <div class="flex items-center gap-1 mt-1">
+                  <span class="text-[10px] bg-white px-2 py-0.5 rounded-full border border-emerald-200 text-emerald-700 font-semibold">10 Active</span>
+                  <span class="text-[10px] bg-pink-50 px-2 py-0.5 rounded-full border border-pink-200 text-pink-600 font-semibold">1 Sentence/Msg</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3-Hour Narrative Chapters Jump List -->
+          <div>
+            <div class="flex items-center justify-between px-1 mb-1.5">
+              <span class="text-[11px] font-cute font-bold uppercase tracking-wider text-slate-400">3-Hour Timeline Chapters</span>
+              <span class="text-[10px] text-emerald-600 font-semibold">5:00 PM – 8:00 PM</span>
+            </div>
+            <div id="chapterListContainer" class="space-y-1.5"></div>
+          </div>
+
+          <!-- Quick Participant Mini-Pills -->
+          <div class="pt-1">
+            <div class="flex items-center justify-between px-1 mb-1.5">
+              <span class="text-[11px] font-cute font-bold uppercase tracking-wider text-slate-400">10 Participants (Click to Filter)</span>
+              <button id="resetSpeakerFilterBtn" class="text-[10px] text-emerald-600 hover:underline hidden">Show All</button>
+            </div>
+            <div id="miniParticipantGrid" class="grid grid-cols-2 gap-1.5"></div>
+          </div>
+        </div>
+
+        <!-- TAB 2: DETAILED 10 MEMBERS BIO CARDS -->
+        <div id="tab-members" class="hidden space-y-2.5"></div>
+
+        <!-- TAB 3: ATTRIBUTES OF GOD TRACKER -->
+        <div id="tab-attributes" class="hidden space-y-2">
+          <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+            <div class="font-cute font-bold text-sm mb-0.5 flex items-center gap-1.5">
+              <i class="fa-solid fa-crown text-amber-500"></i>
+              <span>Every Attribute of God Illuminated</span>
+            </div>
+            <p class="text-[11px] leading-relaxed">As messages unfold, each divine perfection discussed in the fellowship lights up below with its message reference.</p>
+          </div>
+          <div id="attributesListContainer" class="space-y-1.5"></div>
+        </div>
+
+        <!-- TAB 4: CULINARY BRIDGE (MALAYSIAN CHINESE & BAPTIST) -->
+        <div id="tab-culinary" class="hidden space-y-2.5">
+          <div class="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-xs">
+            <h3 class="font-cute font-bold text-rose-800 text-sm mb-1">Kitchen Fellowship & Hairy Wood Ears</h3>
+            <p class="text-[11px] text-rose-700 leading-relaxed">In Phase 4 (6:08 PM – 6:43 PM), OYR, Mom Martha, Sarah, Uncle Mark, and the family compare Malaysian Chinese homemade cooking with traditional US Baptist family dinners.</p>
+          </div>
+          <div class="p-3 rounded-2xl bg-white border border-slate-200 space-y-2 text-xs">
+            <div class="font-cute font-bold text-emerald-700 flex items-center gap-1.5">
+              <i class="fa-solid fa-seedling"></i>
+              <span>Featured Spotlight: Hairy Wood Ears (Cloud Ear Mushrooms)</span>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-relaxed">Known in home kitchens and agricultural botany as hairy wood ears or cloud ear mushrooms, these dried tree fungi soak in warm water until they swell into crisp, velvety ribbons that soak up ginger, garlic, soy sauce, and savory roast broth.</p>
+            <button onclick="jumpToMessageIndex(112)" class="w-full py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold rounded-xl border border-emerald-200 text-[11px] transition">
+              Jump to Hairy Wood Ears Discussion (6:18 PM)
+            </button>
+          </div>
+          <div class="p-3 rounded-2xl bg-white border border-slate-200 space-y-1.5 text-xs">
+            <div class="font-cute font-bold text-slate-800">Shared Homemade Staples Discussed:</div>
+            <ul class="text-[11px] text-slate-600 space-y-1 list-disc pl-4">
+              <li>Fresh ginger, minced garlic cloves & sliced green onions</li>
+              <li>Rich homemade chicken broth, soy sauce & braised beef pot roast</li>
+              <li>Rehydrated hairy wood ears with their signature crisp snap</li>
+              <li>Carrots, potatoes, celery & steamed jasmine rice</li>
+              <li>Homemade yeast dinner rolls & Mom Martha's skillet gravy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER MAIN PANEL: LINE CHAT STREAM & SIMULATION CONTROLS -->
+    <main class="flex-1 flex flex-col min-w-0 relative">
+
+      <!-- CHAT ROOM HEADER -->
+      <div class="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-5 flex items-center justify-between shrink-0 z-20">
+        <div class="flex items-center gap-3 min-w-0">
+          <!-- Cute Animated SVG Group Badge -->
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-100 to-teal-100 border border-emerald-200 flex items-center justify-center shadow-sm shrink-0">
+            <svg viewBox="0 0 64 64" class="w-9 h-9">
+              <!-- Cute Cony & Brown Hugging Icon -->
+              <circle cx="24" cy="36" r="14" fill="#8D5B4C"/>
+              <circle cx="15" cy="24" r="5" fill="#8D5B4C"/>
+              <circle cx="33" cy="24" r="5" fill="#8D5B4C"/>
+              <ellipse cx="24" cy="39" rx="5.5" ry="4.5" fill="#F5E6D3"/>
+              <circle cx="20" cy="34" r="1.8" fill="#111"/>
+              <circle cx="28" cy="34" r="1.8" fill="#111"/>
+              <circle cx="43" cy="38" r="13" fill="#FFF" stroke="#CBD5E1" stroke-width="1.5"/>
+              <ellipse cx="39" cy="19" rx="3.5" ry="9" fill="#FFF" stroke="#CBD5E1" stroke-width="1.5"/>
+              <ellipse cx="47" cy="19" rx="3.5" ry="9" fill="#FFF" stroke="#CBD5E1" stroke-width="1.5"/>
+              <circle cx="39.5" cy="36" r="1.7" fill="#111"/>
+              <circle cx="46.5" cy="36" r="1.7" fill="#111"/>
+              <path d="M32 14 C32 10, 37 10, 37 14 C37 10, 42 10, 42 14 C42 19, 37 22, 37 24 C37 22, 32 19, 32 14 Z" fill="#FF4D6D"/>
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h1 class="font-cute font-bold text-base text-slate-800 truncate">Miller Family Fellowship (10)</h1>
+              <span class="text-[11px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">Verified US English</span>
+            </div>
+            <p id="chatSubheaderStatus" class="text-xs text-slate-500 truncate">
+              OYR (Caroline), Caleb, Mom Martha, Pastor David, Hannah, Luke, Sarah, Uncle Mark, Aunt Ruth, Grandma Esther
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Chat Header Action Pills -->
+        <div class="flex items-center gap-2">
+          <div class="hidden xl:flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-xs text-amber-800">
+            <i class="fa-solid fa-highlighter text-amber-500"></i>
+            <span class="font-semibold">Select any word to search web</span>
+          </div>
+          <button id="toggleInspectorBtn" class="btn-cute bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full border border-slate-200 flex items-center gap-1.5" title="Toggle Right Fellowship & Scripture Inspector">
+            <i class="fa-solid fa-table-columns"></i>
+            <span class="hidden sm:inline">Inspector</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STICKY NARRATIVE PROGRESS & CONTEXT BANNER -->
+      <div class="bg-white/85 backdrop-blur-md border-b border-sky-200/70 px-4 py-2 flex flex-wrap items-center justify-between gap-2 z-10 shadow-sm">
+        <div class="flex items-center gap-2 text-xs">
+          <span class="font-cute font-bold px-2.5 py-0.5 rounded-full bg-line-green text-white shadow-sm" id="bannerPhaseBadge">Phase 1 / 8</span>
+          <span class="font-bold text-slate-700" id="bannerPhaseDesc">Praying at Home Before Leaving — Praising God for His Providence, Blessings & Goodness</span>
+        </div>
+        <div class="flex items-center gap-3 text-xs">
+          <span class="text-slate-500 font-semibold">Max Gap: <strong class="text-emerald-700">&le; 1 min</strong></span>
+          <div class="w-32 h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div id="progressBarFill" class="h-full bg-gradient-to-r from-line-green to-teal-400 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAT MESSAGES STREAM AREA -->
+      <div id="chatWallpaper" class="line-chat-wallpaper flex-1 overflow-y-auto px-4 md:px-8 py-5 space-y-3 relative">
+        <!-- Top Welcome System Card -->
+        <div class="max-w-2xl mx-auto bg-white/90 backdrop-blur-md rounded-3xl p-4 shadow-md border-2 border-white text-center space-y-2 mb-4">
+          <div class="flex justify-center gap-2">
+            <span class="px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-cute font-bold text-xs">Saturday, October 17 • 5:00 PM – 8:00 PM</span>
+            <span class="px-3 py-0.5 rounded-full bg-pink-100 text-pink-700 font-cute font-bold text-xs">260 Single-Sentence Messages</span>
+          </div>
+          <h3 class="font-cute font-bold text-base text-slate-800">Welcome to the Miller Family Fellowship LINE Group!</h3>
+          <p class="text-xs text-slate-600 leading-relaxed max-w-xl mx-auto">
+            <strong>OYR (Caroline Lin, 31)</strong>, a Malaysian Chinese senior graphic designer born and raised in Malaysia and a brand-new believer in Christ, is visiting her boyfriend <strong>Caleb Miller (35)</strong>—a spiritually mature US conservative Baptist—and his family for the very first time. Use <strong>Step 1-by-1 (Next Message)</strong> or <strong>Auto-Play</strong> below to experience real-time typing, tactile typing sounds, classic LINE chimes, and cute stickers!
+          </p>
+        </div>
+
+        <!-- Dynamic Messages Container -->
+        <div id="messagesContainer" class="space-y-3 pb-4"></div>
+
+        <!-- LIVE REAL-TIME TYPING INDICATOR BUBBLE -->
+        <div id="typingIndicatorRow" class="hidden items-end gap-2.5 pt-1 pb-3 animate-message-pop">
+          <div id="typingAvatarBox" class="w-10 h-10 rounded-2xl bg-white p-0.5 shadow-md border border-white shrink-0 overflow-hidden"></div>
+          <div>
+            <div class="flex items-center gap-1.5 mb-1 pl-1">
+              <span id="typingSpeakerName" class="text-xs font-bold text-slate-700">Caleb</span>
+              <span id="typingSpeakerRole" class="text-[10px] bg-white/80 text-slate-600 px-2 py-0.5 rounded-full font-semibold">is typing a sentence...</span>
+            </div>
+            <div class="bubble-left bg-white/95 px-4 py-2.5 inline-flex items-center gap-3 border border-emerald-100">
+              <div class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-line-green typing-dot-1"></span>
+                <span class="w-2 h-2 rounded-full bg-emerald-400 typing-dot-2"></span>
+                <span class="w-2 h-2 rounded-full bg-teal-400 typing-dot-3"></span>
+              </div>
+              <span id="typingLivePreviewText" class="text-xs text-slate-500 italic max-w-md truncate"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STICKER PICKER DRAWER (TOGGLEABLE) -->
+      <div id="stickerDrawer" class="hidden bg-white/95 backdrop-blur-md border-t-2 border-pink-200 px-5 py-3 shadow-xl z-20">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-cute font-bold text-xs text-pink-600 flex items-center gap-1.5">
+            <i class="fa-solid fa-face-Grin-stars"></i>
+            <span>Cute LINE Friends SVG Stickers (Click to Send into Chat!)</span>
+          </span>
+          <button id="closeStickerDrawerBtn" class="text-xs text-slate-400 hover:text-slate-600">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div id="stickerPickerGrid" class="grid grid-cols-4 sm:grid-cols-8 gap-2"></div>
+      </div>
+
+      <!-- DEDICATED SIMULATION PLAYBACK & STEP-BY-STEP CONTROLLER BAR -->
+      <div class="bg-gradient-to-r from-emerald-50 via-white to-sky-50 border-t-2 border-emerald-200/80 px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 shrink-0 z-20 shadow-md">
+        <!-- Left Primary Playback Buttons -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- STEP 1-BY-1 BUTTON (Explicitly requested feature!) -->
+          <button id="stepNextBtn" class="btn-cute bg-gradient-to-r from-[#06C755] to-[#05B04C] hover:from-[#05B04C] hover:to-[#049940] text-white font-cute font-bold text-xs sm:text-sm px-4 py-2 rounded-2xl shadow-md flex items-center gap-2 border-2 border-white ring-2 ring-emerald-300/60">
+            <i class="fa-solid fa-forward-step"></i>
+            <span>Step 1-by-1 (Next Message)</span>
+          </button>
+
+          <!-- AUTO-PLAY / PAUSE BUTTON -->
+          <button id="autoPlayBtn" class="btn-cute bg-sky-500 hover:bg-sky-600 text-white font-cute font-bold text-xs sm:text-sm px-4 py-2 rounded-2xl shadow-md flex items-center gap-2 border-2 border-white">
+            <i id="autoPlayIcon" class="fa-solid fa-play"></i>
+            <span id="autoPlayLabel">Auto-Play Stream</span>
+          </button>
+
+          <!-- SKIP TYPING / INSTANT DELIVER CURRENT -->
+          <button id="instantStepBtn" class="btn-cute bg-amber-400 hover:bg-amber-500 text-slate-900 font-cute font-bold text-xs px-3 py-2 rounded-2xl shadow-sm flex items-center gap-1.5" title="Send Next Message Instantly Without Waiting for Typing">
+            <i class="fa-solid fa-bolt"></i>
+            <span class="hidden md:inline">Instant +1</span>
+          </button>
+        </div>
+
+        <!-- Center Speed & Batch Controls -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="flex items-center bg-white px-3 py-1.5 rounded-full border border-slate-200 text-xs shadow-sm">
+            <i class="fa-solid fa-gauge-high text-emerald-600 mr-1.5"></i>
+            <span class="text-slate-500 font-semibold mr-1">Speed:</span>
+            <select id="speedSelect" class="bg-transparent font-bold text-slate-800 focus:outline-none cursor-pointer">
+              <option value="1.8">Relaxed (Real-Time Typing)</option>
+              <option value="1" selected>Natural LINE Pace (1x)</option>
+              <option value="0.5">Brisk Pace (2x)</option>
+              <option value="0.22">Fast Fellowship (4x)</option>
+            </select>
+          </div>
+
+          <button id="loadAllBtn" class="btn-cute bg-purple-100 hover:bg-purple-200 text-purple-800 font-bold text-xs px-3 py-1.5 rounded-full border border-purple-200 flex items-center gap-1" title="Render All 260 Single-Sentence Messages Immediately">
+            <i class="fa-solid fa-angles-down"></i>
+            <span>Show All 260</span>
+          </button>
+
+          <button id="resetSimBtn" class="btn-cute bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-xs px-3 py-1.5 rounded-full border border-rose-200 flex items-center gap-1" title="Clear and Restart Simulation from 5:00 PM">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span>Restart</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- BOTTOM LINE MESSAGE COMPOSER BAR -->
+      <div class="bg-white px-4 py-2.5 border-t border-slate-200 flex items-center gap-2.5 shrink-0 z-20">
+        <!-- Choose Sender for Custom Message -->
+        <select id="customSenderSelect" class="bg-slate-100 border border-slate-200 rounded-full px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:border-line-green" title="Send custom message as any participant">
+        </select>
+
+        <!-- Toggle Cute Stickers Button -->
+        <button id="openStickerDrawerBtn" class="btn-cute w-9 h-9 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-600 flex items-center justify-center shrink-0 border border-pink-200" title="Open Cute LINE Stickers">
+          <i class="fa-regular fa-face-smile-wink text-base"></i>
+        </button>
+
+        <!-- Text Input (Produces Tangible Typing Clicks!) -->
+        <div class="flex-1 relative">
+          <input id="customMessageInput" type="text" placeholder="Type a custom single-sentence message (with live tactile LINE typing sounds)..." class="w-full pl-4 pr-10 py-2 bg-slate-100 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-line-green rounded-full text-xs sm:text-sm focus:outline-none transition" />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-semibold hidden sm:inline">1 sentence/msg</span>
+        </div>
+
+        <!-- Send Button -->
+        <button id="sendCustomBtn" class="btn-cute bg-line-green hover:bg-emerald-600 text-white font-cute font-bold text-xs sm:text-sm px-4 py-2 rounded-full shadow-sm flex items-center gap-1.5 shrink-0">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Send</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- RIGHT SIDEBAR: LIVE FELLOWSHIP & DIVINE ATTRIBUTES INSPECTOR -->
+    <aside id="rightInspectorPanel" class="w-72 bg-white/95 border-l border-slate-200/80 flex flex-col shrink-0 z-10 hidden lg:flex">
+      <!-- Inspector Header -->
+      <div class="p-3.5 border-b border-slate-100 bg-gradient-to-r from-amber-50/70 to-emerald-50/60">
+        <div class="flex items-center justify-between">
+          <h2 class="font-cute font-bold text-sm text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i>
+            <span>Live Fellowship Guide</span>
+          </h2>
+          <span id="inspectorAttributesCount" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200">0 / 19 Attributes</span>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-0.5">Real-time tracker of God's attributes & character context</p>
+      </div>
+
+      <!-- Inspector Body -->
+      <div class="flex-1 overflow-y-auto p-3 space-y-3">
+        <!-- Spotlight Card: OYR (Caroline) & Caleb -->
+        <div class="p-3 rounded-2xl bg-gradient-to-br from-pink-50 to-amber-50/60 border border-pink-200/80 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-cute font-bold text-xs text-pink-700">New Believer Spotlight</span>
+            <span class="text-[10px] bg-white px-2 py-0.5 rounded-full font-bold text-pink-600 border border-pink-100">Malaysia &rarr; USA</span>
+          </div>
+          <p class="text-[11px] text-slate-700 leading-relaxed">
+            <strong>OYR (Caroline Lin, 31)</strong> grew up in Malaysia in a traditional pagan home. Now living in the United States, she recently trusted Christ through the faithful witness of <strong>Caleb (35)</strong>, knows very little Scripture yet, and deeply wishes her parents and siblings were here tonight.
+          </p>
+        </div>
+
+        <!-- Live Illuminated Attributes Grid -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5 px-1">
+            <span class="text-[11px] font-cute font-bold uppercase tracking-wider text-slate-400">Attributes of God Reflected</span>
+          </div>
+          <div id="rightAttributesGrid" class="grid grid-cols-1 gap-1.5"></div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- APPLICATION SCRIPT -->
+  <script>
+    /*************************************************************************
+     * 1. ULTRA-CUTE CUSTOM SVG AVATARS & LINE STICKERS
+     *************************************************************************/
+    const CHARACTER_SVGS = {
+      // 1. OYR / Caroline (Cute Choco/Cony-inspired Bunny with Pink Ribbon)
+      oyr: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#FFE5EC"/>
+        <ellipse cx="22" cy="17" rx="5.5" ry="13" fill="#FFFFFF" stroke="#F4ACB7" stroke-width="1.8"/>
+        <ellipse cx="22" cy="17" rx="2.8" ry="8.5" fill="#FFCAD4"/>
+        <ellipse cx="42" cy="17" rx="5.5" ry="13" fill="#FFFFFF" stroke="#F4ACB7" stroke-width="1.8"/>
+        <ellipse cx="42" cy="17" rx="2.8" ry="8.5" fill="#FFCAD4"/>
+        <circle cx="32" cy="39" r="19" fill="#FFFFFF" stroke="#F4ACB7" stroke-width="1.8"/>
+        <!-- Cute Pink Bow -->
+        <path d="M35 23 L43 19 L42 27 Z" fill="#FF4D6D"/>
+        <path d="M49 19 L41 23 L49 27 Z" fill="#FF4D6D"/>
+        <circle cx="43.5" cy="23" r="2.6" fill="#FFB3C1"/>
+        <circle cx="25" cy="37" r="2.5" fill="#2B2D42"/>
+        <circle cx="39" cy="37" r="2.5" fill="#2B2D42"/>
+        <circle cx="24.2" cy="36.2" r="0.9" fill="#FFF"/>
+        <circle cx="38.2" cy="36.2" r="0.9" fill="#FFF"/>
+        <ellipse cx="19" cy="41" rx="3.6" ry="2.2" fill="#FF8FAB" opacity="0.65"/>
+        <ellipse cx="45" cy="41" rx="3.6" ry="2.2" fill="#FF8FAB" opacity="0.65"/>
+        <ellipse cx="32" cy="41" rx="2.4" ry="1.8" fill="#FF758F"/>
+        <path d="M29 45 Q32 48 35 45" stroke="#2B2D42" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      // 2. Caleb (Cute Brown Bear with Engineer Glasses & Warm Smile)
+      caleb: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#E0F2FE"/>
+        <circle cx="17" cy="20" r="8" fill="#8D5B4C"/>
+        <circle cx="17" cy="20" r="4.5" fill="#5D3A2F"/>
+        <circle cx="47" cy="20" r="8" fill="#8D5B4C"/>
+        <circle cx="47" cy="20" r="4.5" fill="#5D3A2F"/>
+        <circle cx="32" cy="36" r="20" fill="#8D5B4C"/>
+        <ellipse cx="32" cy="42" rx="8.5" ry="7" fill="#F5E6D3"/>
+        <circle cx="25" cy="33" r="2.4" fill="#1E1E1E"/>
+        <circle cx="39" cy="33" r="2.4" fill="#1E1E1E"/>
+        <ellipse cx="32" cy="39" rx="3" ry="2.2" fill="#3E2723"/>
+        <path d="M29 44 Q32 47 35 44" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="19" cy="38" rx="3.2" ry="1.8" fill="#FF8FAB" opacity="0.55"/>
+        <ellipse cx="45" cy="38" rx="3.2" ry="1.8" fill="#FF8FAB" opacity="0.55"/>
+      </svg>`,
+
+      // 3. Mom Martha (Warm Golden Bear with Pearl Necklace & Rosy Cheeks)
+      martha: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#FEF3C7"/>
+        <circle cx="17" cy="20" r="7.5" fill="#C68B59"/>
+        <circle cx="47" cy="20" r="7.5" fill="#C68B59"/>
+        <circle cx="32" cy="36" r="19.5" fill="#C68B59"/>
+        <ellipse cx="32" cy="41" rx="8" ry="6.5" fill="#FFF8EA"/>
+        <path d="M22 32 Q25 29 28 32" stroke="#2B2D42" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M36 32 Q39 29 42 32" stroke="#2B2D42" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="32" cy="38" rx="2.6" ry="1.9" fill="#5C3D2E"/>
+        <path d="M28.5 43 Q32 46 35.5 43" stroke="#5C3D2E" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="20" cy="37" rx="3.5" ry="2" fill="#FF758F" opacity="0.6"/>
+        <ellipse cx="44" cy="37" rx="3.5" ry="2" fill="#FF758F" opacity="0.6"/>
+      </svg>`,
+
+      // 4. Pastor David (Wise Bear with Glasses & Bowtie)
+      david: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#DCFCE7"/>
+        <circle cx="17" cy="19" r="7.5" fill="#7F5539"/>
+        <circle cx="47" cy="19" r="7.5" fill="#7F5539"/>
+        <circle cx="32" cy="35" r="19.5" fill="#7F5539"/>
+        <ellipse cx="32" cy="40" rx="8" ry="6.5" fill="#EDE0D4"/>
+        <circle cx="25" cy="32" r="4.8" fill="none" stroke="#1E293B" stroke-width="1.8"/>
+        <circle cx="39" cy="32" r="4.8" fill="none" stroke="#1E293B" stroke-width="1.8"/>
+        <line x1="29.8" y1="32" x2="34.2" y2="32" stroke="#1E293B" stroke-width="1.8"/>
+        <circle cx="25" cy="32" r="1.8" fill="#1E293B"/>
+        <circle cx="39" cy="32" r="1.8" fill="#1E293B"/>
+        <ellipse cx="32" cy="38" rx="2.8" ry="2" fill="#3E2723"/>
+        <path d="M28.5 42.5 Q32 45 35.5 42.5" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <polygon points="26,53 32,56 26,59" fill="#06C755"/>
+        <polygon points="38,53 32,56 38,59" fill="#06C755"/>
+        <circle cx="32" cy="56" r="2" fill="#047857"/>
+      </svg>`,
+
+      // 5. Hannah (Cute Sally-Inspired Yellow Chick with Nurse Cap)
+      hannah: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#FEF9C3"/>
+        <circle cx="32" cy="38" r="19" fill="#FFD166"/>
+        <!-- Cute Nurse Cap -->
+        <path d="M21 20 L43 20 L40 12 L24 12 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+        <path d="M32 14 L32 18 M30 16 L34 16" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="25" cy="35" r="2.4" fill="#1E293B"/>
+        <circle cx="39" cy="35" r="2.4" fill="#1E293B"/>
+        <ellipse cx="32" cy="40" rx="6" ry="3.6" fill="#FB8500"/>
+        <ellipse cx="19" cy="39" rx="3.4" ry="2" fill="#FF758F" opacity="0.6"/>
+        <ellipse cx="45" cy="39" rx="3.4" ry="2" fill="#FF758F" opacity="0.6"/>
+      </svg>`,
+
+      // 6. Luke (Friendly Cream Bear with History Book Cap)
+      luke: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#E0E7FF"/>
+        <circle cx="17" cy="20" r="7.5" fill="#B08968"/>
+        <circle cx="47" cy="20" r="7.5" fill="#B08968"/>
+        <circle cx="32" cy="36" r="19.5" fill="#B08968"/>
+        <ellipse cx="32" cy="41" rx="8" ry="6.5" fill="#FAF0CA"/>
+        <circle cx="25" cy="33" r="2.3" fill="#1E293B"/>
+        <circle cx="39" cy="33" r="2.3" fill="#1E293B"/>
+        <ellipse cx="32" cy="38" rx="2.8" ry="2" fill="#3E2723"/>
+        <path d="M28 43 Q32 46.5 36 43" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      // 7. Sarah (Sweet White Cat/Bunny Baker with Chef Hat)
+      sarah: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#FCE7F3"/>
+        <polygon points="16,30 20,15 29,24" fill="#FFF" stroke="#F4ACB7" stroke-width="1.5"/>
+        <polygon points="48,30 44,15 35,24" fill="#FFF" stroke="#F4ACB7" stroke-width="1.5"/>
+        <circle cx="32" cy="39" r="18" fill="#FFFFFF" stroke="#F4ACB7" stroke-width="1.5"/>
+        <circle cx="25.5" cy="36" r="2.3" fill="#1E293B"/>
+        <circle cx="38.5" cy="36" r="2.3" fill="#1E293B"/>
+        <ellipse cx="32" cy="40" rx="2.3" ry="1.7" fill="#FF8FAB"/>
+        <path d="M28.5 44 Q32 47 35.5 44" stroke="#1E293B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <ellipse cx="19.5" cy="40" rx="3.2" ry="1.9" fill="#FF8FAB" opacity="0.6"/>
+        <ellipse cx="44.5" cy="40" rx="3.2" ry="1.9" fill="#FF8FAB" opacity="0.6"/>
+      </svg>`,
+
+      // 8. Uncle Mark (Cute Leonard-Inspired Green Botanist Frog)
+      mark: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#D8F3DC"/>
+        <circle cx="21" cy="22" r="8" fill="#52B788"/>
+        <circle cx="43" cy="22" r="8" fill="#52B788"/>
+        <circle cx="21" cy="22" r="4.5" fill="#FFFFFF"/>
+        <circle cx="43" cy="22" r="4.5" fill="#FFFFFF"/>
+        <circle cx="21" cy="22" r="2.3" fill="#1E293B"/>
+        <circle cx="43" cy="22" r="2.3" fill="#1E293B"/>
+        <ellipse cx="32" cy="39" rx="20" ry="16" fill="#52B788"/>
+        <ellipse cx="32" cy="43" rx="14" ry="9" fill="#D8F3DC"/>
+        <path d="M24 39 Q32 45 40 39" stroke="#1B4332" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="18" cy="37" rx="3.2" ry="1.8" fill="#FF8FAB" opacity="0.65"/>
+        <ellipse cx="46" cy="37" rx="3.2" ry="1.8" fill="#FF8FAB" opacity="0.65"/>
+      </svg>`,
+
+      // 9. Aunt Ruth (Musical Songbird Chick with Choir Note)
+      ruth: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#F3E8FF"/>
+        <circle cx="32" cy="37" r="18.5" fill="#FFB703"/>
+        <circle cx="25.5" cy="34" r="2.3" fill="#1E293B"/>
+        <circle cx="38.5" cy="34" r="2.3" fill="#1E293B"/>
+        <ellipse cx="32" cy="38.5" rx="5" ry="3" fill="#FB8500"/>
+        <ellipse cx="19" cy="38" rx="3.2" ry="1.8" fill="#FF4D6D" opacity="0.55"/>
+        <ellipse cx="45" cy="38" rx="3.2" ry="1.8" fill="#FF4D6D" opacity="0.55"/>
+        <path d="M44 14 L44 23 M44 14 L51 12 L51 21" stroke="#9333EA" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <circle cx="42.5" cy="23" r="2.3" fill="#9333EA"/>
+        <circle cx="49.5" cy="21" r="2.3" fill="#9333EA"/>
+      </svg>`,
+
+      // 10. Grandma Esther (Sweet Silver-Eared Bunny with Kind Smile & Glasses)
+      esther: `<svg viewBox="0 0 64 64" class="w-full h-full">
+        <rect width="64" height="64" rx="16" fill="#CCFBF1"/>
+        <ellipse cx="23" cy="17" rx="5" ry="12" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.6"/>
+        <ellipse cx="41" cy="17" rx="5" ry="12" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.6"/>
+        <circle cx="32" cy="39" r="18.5" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.6"/>
+        <circle cx="25.5" cy="36" r="4.2" fill="none" stroke="#D97706" stroke-width="1.6"/>
+        <circle cx="38.5" cy="36" r="4.2" fill="none" stroke="#D97706" stroke-width="1.6"/>
+        <line x1="29.7" y1="36" x2="34.3" y2="36" stroke="#D97706" stroke-width="1.6"/>
+        <circle cx="25.5" cy="36" r="1.7" fill="#1E293B"/>
+        <circle cx="38.5" cy="36" r="1.7" fill="#1E293B"/>
+        <path d="M28 44 Q32 47.5 36 44" stroke="#475569" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="19" cy="40" rx="3.2" ry="1.8" fill="#FF8FAB" opacity="0.6"/>
+        <ellipse cx="45" cy="40" rx="3.2" ry="1.8" fill="#FF8FAB" opacity="0.6"/>
+      </svg>`
+    };
+
+    // Cute Big Animated SVG Stickers for Messages & Picker
+    const CUTE_STICKERS = {
+      pray_bear: {
+        label: "Praise & Prayer",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <circle cx="35" cy="24" r="11" fill="#8D5B4C"/>
+          <circle cx="85" cy="24" r="11" fill="#8D5B4C"/>
+          <circle cx="60" cy="48" r="28" fill="#8D5B4C"/>
+          <ellipse cx="60" cy="54" rx="11" ry="9" fill="#F5E6D3"/>
+          <path d="M46 43 Q50 38 54 43" stroke="#1E1E1E" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M66 43 Q70 38 74 43" stroke="#1E1E1E" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="60" cy="50" rx="3.5" ry="2.5" fill="#3E2723"/>
+          <path d="M55 56 Q60 60 65 56" stroke="#3E2723" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="42" cy="49" rx="5" ry="3" fill="#FF8FAB" opacity="0.7"/>
+          <ellipse cx="78" cy="49" rx="5" ry="3" fill="#FF8FAB" opacity="0.7"/>
+          <path d="M54 84 L60 66 L66 84 Z" fill="#F5E6D3" stroke="#8D5B4C" stroke-width="2"/>
+          <path d="M22 18 L25 24 L31 25 L25 27 L22 33 L19 27 L13 25 L19 24 Z" fill="#FFD166"/>
+          <path d="M98 16 L100 21 L105 22 L100 24 L98 29 L96 24 L91 22 L96 21 Z" fill="#FFD166"/>
+        </svg>`
+      },
+      welcome_bunny: {
+        label: "Warm Welcome!",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <ellipse cx="46" cy="22" rx="7" ry="18" fill="#FFF" stroke="#F4ACB7" stroke-width="2"/>
+          <ellipse cx="46" cy="22" rx="3.5" ry="12" fill="#FFCAD4"/>
+          <ellipse cx="74" cy="22" rx="7" ry="18" fill="#FFF" stroke="#F4ACB7" stroke-width="2"/>
+          <ellipse cx="74" cy="22" rx="3.5" ry="12" fill="#FFCAD4"/>
+          <circle cx="60" cy="54" r="25" fill="#FFF" stroke="#F4ACB7" stroke-width="2"/>
+          <circle cx="51" cy="50" r="3" fill="#1E293B"/>
+          <circle cx="69" cy="50" r="3" fill="#1E293B"/>
+          <path d="M54 58 Q60 65 66 58" stroke="#FF4D6D" stroke-width="2.8" fill="#FFCCD5" stroke-linecap="round"/>
+          <ellipse cx="43" cy="55" rx="5" ry="2.8" fill="#FF8FAB" opacity="0.75"/>
+          <ellipse cx="77" cy="55" rx="5" ry="2.8" fill="#FF8FAB" opacity="0.75"/>
+          <path d="M18 36 C18 30, 26 30, 26 36 C26 30, 34 30, 34 36 C34 43, 26 47, 26 50 C26 47, 18 43, 18 36 Z" fill="#FF4D6D"/>
+          <path d="M86 36 C86 30, 94 30, 94 36 C94 30, 102 30, 102 36 C102 43, 94 47, 94 50 C94 47, 86 43, 86 36 Z" fill="#FF4D6D"/>
+        </svg>`
+      },
+      sally_hymn: {
+        label: "Singing Hymns!",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <circle cx="60" cy="54" r="26" fill="#FFD166"/>
+          <circle cx="51" cy="48" r="3" fill="#1E293B"/>
+          <circle cx="69" cy="48" r="3" fill="#1E293B"/>
+          <ellipse cx="60" cy="55" rx="8" ry="5" fill="#FB8500"/>
+          <ellipse cx="43" cy="54" rx="4.5" ry="2.5" fill="#FF4D6D" opacity="0.6"/>
+          <ellipse cx="77" cy="54" rx="4.5" ry="2.5" fill="#FF4D6D" opacity="0.6"/>
+          <path d="M24 22 L24 36 M24 22 L35 19 L35 33" stroke="#06C755" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="22" cy="36" r="3.5" fill="#06C755"/>
+          <circle cx="33" cy="33" r="3.5" fill="#06C755"/>
+          <path d="M88 20 L88 32" stroke="#EC4899" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="86" cy="32" r="3.5" fill="#EC4899"/>
+        </svg>`
+      },
+      frog_cooking: {
+        label: "Yummy Fellowship Meal!",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <circle cx="44" cy="32" r="10" fill="#52B788"/>
+          <circle cx="76" cy="32" r="10" fill="#52B788"/>
+          <circle cx="44" cy="32" r="5.5" fill="#FFF"/>
+          <circle cx="76" cy="32" r="5.5" fill="#FFF"/>
+          <circle cx="44" cy="32" r="2.8" fill="#1E293B"/>
+          <circle cx="76" cy="32" r="2.8" fill="#1E293B"/>
+          <ellipse cx="60" cy="54" rx="27" ry="21" fill="#52B788"/>
+          <ellipse cx="60" cy="60" rx="18" ry="11" fill="#D8F3DC"/>
+          <path d="M48 53 Q60 63 72 53" stroke="#1B4332" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M40 76 Q60 92 80 76 Z" fill="#FB8500"/>
+        </svg>`
+      },
+      bible_light: {
+        label: "Thy Word Is Truth",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <circle cx="60" cy="50" r="38" fill="#FEF3C7"/>
+          <path d="M32 34 Q46 30 60 36 Q74 30 88 34 L88 72 Q74 68 60 74 Q46 68 32 72 Z" fill="#FFFFFF" stroke="#D97706" stroke-width="2.5"/>
+          <line x1="60" y1="36" x2="60" y2="74" stroke="#D97706" stroke-width="2.2"/>
+          <path d="M60 14 L63 22 L71 23 L65 28 L67 36 L60 31 L53 36 L55 28 L49 23 L57 22 Z" fill="#F59E0B"/>
+        </svg>`
+      },
+      heart_blessing: {
+        label: "God's Abundant Love",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <path d="M60 82 C60 82, 24 58, 24 36 C24 22, 36 14, 48 14 C55 14, 60 20, 60 24 C60 20, 65 14, 72 14 C84 14, 96 22, 96 36 C96 58, 60 82, 60 82 Z" fill="#FF4D6D"/>
+          <circle cx="49" cy="42" r="3.2" fill="#FFF"/>
+          <circle cx="71" cy="42" r="3.2" fill="#FFF"/>
+          <path d="M53 52 Q60 58 67 52" stroke="#FFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>`
+      },
+      safe_drive: {
+        label: "Driving Under Grace",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <rect x="22" y="46" width="76" height="26" rx="12" fill="#06C755"/>
+          <path d="M34 46 L44 28 L76 28 L86 46 Z" fill="#34D399"/>
+          <rect x="46" y="32" width="12" height="11" rx="3" fill="#E0F2FE"/>
+          <rect x="62" y="32" width="12" height="11" rx="3" fill="#E0F2FE"/>
+          <circle cx="38" cy="72" r="10" fill="#1E293B"/>
+          <circle cx="38" cy="72" r="4.5" fill="#E2E8F0"/>
+          <circle cx="82" cy="72" r="10" fill="#1E293B"/>
+          <circle cx="82" cy="72" r="4.5" fill="#E2E8F0"/>
+        </svg>`
+      },
+      malaysia_prayer: {
+        label: "Praying for Malaysia",
+        svg: `<svg viewBox="0 0 120 100" class="w-28 h-24">
+          <circle cx="60" cy="50" r="32" fill="#38BDF8"/>
+          <path d="M42 36 Q52 28 64 38 Q74 44 68 58 Q56 66 44 54 Z" fill="#4ADE80"/>
+          <path d="M74 20 C74 15, 80 15, 80 20 C80 15, 86 15, 86 20 C86 26, 80 30, 80 32 C80 30, 74 26, 74 20 Z" fill="#FF4D6D"/>
+        </svg>`
+      }
+    };
+
+    /*************************************************************************
+     * 2. PARTICIPANTS DIRECTORY (10 PEOPLE)
+     *************************************************************************/
+    const PARTICIPANTS = {
+      oyr: {
+        id: "oyr",
+        name: "OYR (Caroline Lin)",
+        shortName: "OYR • Caroline",
+        age: 31,
+        occupation: "Senior Graphic Designer",
+        role: "Caleb's Girlfriend • Malaysian Citizen",
+        bio: "Born and raised in Malaysia in a Chinese family that practices traditional pagan religion, she is thirty-one, works as a senior graphic designer in the US, recently came to faith in Christ, feels she knows very little about the Bible yet, and deeply wishes her parents and siblings were here tonight.",
+        badgeColor: "bg-pink-100 text-pink-700 border-pink-200"
+      },
+      caleb: {
+        id: "caleb",
+        name: "Caleb Miller",
+        shortName: "Caleb",
+        age: 35,
+        occupation: "Principal Structural Engineer",
+        role: "OYR's Boyfriend • Adult Sunday School Teacher",
+        bio: "Born-and-raised thirty-five-year-old US citizen, principal structural engineer, and spiritually mature conservative Baptist who met Caroline at a joint engineering and design client presentation and coffee shop.",
+        badgeColor: "bg-sky-100 text-sky-700 border-sky-200"
+      },
+      martha: {
+        id: "martha",
+        name: "Mom Martha",
+        shortName: "Mom Martha",
+        age: 61,
+        occupation: "Retired School Nurse",
+        role: "Caleb's Mother • Warm Family Hostess",
+        bio: "Warm sixty-one-year-old retired school nurse raised in a conservative Baptist home who loves welcoming guests into her kitchen with slow-simmered pot roast and heartfelt encouragement.",
+        badgeColor: "bg-amber-100 text-amber-800 border-amber-200"
+      },
+      david: {
+        id: "david",
+        name: "Pastor David",
+        shortName: "Pastor David",
+        age: 63,
+        occupation: "Baptist Pastor",
+        role: "Caleb's Father • Shepherd & Bible Teacher",
+        bio: "Sixty-three-year-old born-and-raised American conservative Baptist pastor who loves opening the Scriptures around the dining table in a warm, approachable way.",
+        badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200"
+      },
+      hannah: {
+        id: "hannah",
+        name: "Hannah Miller",
+        shortName: "Hannah",
+        age: 29,
+        occupation: "Third-Grade Teacher",
+        role: "Caleb's Younger Sister",
+        bio: "Twenty-nine-year-old third-grade elementary school teacher who brings cheerful energy, warm hugs, and encouragement to the whole family.",
+        badgeColor: "bg-yellow-100 text-yellow-800 border-yellow-200"
+      },
+      luke: {
+        id: "luke",
+        name: "Luke Miller",
+        shortName: "Luke",
+        age: 37,
+        occupation: "Civil Contractor",
+        role: "Caleb's Older Brother",
+        bio: "Thirty-seven-year-old civil contractor and church deacon who loves practical faith, family dinners, and encouraging his younger brother Caleb.",
+        badgeColor: "bg-indigo-100 text-indigo-800 border-indigo-200"
+      },
+      sarah: {
+        id: "sarah",
+        name: "Sarah Miller",
+        shortName: "Sarah",
+        age: 36,
+        occupation: "Pediatric Physical Therapist",
+        role: "Luke's Wife • Sister-in-Law",
+        bio: "Thirty-six-year-old pediatric physical therapist who loves cooking alongside Mom Martha and making newcomers feel completely at ease.",
+        badgeColor: "bg-rose-100 text-rose-700 border-rose-200"
+      },
+      mark: {
+        id: "mark",
+        name: "Uncle Mark",
+        shortName: "Uncle Mark",
+        age: 65,
+        occupation: "Retired Agricultural Extension Agent",
+        role: "Pastor David's Older Brother",
+        bio: "Sixty-five-year-old retired county agricultural extension agent and longtime Baptist deacon who knows all about woodland mushrooms like hairy wood ears.",
+        badgeColor: "bg-teal-100 text-teal-800 border-teal-200"
+      },
+      ruth: {
+        id: "ruth",
+        name: "Aunt Ruth",
+        shortName: "Aunt Ruth",
+        age: 63,
+        occupation: "Piano Teacher",
+        role: "Uncle Mark's Wife • Church Accompanist",
+        bio: "Sixty-three-year-old local piano teacher who accompanies the family as they gather around the living room piano to sing classic Baptist hymns.",
+        badgeColor: "bg-purple-100 text-purple-800 border-purple-200"
+      },
+      esther: {
+        id: "esther",
+        name: "Grandma Esther",
+        shortName: "Grandma Esther",
+        age: 84,
+        occupation: "Retired Homemaker & Quilter",
+        role: "Miller Family Matriarch",
+        bio: "Eighty-four-year-old homemaker and quilter who has walked with the Lord for over seventy years and prays faithfully for every member of the family.",
+        badgeColor: "bg-cyan-100 text-cyan-800 border-cyan-200"
+      }
+    };
+
+    /*************************************************************************
+     * 3. DIVINE ATTRIBUTES TRACKER METADATA (19 ATTRIBUTES OF GOD)
+     *************************************************************************/
+    const DIVINE_ATTRIBUTES = [
+      { id: "providence", name: "Providence", desc: "God's purposeful care and guidance over every detail of our lives", firstMsg: 3 },
+      { id: "goodness", name: "Goodness", desc: "God's generous, kind-hearted bounty toward His children", firstMsg: 5 },
+      { id: "love", name: "Love", desc: "God's self-giving, sacrificial heart shown in sending His Son", firstMsg: 71 },
+      { id: "aseity", name: "Self-Existence (Aseity)", desc: "God has life in Himself and never depends on anything He made", firstMsg: 147 },
+      { id: "eternity", name: "Eternity", desc: "God has no beginning and no end across all ages", firstMsg: 150 },
+      { id: "immutability", name: "Immutability", desc: "God never changes in His character, truth, or promises", firstMsg: 153 },
+      { id: "omnipresence", name: "Omnipresence", desc: "God is fully present right here in America and right now in Malaysia", firstMsg: 156 },
+      { id: "omniscience", name: "Omniscience", desc: "God knows every thought, tear, and unspoken prayer completely", firstMsg: 159 },
+      { id: "omnipotence", name: "Omnipotence", desc: "God has all power in heaven and earth, so nothing is too hard for Him", firstMsg: 162 },
+      { id: "sovereignty", name: "Sovereignty", desc: "God rules over every nation, family, and circumstance as King", firstMsg: 165 },
+      { id: "wisdom", name: "Wisdom", desc: "God weaves every step together in the best and wisest way", firstMsg: 168 },
+      { id: "holiness", name: "Holiness", desc: "God's pure, spotless perfection, completely set apart from sin", firstMsg: 171 },
+      { id: "wrath", name: "Righteous Wrath Against Sin", desc: "God's holy opposition to evil that Christ bore in our place on the cross", firstMsg: 174 },
+      { id: "justice", name: "Justice & Righteousness", desc: "God always does what is right and satisfied justice through Jesus' blood", firstMsg: 176 },
+      { id: "truth", name: "Truth", desc: "God never lies, and every promise in His Word is completely reliable", firstMsg: 180 },
+      { id: "grace", name: "Grace", desc: "God's free, undeserved gift of salvation through faith in Christ", firstMsg: 185 },
+      { id: "mercy", name: "Mercy", desc: "God's tender compassion that forgives and binds up our wounds", firstMsg: 188 },
+      { id: "patience", name: "Patience", desc: "God's gentle forbearance giving sinners time to turn to Him", firstMsg: 191 },
+      { id: "faithfulness", name: "Faithfulness", desc: "God's steady loyalty that never lets His children go", firstMsg: 194 }
+    ];
+
+    /*************************************************************************
+     * 4. NARRATIVE CHAPTERS (8 PHASES OVER 3 HOURS: 5:00 PM – 8:00 PM)
+     *************************************************************************/
+    const CHAPTERS = [
+      { id: 1, title: "Phase 1: Praying at Home Before Leaving", timeRange: "5:00 PM – 5:18 PM", startIdx: 0, endIdx: 27, icon: "fa-hands-praying" },
+      { id: 2, title: "Phase 2: Driving & Talking on the Way Over", timeRange: "5:18 PM – 5:49 PM", startIdx: 28, endIdx: 72, icon: "fa-car-side" },
+      { id: 3, title: "Phase 3: Reaching Mom Martha's House", timeRange: "5:49 PM – 6:08 PM", startIdx: 73, endIdx: 99, icon: "fa-house-chimney-heart" },
+      { id: 4, title: "Phase 4: Helping Out with Dinner & Hairy Wood Ears", timeRange: "6:08 PM – 6:43 PM", startIdx: 100, endIdx: 144, icon: "fa-bowl-food" },
+      { id: 5, title: "Phase 5: Table Conversation & Scripture Study", timeRange: "6:43 PM – 7:19 PM", startIdx: 145, endIdx: 200, icon: "fa-book-bible" },
+      { id: 6, title: "Phase 6: Praying After Dinner in Thanksgiving", timeRange: "7:19 PM – 7:29 PM", startIdx: 201, endIdx: 213, icon: "fa-hands-holding-circle" },
+      { id: 7, title: "Phase 7: Singing Classic Hymns Around the Piano", timeRange: "7:29 PM – 7:43 PM", startIdx: 214, endIdx: 232, icon: "fa-music" },
+      { id: 8, title: "Phase 8: Praying for Caroline's Family & Driving Home", timeRange: "7:43 PM – 8:00 PM", startIdx: 233, endIdx: 259, icon: "fa-earth-asia" }
+    ];
+
+    /*************************************************************************
+     * 5. COMPLETE 260-MESSAGE SINGLE-SENTENCE SCRIPT (5:00 PM to 8:00 PM)
+     *    - Every single message is strictly ONE grammatically immaculate
+     *      US English sentence written in natural, real-life conversational speech.
+     *    - Consecutive timestamps never exceed 1 minute (180 minutes / 260 msgs).
+     *************************************************************************/
+    const RAW_SCRIPT = [
+      // ================= PHASE 1: PRAYING AT HOME BEFORE LEAVING (0 - 27) =================
+      { s: "caleb", t: "Caroline and I are just about to bow our heads and pray here in the living room before we head out to Mom and Dad's house!", sticker: "pray_bear" },
+      { s: "oyr", t: "I am so excited to finally meet everyone in person tonight, even if I am a little bit nervous!" },
+      { s: "martha", t: "Sweetheart, please do not be nervous for a single second because we are already sitting in the living room praying for you both!", sticker: "welcome_bunny" },
+      { s: "david", t: "We were just thanking the Lord for His sweet providence in bringing you and Caleb together and guiding you to our home tonight.", attr: "providence" },
+      { s: "esther", t: "I have been thanking God all afternoon for the wonderful blessings He has poured out on our family this week." },
+      { s: "ruth", t: "Mark and I were just talking on the porch about God's goodness and how faithful He is to bring new brothers and sisters in Christ into our lives.", attr: "goodness" },
+      { s: "caleb", t: "Lord Jesus, as I hold Caroline's hand before we walk out the door, thank You for saving her by Your grace and giving us a peaceful evening with my family." },
+      { s: "oyr", t: "Listening to Caleb pray out loud always steadies my heart, especially since praying like this is still so brand-new to me." },
+      { s: "hannah", t: "Caroline, our Wednesday night prayer group at church has been lifting you up all month, and we are just praising God for His blessings tonight!" },
+      { s: "luke", t: "We really cannot stop praising God for His providence when we think about how you grew up halfway around the world in Malaysia and now you are spending Saturday night with us.", attr: "providence" },
+      { s: "sarah", t: "Mom Martha and I just checked on the pot roast in the kitchen, and we were thanking the Lord for His goodness to our whole family.", attr: "goodness" },
+      { s: "mark", t: "A few of us deacons stayed after men's coffee this morning just to thank God for His blessings in your life, Caroline, and to ask Him to encourage your heart tonight." },
+      { s: "oyr", t: "You have no idea how much that means to me, because growing up in Malaysia in a pagan home means I have never had a room full of Christians praying for me before." },
+      { s: "david", t: "What a privilege it is for all of us to praise God for His goodness and welcome you with open arms!", attr: "goodness" },
+      { s: "caleb", t: "We just said amen together here by the couch, and Caroline's smile is already so much brighter." },
+      { s: "oyr", t: "I kept my prayer really short because I still do not know all the right church words yet, but I thanked God from the bottom of my heart for bringing me to Caleb." },
+      { s: "esther", t: "Honey, the Lord loves an honest, simple prayer from the heart far more than fancy words anyway." },
+      { s: "martha", t: "That is the absolute truth, Grandma Esther, and we are just praising God for His providence in every single step of Caroline's journey.", attr: "providence" },
+      { s: "hannah", t: "My third-graders at school always remind me that the simplest thank-you is the sweetest one, and our Father in heaven feels the exact same way." },
+      { s: "luke", t: "Caleb, do you two have everything loaded up for the drive over?" },
+      { s: "caleb", t: "I am grabbing the keys off the counter right now and carrying Caroline's tote bag of Malaysian cooking ingredients out to the truck." },
+      { s: "oyr", t: "I packed the dried mushrooms and fresh ginger carefully so nothing spills on the way over to Mom Martha's kitchen." },
+      { s: "sarah", t: "We cleared off a whole corner of the kitchen counter for you, Caroline, and we cannot wait to cook together!" },
+      { s: "ruth", t: "I just finished warming up the piano in the parlor while praising God for His blessings on this beautiful autumn evening." },
+      { s: "mark", t: "The highway traffic looks pretty clear coming out of town, Caleb, so you two should have a smooth drive." },
+      { s: "david", t: "We will keep praying here at the house and praising God for His providence until your truck pulls into the driveway.", attr: "providence" },
+      { s: "oyr", t: "We just stepped outside into the crisp fall air, and I am so thankful for all of your kindness." },
+      { s: "caleb", t: "We are buckled into the truck and pulling out onto the street right now, so we will see you all in about thirty minutes!", sticker: "safe_drive" },
+
+      // ================= PHASE 2: DRIVING & TALKING ON THE WAY OVER (28 - 72) =================
+      { s: "martha", t: "Take your time on the highway, Caleb, and let Caroline text us from the passenger seat whenever she feels like chatting!" },
+      { s: "oyr", t: "Caleb has his phone connected to the truck screen so we can hear the messages, and I am typing from the passenger seat while we merge onto the interstate." },
+      { s: "oyr", t: "Looking out the window at all the neighborhoods decorated for fall suddenly makes me wish my mom and dad back in Malaysia could be here tonight." },
+      { s: "martha", t: "Oh, sweetheart, I know how much your heart must miss your mom and dad on a big evening like this." },
+      { s: "oyr", t: "Since I was born and raised in Malaysia, every big Saturday dinner growing up meant my parents, my brother, and my sister all crowding around the table together." },
+      { s: "caleb", t: "Caroline was just telling me a minute ago how much she wishes her parents could sit down at our table tonight and see how warmly our family loves her." },
+      { s: "esther", t: "Nobody can ever replace your dear parents in Malaysia, Caroline, but we are going to love on you tonight and pray hard for every single one of them." },
+      { s: "hannah", t: "Since a few of us have only heard Caleb talk nonstop about you for months, Caroline, let us do a quick round of introductions with our ages and what we do so you don't feel overwhelmed at the door!" },
+      { s: "oyr", t: "That would actually help me so much, and I can go first since I just turned thirty-one and work as a senior graphic designer." },
+      { s: "caleb", t: "And of course everyone knows I am thirty-five, working as a principal structural engineer during the week and teaching adult Sunday school on Sunday mornings." },
+      { s: "luke", t: "I still laugh about how my thirty-five-year-old structural engineer brother ended up falling for a thirty-one-year-old senior graphic designer!" },
+      { s: "oyr", t: "Honestly, it is such a blessing that Caleb is thirty-five and so steady in his faith, because he is endlessly patient whenever I ask him the most basic questions about the Bible." },
+      { s: "luke", t: "To keep the introductions rolling for you, Caroline, I am Caleb's older brother Luke, I am thirty-seven, and I work as a civil contractor." },
+      { s: "sarah", t: "I am Luke's wife Sarah, I am thirty-six, and I work as a pediatric physical therapist helping little ones learn to walk and move." },
+      { s: "hannah", t: "I am Caleb's little sister Hannah, I am twenty-nine, and I teach third grade at Oak Creek Elementary!" },
+      { s: "david", t: "I am Caleb's dad David, I am sixty-three, and I have had the joy of serving as pastor of our Baptist church for the past thirty years." },
+      { s: "martha", t: "I am Caleb's mom Martha, I am sixty-one, and I recently retired after working for years as a school nurse." },
+      { s: "mark", t: "I am David's older brother Mark, I am sixty-five, and I am a retired county agricultural extension agent and one of the deacons at church." },
+      { s: "ruth", t: "I am Mark's wife Ruth, I am sixty-three, and I teach neighborhood kids piano lessons all week and play the piano at church." },
+      { s: "esther", t: "And I am Grandma Esther, eighty-four years old, a retired homemaker and quilter who has been spoiling Caleb since the day he was born!" },
+      { s: "oyr", t: "Reading all of your messages makes me smile so big, and now I can match all ten names and faces as soon as we walk in." },
+      { s: "ruth", t: "Okay, Mark and I still want to hear the real story from Caroline's side about how you and Caleb actually met!" },
+      { s: "caleb", t: "We are actually driving right past the downtown office building where that joint client presentation happened ten months ago." },
+      { s: "oyr", t: "My design agency was hired to create the visual branding and community display boards for a new pedestrian bridge project, and Caleb's firm was leading the structural engineering." },
+      { s: "caleb", t: "When Caroline stood up at the conference table to present her concepts, I was amazed by how thoughtful, calm, and sharp her work was." },
+      { s: "oyr", t: "Then right after our meeting wrapped up, a huge downpour started outside just as I was trying to carry my display boards to the coffee shop next door." },
+      { s: "caleb", t: "I ran out with my golf umbrella to cover her portfolio case so her boards wouldn't get ruined, and then we ended up grabbing coffee together while we waited out the rain." },
+      { s: "hannah", t: "Leave it to Caleb to rescue the presentation boards in the pouring rain and turn it into a coffee date!", sticker: "heart_blessing" },
+      { s: "oyr", t: "What caught my attention at the coffee shop was seeing Caleb's worn leather Bible sitting right next to his engineering notebook while he studied for his Sunday school class." },
+      { s: "david", t: "Look at how God's providence wove together a bridge presentation, a sudden rainstorm, and a quiet coffee shop table.", attr: "providence" },
+      { s: "oyr", t: "When our tea and coffee arrived, Caleb quietly bowed his head to thank God, and I asked him why he did that because in my family in Malaysia we only ever burned incense at pagan shrines." },
+      { s: "caleb", t: "She asked such sincere questions that afternoon, and over the next several months we kept meeting for coffee and walking through the Gospel of John together." },
+      { s: "oyr", t: "Since I grew up in Malaysia in a traditional pagan home, at thirty-one years old I honestly did not even know the difference between the Old Testament and the New Testament." },
+      { s: "martha", t: "There is no shame in that at all, sweetheart, because nobody knows the Scriptures until someone lovingly opens the Word with them." },
+      { s: "oyr", t: "Four months ago, after Caleb patiently explained how Jesus died on the cross for my sins and rose again, I prayed and trusted Christ as my Savior." },
+      { s: "esther", t: "Praise the Lord for His goodness and saving grace in drawing your heart to Jesus!", attr: "goodness" },
+      { s: "oyr", t: "I still feel so shallow in my faith sometimes because I have to flip to the table of contents just to find most books in my Bible." },
+      { s: "sarah", t: "Caroline, half the adults in our Sunday school class still peek at the table of contents when Pastor David calls out one of the minor prophets!" },
+      { s: "luke", t: "Sarah is telling the truth, because growing in Christ takes a lifetime and we are all still learning together every single week." },
+      { s: "oyr", t: "The hardest part for me right now is that when I call home to Malaysia, my parents and siblings still practice pagan rituals and do not understand why I follow Jesus." },
+      { s: "caleb", t: "We were just praying together in the truck a few minutes ago that the Lord would soften her parents' hearts back in Malaysia." },
+      { s: "david", t: "Before you two drive home tonight, Caroline, all ten of us are going to gather in a circle and pray specifically for your mom, your dad, your brother, and your sister." },
+      { s: "oyr", t: "Thank you, Pastor David, because hearing that makes my eyes fill up with happy tears right here in the passenger seat." },
+      { s: "ruth", t: "God's love reaches all the way across the Pacific Ocean to Malaysia, and He hears every prayer we lift up for our families.", attr: "love" },
+      { s: "caleb", t: "We just turned off the main highway onto the county road, so we will be pulling into the driveway in less than two minutes!" },
+
+      // ================= PHASE 3: REACHING MOM MARTHA'S HOUSE (73 - 99) =================
+      { s: "hannah", t: "I just spotted Caleb's headlights coming up the lane through the front window!" },
+      { s: "martha", t: "David is turning on the porch lights right now, and we are all heading to the front door to meet you two!" },
+      { s: "caleb", t: "We just parked in the gravel driveway, and I am walking around to open Caroline's door." },
+      { s: "oyr", t: "Seeing all of you smiling and waving from the front porch under the warm lights makes my heart feel so full!" },
+      { s: "martha", t: "Come right up the steps and let me give you a real Mom Martha hug, Caroline!", sticker: "welcome_bunny" },
+      { s: "oyr", t: "Mom Martha's hug on the front porch just melted away the last bit of my nervousness." },
+      { s: "david", t: "Welcome to our home, Caroline, and we are so grateful to the Lord that you are here with us tonight." },
+      { s: "hannah", t: "It is so fun to finally hug you in person while we keep our family group thread going so we can save all the memories from tonight!" },
+      { s: "esther", t: "Let me hold both of your hands for a second, dear, because at eighty-four years old it is a pure joy to welcome a new sister in Christ into this house." },
+      { s: "oyr", t: "Your hands are so warm, Grandma Esther, and that patchwork quilt draped over your rocking chair is gorgeous." },
+      { s: "esther", t: "I stitched that Wedding Ring quilt a few winters ago, and next time you visit I will show you my whole cedar chest of quilts!" },
+      { s: "luke", t: "Caleb is grinning from ear to ear while he hangs up Caroline's coat in the front hall." },
+      { s: "sarah", t: "Come on into the living room by the fireplace for a minute, Caroline, and let Uncle Mark and Aunt Ruth say hello." },
+      { s: "mark", t: "It is wonderful to meet you, Caroline, and Caleb was not exaggerating one bit about how kind and gracious you are." },
+      { s: "ruth", t: "We are thrilled to have you here, dear, and my piano bench in the corner is all ready for our hymn singing after dinner!", sticker: "sally_hymn" },
+      { s: "oyr", t: "Everyone is making me feel like I have belonged to this family for years instead of meeting you for the very first time." },
+      { s: "caleb", t: "I brought Caroline's tote bag into the kitchen because she insisted on helping Mom and Sarah finish making dinner." },
+      { s: "martha", t: "Having extra hands in the kitchen is my favorite part of family Saturdays, so come right on in and tie on an apron, Caroline!" },
+      { s: "oyr", t: "Growing up in Malaysia, the women in my family always crowded around the kitchen counter together to chop vegetables and talk before dinner." },
+      { s: "sarah", t: "That is the exact way every Baptist family gathering in the Midwest and the South works too, because everyone always ends up congregating in the kitchen!" },
+      { s: "hannah", t: "I am pouring warm spiced apple cider into mugs for everyone while Mom, Sarah, and Caroline unpack the ingredients on the island." },
+      { s: "luke", t: "Uncle Mark and I are leaning against the kitchen doorframe because Mark has been waiting all afternoon to see these Malaysian mushrooms Caleb told him about." },
+      { s: "mark", t: "After thirty-five years working as an agricultural extension agent, you better believe I want to see what Caroline brought from the Asian market!" },
+      { s: "david", t: "Even the smell coming off that stove is a reminder of God's goodness in giving us food and family to enjoy together.", attr: "goodness" },
+      { s: "esther", t: "I moved my rocking chair right near the kitchen doorway so I do not miss a single word of the cooking conversation." },
+      { s: "ruth", t: "Here is a warm mug of cider for you, Caroline, right beside your cutting board." },
+      { s: "oyr", t: "Thank you, Aunt Ruth, and now I am ready to chop, stir, or help Mom Martha with whatever needs doing!" },
+
+      // ================= PHASE 4: HELPING OUT WITH DINNER & HAIRY WOOD EARS (100 - 144) =================
+      { s: "martha", t: "Let me lift the lid off this Dutch oven, Caroline, so you can see our slow-braised beef pot roast simmering in homemade broth!", sticker: "frog_cooking" },
+      { s: "oyr", t: "Oh my goodness, Mom Martha, the smell of slow-simmered beef, garlic, and onions rising from that pot reminds me so much of my mom's kitchen in Malaysia!" },
+      { s: "sarah", t: "Isn't it amazing how home-cooked Malaysian Chinese meals and traditional American Baptist family suppers actually use so many of the exact same basic ingredients?" },
+      { s: "oyr", t: "It really is, because in Malaysian Chinese home cooking almost every dish starts with minced garlic, sliced fresh ginger, and chopped green onions sizzling in the pan." },
+      { s: "martha", t: "Look right here on my cutting board, because I use minced garlic, yellow onions, green onions, and even a little grated ginger in my pot roast broth and skillet chicken!" },
+      { s: "caleb", t: "Last week Caroline made me a homemade Malaysian ginger chicken soup with green onions and garlic, and I told her it tasted just like the soup Mom used to make when we were kids." },
+      { s: "martha", t: "As a retired school nurse, I can tell you that homemade chicken broth simmered with garlic and fresh ginger is the best comfort food in the world in any country!" },
+      { s: "oyr", t: "My mom in Malaysia says the exact same thing whenever someone has a cold, and she also braises meats slowly with soy sauce, garlic, and broth until they are tender." },
+      { s: "hannah", t: "And Mom Martha always sneaks a splash of soy sauce into her beef roast gravy for extra depth, along with carrots, celery, and potatoes!" },
+      { s: "oyr", t: "We put carrots and potatoes into our home-style braised beef and soups in Malaysia too, and we always serve everything with a big pot of steamed jasmine rice." },
+      { s: "luke", t: "Around a Baptist dinner table, whether you spoon that rich roast gravy over mashed potatoes, homemade yeast rolls, or steamed rice, nobody leaves hungry!" },
+      { s: "oyr", t: "Now let me show you all this bowl of dark, ruffled mushrooms that I soaked in warm water before Caleb and I left his apartment." },
+      { s: "mark", t: "Let me step right up to the counter with my glasses on, Caroline, because those are hairy wood ears, which folks also call cloud ear mushrooms!" },
+      { s: "oyr", t: "You recognized them right away, Uncle Mark, because in Malaysian Chinese kitchens we put hairy wood ears in stir-fries, braised pork or chicken, and hot soups all the time!" },
+      { s: "sarah", t: "I have never cooked with hairy wood ears before, Caroline, so what makes them different from regular button or portobello mushrooms?" },
+      { s: "mark", t: "They grow on fallen hardwood logs in little ear-shaped folds, and the outside edge has a tiny velvety fuzz that gives hairy wood ears their name while the inside is smooth." },
+      { s: "oyr", t: "When you buy them in a bag at the grocery store they are completely dry and hard, but after soaking in warm water for half an hour they puff up into soft, bouncy ribbons." },
+      { s: "martha", t: "Feel how springy and firm that piece is between your fingers, Sarah, almost like a crisp ruffle!" },
+      { s: "oyr", t: "The best part about hairy wood ears is that they keep a wonderful little crunch even after you cook them, and their folds soak up all the garlic, ginger, soy sauce, and broth." },
+      { s: "david", t: "That sounds delicious, because I love how mushrooms soak up the savory juices from a roast." },
+      { s: "oyr", t: "Mom Martha, would you like me to stir-fry half of these hairy wood ears with ginger, garlic, cabbage, and green onions, and let the other half simmer right in your pot roast gravy?" },
+      { s: "martha", t: "I would love that, Caroline, because putting your Malaysian hairy wood ears right into our family pot roast gravy brings both of our kitchens together!" },
+      { s: "caleb", t: "Watching Caroline slice fresh ginger and green onions right next to Mom at the stove makes me happier than I can say." },
+      { s: "esther", t: "In my eighty-four years, I used to gather wild mushrooms in the woods with my dad, and we always thanked the Lord for putting such good food right on the trees." },
+      { s: "mark", t: "Hairy wood ears are actually packed with iron and fiber too, Martha, so your school nurse instincts will approve of this dish one hundred percent." },
+      { s: "hannah", t: "Listen to that skillet sizzle as Caroline tosses the garlic, ginger, and hairy wood ears into the hot pan with a splash of soy sauce and chicken broth!" },
+      { s: "ruth", t: "The smell of ginger and garlic mixing with Martha's beef roast and Sarah's warm dinner rolls is making my stomach growl!" },
+      { s: "sarah", t: "I love how natural it feels cooking side by side with you, Caroline, like we have been trading family recipes for years." },
+      { s: "oyr", t: "Standing here at the stove with you and Mom Martha feels so much like cooking with my mom and my sister back home in Malaysia." },
+      { s: "martha", t: "Anytime you miss your mom's kitchen, sweetheart, my stove and my apron drawer are yours whenever you want to come over." },
+      { s: "oyr", t: "Thank you, Mom Martha, you are going to make me cry right into the stir-fry skillet!" },
+      { s: "luke", t: "Hannah and I just finished setting ten plates and water glasses around the big dining room table." },
+      { s: "hannah", t: "Caroline, Mom let me sneak one bite of the hairy wood ears out of the skillet, and that little crisp snap with the ginger and gravy is incredible!" },
+      { s: "mark", t: "That crisp texture next to tender braised beef and carrots is going to be a hit with everyone at the table." },
+      { s: "caleb", t: "I am carrying the heavy Dutch oven out to the dining table right now while Caroline brings the platter of ginger stir-fried cabbage and hairy wood ears." },
+      { s: "sarah", t: "I have the basket of hot buttered yeast rolls and the bowl of steamed jasmine rice coming right behind you!" },
+      { s: "david", t: "Everyone come find your seats around the table so we can hold hands and thank the Lord before we eat." },
+      { s: "esther", t: "Look around this table at all ten of us together and see how rich we are in the blessings of God." },
+      { s: "david", t: "Heavenly Father, we praise You for Your providence, Your blessings, and Your goodness in bringing Caroline to our table tonight, and we ask You to bless this food to our bodies in Jesus' name, Amen.", attr: "providence" },
+      { s: "oyr", t: "Sitting here between Caleb and Mom Martha while we pass the platters around the table feels so warm and welcoming." },
+      { s: "luke", t: "Caroline, these hairy wood ears in Mom's pot roast gravy over the rice are seriously good, and I am already going back for seconds!" },
+      { s: "ruth", t: "The way the hairy wood ears hold onto the garlic, ginger, and savory roast broth while staying crisp is wonderful." },
+      { s: "mark", t: "You are going to have to tell me which Asian grocery in town carries the best dried hairy wood ears so Ruth and I can pick up a bag next week." },
+      { s: "oyr", t: "I actually brought an extra unopened bag of dried hairy wood ears in my tote bag for Mom Martha's pantry, and I can pick up another bag for you and Aunt Ruth anytime!" },
+      { s: "martha", t: "Now that everyone has had plenty to eat and Sarah is pouring coffee and hot tea, David is reaching for his Bible at the end of the table." },
+
+      // ================= PHASE 5: TABLE CONVERSATION & SCRIPTURE STUDY (145 - 200) =================
+      { s: "david", t: "After Saturday dinner we always open the Bible together for a little bit, and tonight we thought it would be wonderful to talk about who God is and what He is like!", sticker: "bible_light" },
+      { s: "oyr", t: "I brought the Bible Caleb gave me right to the table because I really want to understand who God is, even though so much of the Bible is still new to me." },
+      { s: "david", t: "The very first thing the Bible shows us in Exodus 3:14, when God calls Himself I AM WHO I AM, is His self-existence, meaning He has life in Himself and never needed anyone to create Him.", attr: "aseity" },
+      { s: "oyr", t: "That stands out to me right away, because in Malaysia people have to carve pagan idols out of wood or clay and set food in front of them, whereas the real God does not depend on anything.", attr: "aseity" },
+      { s: "caleb", t: "That is the exact point Paul makes in Acts 17:25 when he says God is not served by human hands as if He needed anything, because He Himself gives everyone life and breath.", attr: "aseity" },
+      { s: "esther", t: "Right alongside that is Psalm 90:2, which reminds us of God's eternity, that from everlasting to everlasting He is God without any beginning or end.", attr: "eternity" },
+      { s: "luke", t: "Knowing that God is eternal means He was already on His throne long before the world began, and He will never run out of time or strength.", attr: "eternity" },
+      { s: "oyr", t: "Thinking about God's eternity makes me feel so safe, because He is not some temporary spirit that comes and goes.", attr: "eternity" },
+      { s: "mark", t: "And because He is eternal, Malachi 3:6 and James 1:17 tell us about God's immutability, which simply means God never changes.", attr: "immutability" },
+      { s: "caleb", t: "In my engineering work, steel rusts and concrete settles over time, but God's immutability means His character and His promises stay the exact same forever.", attr: "immutability" },
+      { s: "oyr", t: "So because God never changes, He is never going to wake up one day and change His mind about forgiving me through Jesus!", attr: "immutability" },
+      { s: "martha", t: "Never, sweetheart, and Psalm 139:7-10 also comforts us with God's omnipresence, showing us that there is nowhere we can go away from His presence.", attr: "omnipresence" },
+      { s: "hannah", t: "I love thinking about God's omnipresence tonight, Caroline, because He is not stuck in one country or temple—He is right here in our dining room and right there in Malaysia at the exact same moment.", attr: "omnipresence" },
+      { s: "oyr", t: "Hearing that God's omnipresence means He is right there in Malaysia where my parents live while also sitting here with us tonight brings me so much comfort.", attr: "omnipresence" },
+      { s: "sarah", t: "The beginning of Psalm 139 also talks about God's omniscience, telling us that He knows every word on our tongue before we even speak it.", attr: "omniscience" },
+      { s: "ruth", t: "God's omniscience means He knows everything completely—past, present, and future—including every quiet worry in our hearts.", attr: "omniscience" },
+      { s: "oyr", t: "That takes such a weight off my shoulders, because even when I struggle to find the right words in prayer, God already knows my heart completely.", attr: "omniscience" },
+      { s: "david", t: "And Jeremiah 32:17 pairs His knowledge with His omnipotence, reminding us that nothing is too hard for the Lord who made the heavens and the earth by His great power.", attr: "omnipotence" },
+      { s: "luke", t: "When you remember God's omnipotence—that He spoke the universe into being and raised Jesus from the dead—you realize no hardened heart is too difficult for Him to reach.", attr: "omnipotence" },
+      { s: "oyr", t: "That gives me real hope for my mom and dad in Malaysia, because God's almighty power can reach them even when I do not know how.", attr: "omnipotence" },
+      { s: "mark", t: "Psalm 115:3 and Romans 8:28 also show us God's sovereignty, meaning He is the supreme King ruling over every nation, rainstorm, and detail of history.", attr: "sovereignty" },
+      { s: "caleb", t: "Because of God's sovereignty, we do not have to be afraid of bad luck or superstition anymore, Caroline, since our Father is in complete control.", attr: "sovereignty" },
+      { s: "oyr", t: "Growing up in a home where everyone worried constantly about bad luck and superstitions, resting in God's sovereignty feels like stepping out of a cage.", attr: "sovereignty" },
+      { s: "ruth", t: "And Romans 11:33 reminds us that His rule is guided by infinite wisdom, so He always knows the best way to accomplish His good purposes.", attr: "wisdom" },
+      { s: "martha", t: "Looking back over sixty-one years of life, I can see how God's wisdom was working even in seasons I did not understand at the time.", attr: "wisdom" },
+      { s: "oyr", t: "Even the way Caleb and I met on that rainy afternoon after the bridge presentation shows me how much wiser God's plan is than mine!", attr: "wisdom" },
+      { s: "david", t: "Now when we look at Isaiah 6:3, where the angels cry Holy, holy, holy is the Lord of hosts, we see God's holiness—that He is completely pure and separate from all sin.", attr: "holiness" },
+      { s: "esther", t: "God's holiness is like pure, blazing light where there is not even a single speck of darkness or wrongdoing.", attr: "holiness" },
+      { s: "oyr", t: "When Caleb first read Isaiah 6 with me, seeing God's holiness helped me realize why I could never just be a good enough person on my own.", attr: "holiness" },
+      { s: "david", t: "And because God is holy, Romans 1:18 and John 3:36 teach us that He has a righteous wrath against sin, because a good judge cannot just shrug at evil.", attr: "wrath" },
+      { s: "caleb", t: "Unlike pagan spirits that act out of temper, God's wrath against sin flows from His pure justice and righteousness, because every wrong has to be answered.", attr: "justice" },
+      { s: "david", t: "And that is the heart of the Gospel in Romans 3:25-26—that on the cross Jesus willingly bore God's righteous wrath against our sin so God could be completely just and still forgive us!", attr: "justice" },
+      { s: "oyr", t: "Wait, hearing how God's holiness, His wrath against sin, and His justice all met at the cross when Jesus took my place makes the whole Bible click together for me!", attr: "wrath" },
+      { s: "sarah", t: "That really is the heart of everything we believe, Caroline, and it is why Jesus' sacrifice on the cross is such good news.", attr: "justice" },
+      { s: "luke", t: "We know we can count on that promise because Titus 1:2 and John 17:17 tell us that God is truth and cannot lie.", attr: "truth" },
+      { s: "caleb", t: "Because God is truth itself, every single promise in this Bible in front of us is solid rock.", attr: "truth" },
+      { s: "oyr", t: "I love knowing that God's Word is truth, so I do not have to guess what He thinks of me.", attr: "truth" },
+      { s: "hannah", t: "And 1 John 4:8-10 together with Romans 5:8 show us God's love, that while we were still sinners, Christ died for us.", attr: "love" },
+      { s: "martha", t: "God's love did not wait for us to clean ourselves up first, Caroline; He loved us first and sent His Son to rescue us.", attr: "love" },
+      { s: "oyr", t: "In the pagan religion I grew up around, nobody ever talked about a Creator who actually loves you and gave His Son for you.", attr: "love" },
+      { s: "ruth", t: "Out of that love comes God's grace in Ephesians 2:8-9, that we are saved by grace through faith as a free gift of God, not by our own works.", attr: "grace" },
+      { s: "oyr", t: "Ephesians 2:8-9 is the very first passage Caleb helped me memorize, and I thank God every day for His free grace!", attr: "grace" },
+      { s: "esther", t: "Right beside His grace is His tender mercy in Lamentations 3:22-23, where His compassions never fail and are new every single morning.", attr: "mercy" },
+      { s: "sarah", t: "When we stumble or feel weak, God's mercy stoops right down to forgive us and bind up our hearts.", attr: "mercy" },
+      { s: "oyr", t: "Knowing that God's mercy is brand-new every morning encourages me so much when I feel like a slow learner.", attr: "mercy" },
+      { s: "mark", t: "And look at 2 Peter 3:9, which highlights God's patience, telling us the Lord is patient and not wanting anyone to perish, but for all to come to repentance.", attr: "patience" },
+      { s: "caleb", t: "God was so patient with Caroline for thirty-one years before she heard the Gospel, and He is being patient with her family in Malaysia right now.", attr: "patience" },
+      { s: "oyr", t: "Thanking God for His patience makes me want to keep praying for my parents and siblings without ever giving up.", attr: "patience" },
+      { s: "david", t: "And tying every one of His attributes together is God's faithfulness in 1 Corinthians 1:9 and Lamentations 3:23, because He will never forsake those who belong to Him.", attr: "faithfulness" },
+      { s: "luke", t: "Plus Psalm 34:8 invites us to taste and see that the Lord is good, because His goodness and providence overflow in our lives every day.", attr: "goodness" },
+      { s: "oyr", t: "I just wrote down all nineteen attributes in my little notebook—His self-existence, eternity, immutability, omnipresence, omniscience, omnipotence, sovereignty, wisdom, holiness, wrath against sin, justice, truth, love, grace, mercy, patience, goodness, providence, and faithfulness!", attr: "faithfulness" },
+      { s: "martha", t: "Sweetheart, you came in tonight worried that you barely knew the Bible, and yet your heart is soaking up the truth of God's character like a sponge!" },
+      { s: "david", t: "Seeing your joy in the Scriptures tonight, Caroline, has blessed every single one of us around this table." },
+      { s: "oyr", t: "You all explained the Bible so naturally and warmly around the dinner table that I feel like I learned more tonight than in my whole life before." },
+      { s: "caleb", t: "All glory belongs to God for who He is and for how clearly He shows Himself in His Word!", attr: "truth" },
+      { s: "esther", t: "Amen to that, Caleb, and what a sweet time of fellowship around the Word this has been!" },
+
+      // ================= PHASE 6: PRAYING AFTER DINNER IN THANKSGIVING (201 - 213) =================
+      { s: "david", t: "Before we head into the living room around Aunt Ruth at the piano, let us bow our heads right here at the table and thank the Lord after our meal." },
+      { s: "martha", t: "Lord, we thank You so much for this wonderful dinner, for our time in Your Word, and for Your sweet providence in bringing Caroline into our lives.", attr: "providence" },
+      { s: "luke", t: "Father, we praise You for Your blessings on our family and for the joy of seeing Caleb and Caroline walking together in Christ." },
+      { s: "sarah", t: "Thank You, Lord, for Your constant goodness and for letting us share stories, laughter, and homemade food around this table tonight.", attr: "goodness" },
+      { s: "mark", t: "We praise You, Lord, for Your wisdom and bounty in creation, from the harvest in the fields right down to the hairy wood ears we enjoyed at supper.", attr: "wisdom" },
+      { s: "hannah", t: "Thank You, Father, for Your tender mercy and love that make strangers from different sides of the world into one family in Jesus.", attr: "mercy" },
+      { s: "ruth", t: "Lord, we praise You for Your faithfulness and grace, and we ask You to bless our voices as we sing hymns to Your glory.", attr: "faithfulness" },
+      { s: "esther", t: "Thank You, precious Lord, for letting my eighty-four-year-old eyes see another generation praising Your holy name around this table.", attr: "holiness" },
+      { s: "caleb", t: "Father, I praise You for Your providence, Your blessings, and Your goodness in saving Caroline and giving us this evening together.", attr: "providence" },
+      { s: "oyr", t: "Dear Lord Jesus, thank You for loving me, saving me by Your grace, and letting me sit at this table tonight with Caleb's family, Amen!", attr: "grace" },
+      { s: "david", t: "Amen, and now let us carry our coffee mugs into the living room while Ruth opens the piano!" },
+      { s: "hannah", t: "I am passing out the church hymnals from the bookshelf so everyone has a copy." },
+      { s: "caleb", t: "Caroline and I are sharing a hymnal right here beside the piano bench so I can point to the verses as we sing." },
+
+      // ================= PHASE 7: SINGING CLASSIC HYMNS AROUND THE PIANO (214 - 232) =================
+      { s: "ruth", t: "I am sitting down at the piano keys now, and let us start with Caroline's favorite theme from tonight by turning to Great Is Thy Faithfulness!", sticker: "sally_hymn" },
+      { s: "martha", t: "Listen to Ruth play that beautiful introduction on the piano while we all join in on the first verse!" },
+      { s: "oyr", t: "When we just sang Great is Thy faithfulness, O God my Father, there is no shadow of turning with Thee, I recognized the exact verse from James 1:17 we just read at the table!", attr: "immutability" },
+      { s: "caleb", t: "That is why we love these old Baptist hymns so much, Caroline, because they are packed with Scripture from start to finish.", attr: "faithfulness" },
+      { s: "hannah", t: "Singing Morning by morning new mercies I see, all I have needed Thy hand hath provided with all ten of us in the living room gives me chills!", attr: "mercy" },
+      { s: "luke", t: "Dad and Uncle Mark singing the bass and tenor parts while the ladies sing soprano and alto sounds just like Sunday night church." },
+      { s: "ruth", t: "Now flip over a few pages to Come Thou Fount of Every Blessing, and let us sing it right from the heart!" },
+      { s: "sarah", t: "I always love the line that says Tune my heart to sing Thy grace; streams of mercy, never ceasing, call for songs of loudest praise!", attr: "grace" },
+      { s: "oyr", t: "Standing next to Caleb and singing these words out loud while Aunt Ruth plays the piano is honestly one of the sweetest moments of my life." },
+      { s: "esther", t: "Your voice blends right in with ours, Caroline, and you can tell you are singing every word from a grateful heart." },
+      { s: "mark", t: "Ruth, let us do Amazing Grace next so we can all sing it without even needing to look down at the page!", attr: "grace" },
+      { s: "david", t: "Hearing Caroline sing I once was lost, but now am found, was blind, but now I see reminds every one of us of the day Christ saved us.", attr: "grace" },
+      { s: "oyr", t: "Those words are my exact story, Pastor David, because four months ago I really was spiritually blind and now I belong to Jesus!" },
+      { s: "ruth", t: "For our last hymn around the piano tonight, let us sing How Firm a Foundation, celebrating how trustworthy God's Word is!", attr: "truth" },
+      { s: "caleb", t: "Look at that verse right there, Caroline—Fear not, I am with thee, O be not dismayed, for I am thy God, and will still give thee aid!", attr: "omnipresence" },
+      { s: "martha", t: "As Ruth's last piano chord fades out, you can just feel the peace of the Lord filling this whole living room." },
+      { s: "oyr", t: "I never grew up singing hymns around a piano in Malaysia, and I cannot stop wishing my mom, my dad, my brother, and my sister could experience this joy." },
+      { s: "david", t: "Then let us gather all ten of our chairs into a tight circle right here in the living room and pray earnestly for your parents and siblings in Malaysia before you two head home." },
+      { s: "oyr", t: "Thank you so much, Pastor David, because having all ten of us pray together for my family's salvation means everything to me!" },
+
+      // ================= PHASE 8: PRAYING FOR CAROLINE'S FAMILY & DRIVING HOME (233 - 259) =================
+      { s: "david", t: "Heavenly Father, all ten of us join hands in this living room right now to lift up Caroline's dad, her mom, her brother, and her sister back home in Malaysia.", sticker: "malaysia_prayer" },
+      { s: "martha", t: "Lord of mercy, You know how deeply Caroline loves her parents and misses them tonight, and we ask You to surround their home in Malaysia with Your care.", attr: "mercy" },
+      { s: "esther", t: "Gracious Father, please open her parents' eyes to see that pagan idols cannot save, and draw their hearts to the living Savior, Jesus Christ.", attr: "grace" },
+      { s: "mark", t: "Lord, since You are omnipresent and right there in Malaysia at this very hour, bring faithful Christians across her parents' and siblings' paths to share the Gospel with them.", attr: "omnipresence" },
+      { s: "ruth", t: "God of truth and love, let the conversations Caroline has over the phone with her brother and sister plant seeds of Your Word deep in their hearts.", attr: "truth" },
+      { s: "luke", t: "Sovereign Lord, nothing is too hard for Your omnipotent hand, so we ask You to soften every heart in the Lin family and bring them to saving faith.", attr: "omnipotence" },
+      { s: "sarah", t: "Patient and loving Father, give Caroline peace whenever she feels homesick, and let her family see the joy and kindness of Christ shining through her.", attr: "patience" },
+      { s: "hannah", t: "Lord Jesus, we ask that one day soon Caroline will have the joy of hugging her mom, dad, brother, and sister as fellow believers in Christ.", attr: "love" },
+      { s: "caleb", t: "Faithful Father, help me encourage Caroline every day and pray alongside her faithfully until her whole family in Malaysia knows You as Lord and Savior.", attr: "faithfulness" },
+      { s: "oyr", t: "Dear Father in heaven, thank You for Your goodness, Your providence, and Your power, and please save my mom, my dad, my brother, and my sister in Malaysia, in Jesus' name, Amen!", attr: "providence" },
+      { s: "david", t: "Amen and amen, and we are going to keep your family on our daily prayer list right here in this house, Caroline!" },
+      { s: "oyr", t: "I am wiping happy tears off my cheeks right now because I have never felt so loved and supported in my entire life." },
+      { s: "martha", t: "Here are two big containers of leftover pot roast, gravy with the hairy wood ears, rice, and rolls packed up for you and Caleb to take home!" },
+      { s: "sarah", t: "Give me a big hug before you put your coat on, Caroline, because you are officially part of the kitchen crew every Saturday now!" },
+      { s: "esther", t: "God bless you, sweet girl, and remember Grandma Esther is praying for you and your folks in Malaysia every single night." },
+      { s: "hannah", t: "We are all standing out on the front porch waving while Caleb walks Caroline out to the truck!" },
+      { s: "caleb", t: "We are buckled into the truck and backing down the driveway now while waving goodbye to everyone on the porch!", sticker: "safe_drive" },
+      { s: "luke", t: "Drive safe heading back into town, bro, and text us when you two get back!" },
+      { s: "oyr", t: "As we turn back onto the highway, my heart is so full from these past three hours with all of you." },
+      { s: "mark", t: "Ruth and I are heading home now too, and we cannot wait to cook with those dried hairy wood ears you shared with the family, Caroline!" },
+      { s: "ruth", t: "Keep humming those hymns on the drive back, Caroline, and we will see you both in the church pew tomorrow morning!" },
+      { s: "caleb", t: "Traffic on the interstate is nice and light, and Caroline is sitting right beside me looking over her Bible study notes with a big smile." },
+      { s: "oyr", t: "When we left at five o'clock I felt so nervous and spiritually shallow, and now I am riding home amazed by how good, holy, merciful, and faithful God truly is.", attr: "goodness" },
+      { s: "david", t: "Philippians 1:6 promises that He who began a good work in you will carry it on to completion until the day of Christ Jesus, Caroline!", attr: "faithfulness" },
+      { s: "caleb", t: "We just pulled safely into the parking spot right out front at eight o'clock on the dot!" },
+      { s: "martha", t: "Praise the Lord for a safe trip home and for such a sweet three hours together tonight!", attr: "providence" },
+      { s: "oyr", t: "Thank you all from the bottom of my heart for welcoming me, praying for my family in Malaysia, and showing me the love and truth of Jesus tonight, and to God be all the glory!", sticker: "heart_blessing" }
+    ];
+
+    // Generate timestamps from 5:00 PM to 8:00 PM (180 minutes across 260 messages)
+    // Consecutive messages NEVER differ by more than 1 minute!
+    const MESSAGES = RAW_SCRIPT.map((item, index) => {
+      const totalMinutes = Math.floor((index * 180) / (RAW_SCRIPT.length - 1));
+      const hour24 = 17 + Math.floor(totalMinutes / 60);
+      const minute = totalMinutes % 60;
+      const hour12 = hour24 > 12 ? hour24 - 12 : hour24;
+      const timeStr = `${hour12}:${minute.toString().padStart(2, "0")} PM`;
+
+      // Determine chapter
+      let chapterId = 1;
+      for (const ch of CHAPTERS) {
+        if (index >= ch.startIdx && index <= ch.endIdx) {
+          chapterId = ch.id;
+          break;
+        }
+      }
+
+      return {
+        index,
+        speaker: item.s,
+        text: item.t,
+        time: timeStr,
+        minuteOffset: totalMinutes,
+        sticker: item.sticker || null,
+        attr: item.attr || null,
+        chapterId
+      };
+    });
+
+    /*************************************************************************
+     * 6. WEB AUDIO API SYNTHESIZER (TANGIBLE TYPING + CLASSIC LINE TONES)
+     *************************************************************************/
+    class LineAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+        this.toneMode = "variety";
+        this.varietyCounter = 0;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            this.ctx = new AudioCtx();
+          }
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume();
+        }
+      }
+
+      // Tangible mechanical/bubble keystroke sound
+      playKeyClick(pitchMod = 1) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        // Short woody/tactile pop + crisp click
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = "triangle";
+        const baseFreq = 520 * pitchMod + (Math.random() * 90 - 45);
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.028);
+
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.032);
+      }
+
+      // Classic LINE Notification Tones (Variety of 5 Distinct Melodies)
+      playNotificationTone(isSelf = false) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        let chosen = this.toneMode;
+        if (chosen === "variety") {
+          const modes = ["xylophone", "bell", "pop", "melody", "whistle"];
+          chosen = modes[this.varietyCounter % modes.length];
+          this.varietyCounter++;
+        }
+
+        const now = this.ctx.currentTime;
+
+        if (isSelf) {
+          // Subtle cute ascending "swoosh-pop" for sent messages
+          this.playNote(587.33, now, 0.07, "sine", 0.11);       // D5
+          this.playNote(880.00, now + 0.055, 0.11, "sine", 0.13); // A5
+          return;
+        }
+
+        switch (chosen) {
+          case "xylophone":
+            // Classic LINE 4-note Xylophone Chime (B5 - D6 - G6 - F#6)
+            this.playNote(987.77, now, 0.09, "sine", 0.14);
+            this.playNote(1174.66, now + 0.08, 0.09, "sine", 0.14);
+            this.playNote(1567.98, now + 0.16, 0.12, "triangle", 0.15);
+            this.playNote(1479.98, now + 0.27, 0.22, "sine", 0.14);
+            break;
+
+          case "bell":
+            // Cony Crystal Bell Two-Tone Ding-Dong
+            this.playNote(1318.51, now, 0.14, "sine", 0.15);      // E6
+            this.playNote(1760.00, now + 0.11, 0.28, "sine", 0.15); // A6
+            break;
+
+          case "pop":
+            // Brown Cute Marimba Triple Pop
+            this.playNote(659.25, now, 0.07, "triangle", 0.14);       // E5
+            this.playNote(783.99, now + 0.065, 0.07, "triangle", 0.14); // G5
+            this.playNote(1046.50, now + 0.13, 0.16, "sine", 0.16);    // C6
+            break;
+
+          case "melody":
+            // Sally Cheerful Arpeggio (C6 - E6 - G6 - C7)
+            this.playNote(1046.50, now, 0.07, "sine", 0.12);
+            this.playNote(1318.51, now + 0.07, 0.07, "sine", 0.12);
+            this.playNote(1567.98, now + 0.14, 0.07, "sine", 0.12);
+            this.playNote(2093.00, now + 0.21, 0.20, "sine", 0.13);
+            break;
+
+          case "whistle":
+            // Leonard Chirp-Chime
+            this.playNote(1174.66, now, 0.08, "sine", 0.13);
+            this.playNote(1567.98, now + 0.08, 0.08, "sine", 0.13);
+            this.playNote(1975.53, now + 0.16, 0.18, "sine", 0.14);
+            break;
+        }
+      }
+
+      playNote(freq, startTime, duration, waveType = "sine", volume = 0.12) {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = waveType;
+        osc.frequency.setValueAtTime(freq, startTime);
+
+        gain.gain.setValueAtTime(0.001, startTime);
+        gain.gain.linearRampToValueAtTime(volume, startTime + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0008, startTime + duration);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.02);
+      }
+    }
+
+    const audio = new LineAudioEngine();
+
+    /*************************************************************************
+     * 7. SIMULATION STATE & ENGINE
+     *************************************************************************/
+    let currentIndex = 0;            // Next message index to play (0..259)
+    let isAutoPlaying = false;       // Auto-play active flag
+    let isCurrentlyTyping = false;   // Typing animation in progress flag
+    let typingIntervalId = null;     // Interval for typing characters/clicks
+    let autoPlayTimeoutId = null;    // Timeout between auto-played messages
+    let speedMultiplier = 1.0;       // Playback speed multiplier
+    let perspectiveSpeaker = "oyr";  // Whose messages appear on the right in green
+    let activeSpeakerFilter = null;  // Optional participant filter
+    let searchFilterQuery = "";      // Text search filter
+    let illuminatedAttributes = new Set();
+    let currentRenderedChapter = 0;
+
+    // DOM References
+    const messagesContainer = document.getElementById("messagesContainer");
+    const chatWallpaper = document.getElementById("chatWallpaper");
+    const typingIndicatorRow = document.getElementById("typingIndicatorRow");
+    const typingAvatarBox = document.getElementById("typingAvatarBox");
+    const typingSpeakerName = document.getElementById("typingSpeakerName");
+    const typingSpeakerRole = document.getElementById("typingSpeakerRole");
+    const typingLivePreviewText = document.getElementById("typingLivePreviewText");
+
+    const headerClockBadge = document.getElementById("headerClockBadge");
+    const headerPhaseTitle = document.getElementById("headerPhaseTitle");
+    const headerMessageCounter = document.getElementById("headerMessageCounter");
+    const bannerPhaseBadge = document.getElementById("bannerPhaseBadge");
+    const bannerPhaseDesc = document.getElementById("bannerPhaseDesc");
+    const progressBarFill = document.getElementById("progressBarFill");
+    const sidebarLatestTime = document.getElementById("sidebarLatestTime");
+    const sidebarLatestPreview = document.getElementById("sidebarLatestPreview");
+
+    const stepNextBtn = document.getElementById("stepNextBtn");
+    const autoPlayBtn = document.getElementById("autoPlayBtn");
+    const autoPlayIcon = document.getElementById("autoPlayIcon");
+    const autoPlayLabel = document.getElementById("autoPlayLabel");
+    const instantStepBtn = document.getElementById("instantStepBtn");
+    const loadAllBtn = document.getElementById("loadAllBtn");
+    const resetSimBtn = document.getElementById("resetSimBtn");
+    const speedSelect = document.getElementById("speedSelect");
+
+    /*************************************************************************
+     * 8. INITIALIZE UI COMPONENTS (AVATARS, ROSTER, CHAPTERS, STICKERS)
+     *************************************************************************/
+    function initUI() {
+      // Set Rail Avatar
+      document.getElementById("myRailAvatar").innerHTML = CHARACTER_SVGS[perspectiveSpeaker];
+
+      // Populate Chapter List in Left Sidebar
+      const chapterListContainer = document.getElementById("chapterListContainer");
+      chapterListContainer.innerHTML = CHAPTERS.map(ch => `
+        <button onclick="jumpToMessageIndex(${ch.startIdx})" id="chapterBtn-${ch.id}" class="w-full text-left p-2 rounded-xl border border-slate-200/80 hover:border-line-green hover:bg-emerald-50/50 transition flex items-center gap-2.5 group">
+          <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0 group-hover:bg-line-green group-hover:text-white transition">
+            <i class="fa-solid ${ch.icon}"></i>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between">
+              <span class="font-cute font-bold text-xs text-slate-800 truncate">Phase ${ch.id}</span>
+              <span class="text-[10px] text-emerald-700 font-semibold">${ch.timeRange}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 truncate">${ch.title.replace(/^Phase \d+: /, '')}</p>
+          </div>
+        </button>
+      `).join("");
+
+      // Populate Mini Participant Pills
+      const miniGrid = document.getElementById("miniParticipantGrid");
+      miniGrid.innerHTML = Object.values(PARTICIPANTS).map(p => `
+        <button onclick="filterBySpeaker('${p.id}')" id="miniPill-${p.id}" class="p-1.5 rounded-xl border border-slate-200 hover:border-line-green bg-white flex items-center gap-1.5 text-left transition">
+          <div class="w-6 h-6 rounded-lg overflow-hidden shrink-0">${CHARACTER_SVGS[p.id]}</div>
+          <div class="min-w-0 flex-1">
+            <div class="text-[11px] font-bold text-slate-700 truncate">${p.shortName}</div>
+            <div class="text-[9px] text-slate-400 truncate">${p.age}y • ${p.occupation.split(' ')[0]}</div>
+          </div>
+        </button>
+      `).join("");
+
+      // Populate Full 10 Members Bio Cards (Tab 2)
+      const membersTab = document.getElementById("tab-members");
+      membersTab.innerHTML = Object.values(PARTICIPANTS).map(p => `
+        <div class="p-3 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-11 h-11 rounded-2xl overflow-hidden shrink-0 border border-slate-100 shadow-sm">${CHARACTER_SVGS[p.id]}</div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between">
+                <span class="font-cute font-bold text-xs text-slate-800">${p.name}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${p.badgeColor}">Age ${p.age}</span>
+              </div>
+              <div class="text-[11px] font-semibold text-emerald-700">${p.occupation}</div>
+              <div class="text-[10px] text-slate-400">${p.role}</div>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">${p.bio}</p>
+        </div>
+      `).join("");
+
+      // Populate Custom Sender Dropdown
+      const customSenderSelect = document.getElementById("customSenderSelect");
+      customSenderSelect.innerHTML = Object.values(PARTICIPANTS).map(p =>
+        `<option value="${p.id}" ${p.id === "oyr" ? "selected" : ""}>Send as: ${p.shortName}</option>`
+      ).join("");
+
+      // Populate Sticker Picker Drawer
+      const stickerGrid = document.getElementById("stickerPickerGrid");
+      stickerGrid.innerHTML = Object.entries(CUTE_STICKERS).map(([key, st]) => `
+        <button onclick="sendCustomSticker('${key}')" class="p-2 rounded-2xl bg-slate-50 hover:bg-pink-50 border border-slate-200 hover:border-pink-300 flex flex-col items-center justify-center transition btn-cute group">
+          <div class="w-14 h-12 flex items-center justify-center">${st.svg}</div>
+          <span class="text-[10px] font-bold text-slate-600 group-hover:text-pink-600 mt-1 truncate w-full text-center">${st.label}</span>
+        </button>
+      `).join("");
+
+      renderAttributesTrackers();
+    }
+
+    // Render Divine Attributes in both Left Tab and Right Inspector
+    function renderAttributesTrackers() {
+      const leftContainer = document.getElementById("attributesListContainer");
+      const rightContainer = document.getElementById("rightAttributesGrid");
+      const countBadge = document.getElementById("inspectorAttributesCount");
+
+      countBadge.textContent = `${illuminatedAttributes.size} / ${DIVINE_ATTRIBUTES.length} Attributes`;
+
+      const html = DIVINE_ATTRIBUTES.map(attr => {
+        const isLit = illuminatedAttributes.has(attr.id);
+        return `
+          <div onclick="jumpToMessageIndex(${attr.firstMsg})" class="cursor-pointer p-2 rounded-xl border transition flex items-start gap-2 ${
+            isLit
+              ? "bg-gradient-to-r from-amber-50 to-emerald-50 border-emerald-300 shadow-sm"
+              : "bg-slate-50/70 border-slate-200 opacity-65 hover:opacity-100"
+          }">
+            <div class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5 ${
+              isLit ? "bg-line-green text-white" : "bg-slate-200 text-slate-500"
+            }">
+              <i class="fa-solid ${isLit ? "fa-check" : "fa-sparkles"}"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between">
+                <span class="font-cute font-bold text-xs ${isLit ? "text-emerald-900" : "text-slate-700"}">${attr.name}</span>
+                <span class="text-[9px] font-bold ${isLit ? "text-emerald-700 bg-white px-1.5 py-0.5 rounded-full border border-emerald-200" : "text-slate-400"}">
+                  ${isLit ? "Illuminated" : `Msg #${attr.firstMsg + 1}`}
+                </span>
+              </div>
+              <p class="text-[10px] text-slate-600 leading-snug mt-0.5">${attr.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      leftContainer.innerHTML = html;
+      rightContainer.innerHTML = html;
+    }
+
+    /*************************************************************************
+     * 9. MESSAGE RENDERING & REAL-TIME TYPING SIMULATION
+     *************************************************************************/
+    function createChapterDividerElement(chapter) {
+      const div = document.createElement("div");
+      div.className = "py-3 flex justify-center chapter-divider";
+      div.innerHTML = `
+        <div class="bg-white/90 backdrop-blur-md border border-emerald-200 px-4 py-1.5 rounded-full shadow-sm flex items-center gap-2 text-xs">
+          <i class="fa-solid ${chapter.icon} text-line-green"></i>
+          <span class="font-cute font-bold text-slate-800">${chapter.title}</span>
+          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">${chapter.timeRange}</span>
+        </div>
+      `;
+      return div;
+    }
+
+    function createMessageElement(msgObj, animate = true) {
+      const p = PARTICIPANTS[msgObj.speaker];
+      const isRight = msgObj.speaker === perspectiveSpeaker;
+      const attrObj = msgObj.attr ? DIVINE_ATTRIBUTES.find(a => a.id === msgObj.attr) : null;
+      const stickerObj = msgObj.sticker ? CUTE_STICKERS[msgObj.sticker] : null;
+
+      const wrapper = document.createElement("div");
+      wrapper.dataset.speaker = msgObj.speaker;
+      wrapper.dataset.msgIndex = msgObj.index;
+      wrapper.className = `message-row flex items-start gap-2.5 ${isRight ? "flex-row-reverse" : "flex-row"} ${animate ? "animate-message-pop" : ""}`;
+
+      // Apply current filter visibility if active
+      if (activeSpeakerFilter && msgObj.speaker !== activeSpeakerFilter) {
+        wrapper.classList.add("hidden");
+      }
+      if (searchFilterQuery && !msgObj.text.toLowerCase().includes(searchFilterQuery) && !p.name.toLowerCase().includes(searchFilterQuery)) {
+        wrapper.classList.add("hidden");
+      }
+
+      const stickerHtml = stickerObj ? `
+        <div class="mt-2 p-2 rounded-2xl bg-white/90 border border-pink-100 inline-flex flex-col items-center shadow-sm">
+          ${stickerObj.svg}
+          <span class="text-[10px] font-cute font-bold text-pink-600 mt-0.5">${stickerObj.label}</span>
+        </div>
+      ` : "";
+
+      const attrBadgeHtml = attrObj ? `
+        <div class="mt-1.5 inline-flex items-center gap-1 bg-amber-50/95 border border-amber-300/80 text-amber-900 px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm">
+          <i class="fa-solid fa-crown text-amber-500"></i>
+          <span>Attribute of God: ${attrObj.name}</span>
+        </div>
+      ` : "";
+
+      wrapper.innerHTML = `
+        <!-- Cute SVG Character Avatar -->
+        <div onclick="filterBySpeaker('${p.id}')" class="w-10 h-10 rounded-2xl bg-white p-0.5 shadow-md border border-white shrink-0 overflow-hidden cursor-pointer hover:scale-105 transition" title="${p.name} (${p.age}, ${p.occupation})">
+          ${CHARACTER_SVGS[p.id]}
+        </div>
+
+        <!-- Message Content Column -->
+        <div class="max-w-[76%] sm:max-w-[68%] flex flex-col ${isRight ? "items-end" : "items-start"}">
+          <!-- Speaker Name & Role Pill -->
+          <div class="flex items-center gap-1.5 mb-1 px-1 ${isRight ? "flex-row-reverse" : ""}">
+            <span class="font-cute font-bold text-xs text-slate-800">${p.name}</span>
+            <span class="text-[10px] font-semibold px-2 py-0.2 rounded-full border ${p.badgeColor}">${p.age} • ${p.occupation}</span>
+          </div>
+
+          <!-- Bubble + Read/Time Metadata Row -->
+          <div class="flex items-end gap-1.5 ${isRight ? "flex-row-reverse" : "flex-row"}">
+            <div class="${isRight ? "bubble-right text-slate-900" : "bubble-left bg-white text-slate-800"} px-4 py-2.5 text-xs sm:text-sm leading-relaxed font-medium">
+              <p class="sentence-text">${msgObj.text}</p>
+              ${stickerHtml}
+            </div>
+
+            <!-- Classic LINE Read Count & Timestamp -->
+            <div class="flex flex-col ${isRight ? "items-end" : "items-start"} text-[10px] leading-tight text-slate-600 font-bold shrink-0 pb-0.5">
+              <span class="text-emerald-800">Read 9</span>
+              <span>${msgObj.time}</span>
+            </div>
+          </div>
+
+          ${attrBadgeHtml}
+        </div>
+      `;
+
+      return wrapper;
+    }
+
+    function updateStatusBanners(msgObj) {
+      const ch = CHAPTERS.find(c => c.id === msgObj.chapterId) || CHAPTERS[0];
+      headerClockBadge.textContent = msgObj.time;
+      headerPhaseTitle.textContent = ch.title;
+      headerMessageCounter.textContent = `${msgObj.index + 1} / ${MESSAGES.length} Messages`;
+
+      bannerPhaseBadge.textContent = `Phase ${ch.id} / 8`;
+      bannerPhaseDesc.textContent = `${ch.title} (${ch.timeRange})`;
+
+      const pct = Math.round(((msgObj.index + 1) / MESSAGES.length) * 100);
+      progressBarFill.style.width = `${pct}%`;
+
+      sidebarLatestTime.textContent = msgObj.time;
+      sidebarLatestPreview.textContent = `${PARTICIPANTS[msgObj.speaker].shortName}: ${msgObj.text}`;
+
+      if (msgObj.attr && !illuminatedAttributes.has(msgObj.attr)) {
+        illuminatedAttributes.add(msgObj.attr);
+        renderAttributesTrackers();
+      }
+    }
+
+    function scrollToBottom(smooth = true) {
+      chatWallpaper.scrollTo({
+        top: chatWallpaper.scrollHeight,
+        behavior: smooth ? "smooth" : "auto"
+      });
+    }
+
+    // Play a single message with realistic typing simulation & tangible typing sounds
+    function playNextMessageWithTyping(onCompleteCallback = null) {
+      if (currentIndex >= MESSAGES.length) {
+        stopAutoPlay();
+        return;
+      }
+
+      // If currently typing, finish current message immediately so user's click feels super responsive
+      if (isCurrentlyTyping) {
+        finishCurrentTypingImmediately();
+        return;
+      }
+
+      const msgObj = MESSAGES[currentIndex];
+      const speaker = PARTICIPANTS[msgObj.speaker];
+
+      // Insert chapter divider if entering a new chapter
+      if (msgObj.chapterId !== currentRenderedChapter) {
+        currentRenderedChapter = msgObj.chapterId;
+        const chObj = CHAPTERS.find(c => c.id === currentRenderedChapter);
+        if (chObj) {
+          messagesContainer.appendChild(createChapterDividerElement(chObj));
+        }
+      }
+
+      isCurrentlyTyping = true;
+      typingAvatarBox.innerHTML = CHARACTER_SVGS[speaker.id];
+      typingSpeakerName.textContent = speaker.name;
+      typingSpeakerRole.textContent = `(${speaker.age}, ${speaker.occupation}) is typing...`;
+      typingLivePreviewText.textContent = "";
+      typingIndicatorRow.classList.remove("hidden");
+      typingIndicatorRow.classList.add("flex");
+      scrollToBottom(true);
+
+      // Calculate typing steps based on speedMultiplier
+      const words = msgObj.text.split(" ");
+      let wordIdx = 0;
+      const stepMs = Math.max(22, Math.round(68 * speedMultiplier));
+
+      typingIntervalId = setInterval(() => {
+        if (wordIdx < words.length) {
+          typingLivePreviewText.textContent += (wordIdx === 0 ? "" : " ") + words[wordIdx];
+          // Play tangible key click sound
+          audio.playKeyClick(speaker.id === "oyr" ? 1.15 : 0.95);
+          wordIdx++;
+          // Keep typing indicator in view
+          if (wordIdx % 4 === 0) scrollToBottom(false);
+        } else {
+          deliverTypedMessage(msgObj, onCompleteCallback);
+        }
+      }, stepMs);
+    }
+
+    function deliverTypedMessage(msgObj, onCompleteCallback = null) {
+      if (typingIntervalId) {
+        clearInterval(typingIntervalId);
+        typingIntervalId = null;
+      }
+      isCurrentlyTyping = false;
+      typingIndicatorRow.classList.add("hidden");
+      typingIndicatorRow.classList.remove("flex");
+
+      const msgEl = createMessageElement(msgObj, true);
+      messagesContainer.appendChild(msgEl);
+
+      // Play classic LINE notification chime
+      audio.playNotificationTone(msgObj.speaker === perspectiveSpeaker);
+
+      updateStatusBanners(msgObj);
+      currentIndex++;
+      scrollToBottom(true);
+
+      if (onCompleteCallback) {
+        onCompleteCallback();
+      } else if (isAutoPlaying) {
+        scheduleNextAutoPlay();
+      }
+    }
+
+    function finishCurrentTypingImmediately() {
+      if (!isCurrentlyTyping || currentIndex >= MESSAGES.length) return;
+      const msgObj = MESSAGES[currentIndex];
+      deliverTypedMessage(msgObj);
+    }
+
+    function scheduleNextAutoPlay() {
+      if (!isAutoPlaying) return;
+      if (currentIndex >= MESSAGES.length) {
+        stopAutoPlay();
+        return;
+      }
+      const pauseMs = Math.max(180, Math.round(650 * speedMultiplier));
+      autoPlayTimeoutId = setTimeout(() => {
+        if (isAutoPlaying) {
+          playNextMessageWithTyping();
+        }
+      }, pauseMs);
+    }
+
+    function startAutoPlay() {
+      if (currentIndex >= MESSAGES.length) {
+        resetSimulation();
+      }
+      isAutoPlaying = true;
+      autoPlayIcon.className = "fa-solid fa-pause";
+      autoPlayLabel.textContent = "Pause Stream";
+      autoPlayBtn.classList.remove("bg-sky-500", "hover:bg-sky-600");
+      autoPlayBtn.classList.add("bg-rose-500", "hover:bg-rose-600");
+
+      if (!isCurrentlyTyping) {
+        playNextMessageWithTyping();
+      }
+    }
+
+    function stopAutoPlay() {
+      isAutoPlaying = false;
+      if (autoPlayTimeoutId) {
+        clearTimeout(autoPlayTimeoutId);
+        autoPlayTimeoutId = null;
+      }
+      autoPlayIcon.className = "fa-solid fa-play";
+      autoPlayLabel.textContent = "Auto-Play Stream";
+      autoPlayBtn.classList.add("bg-sky-500", "hover:bg-sky-600");
+      autoPlayBtn.classList.remove("bg-rose-500", "hover:bg-rose-600");
+    }
+
+    // Instant +1 message delivery without waiting
+    function instantStepNext() {
+      if (isCurrentlyTyping) {
+        finishCurrentTypingImmediately();
+        return;
+      }
+      if (currentIndex >= MESSAGES.length) return;
+      const msgObj = MESSAGES[currentIndex];
+      if (msgObj.chapterId !== currentRenderedChapter) {
+        currentRenderedChapter = msgObj.chapterId;
+        const chObj = CHAPTERS.find(c => c.id === currentRenderedChapter);
+        if (chObj) messagesContainer.appendChild(createChapterDividerElement(chObj));
+      }
+      deliverTypedMessage(msgObj);
+    }
+
+    // Load all 260 messages immediately
+    function loadAllMessagesInstantly() {
+      stopAutoPlay();
+      if (typingIntervalId) {
+        clearInterval(typingIntervalId);
+        typingIntervalId = null;
+      }
+      isCurrentlyTyping = false;
+      typingIndicatorRow.classList.add("hidden");
+
+      const fragment = document.createDocumentFragment();
+      while (currentIndex < MESSAGES.length) {
+        const msgObj = MESSAGES[currentIndex];
+        if (msgObj.chapterId !== currentRenderedChapter) {
+          currentRenderedChapter = msgObj.chapterId;
+          const chObj = CHAPTERS.find(c => c.id === currentRenderedChapter);
+          if (chObj) fragment.appendChild(createChapterDividerElement(chObj));
+        }
+        if (msgObj.attr) illuminatedAttributes.add(msgObj.attr);
+        fragment.appendChild(createMessageElement(msgObj, false));
+        currentIndex++;
+      }
+      messagesContainer.appendChild(fragment);
+      updateStatusBanners(MESSAGES[MESSAGES.length - 1]);
+      renderAttributesTrackers();
+      audio.playNotificationTone(false);
+      scrollToBottom(true);
+    }
+
+    // Jump to a specific message index (renders up to that index cleanly)
+    window.jumpToMessageIndex = function(targetIdx) {
+      stopAutoPlay();
+      if (typingIntervalId) {
+        clearInterval(typingIntervalId);
+        typingIntervalId = null;
+      }
+      isCurrentlyTyping = false;
+      typingIndicatorRow.classList.add("hidden");
+
+      // If target is earlier than current, reset and build up to targetIdx
+      if (targetIdx < currentIndex) {
+        messagesContainer.innerHTML = "";
+        currentIndex = 0;
+        currentRenderedChapter = 0;
+        illuminatedAttributes.clear();
+      }
+
+      const fragment = document.createDocumentFragment();
+      while (currentIndex <= targetIdx && currentIndex < MESSAGES.length) {
+        const msgObj = MESSAGES[currentIndex];
+        if (msgObj.chapterId !== currentRenderedChapter) {
+          currentRenderedChapter = msgObj.chapterId;
+          const chObj = CHAPTERS.find(c => c.id === currentRenderedChapter);
+          if (chObj) fragment.appendChild(createChapterDividerElement(chObj));
+        }
+        if (msgObj.attr) illuminatedAttributes.add(msgObj.attr);
+        fragment.appendChild(createMessageElement(msgObj, currentIndex === targetIdx));
+        currentIndex++;
+      }
+      messagesContainer.appendChild(fragment);
+      updateStatusBanners(MESSAGES[Math.min(targetIdx, MESSAGES.length - 1)]);
+      renderAttributesTrackers();
+      audio.playNotificationTone(false);
+
+      // Scroll the target message into view
+      const targetEl = messagesContainer.querySelector(`[data-msg-index="${targetIdx}"]`);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+
+    function resetSimulation() {
+      stopAutoPlay();
+      if (typingIntervalId) {
+        clearInterval(typingIntervalId);
+        typingIntervalId = null;
+      }
+      isCurrentlyTyping = false;
+      typingIndicatorRow.classList.add("hidden");
+      messagesContainer.innerHTML = "";
+      currentIndex = 0;
+      currentRenderedChapter = 0;
+      illuminatedAttributes.clear();
+      renderAttributesTrackers();
+
+      headerClockBadge.textContent = "5:00 PM";
+      headerPhaseTitle.textContent = CHAPTERS[0].title;
+      headerMessageCounter.textContent = `0 / ${MESSAGES.length} Messages`;
+      bannerPhaseBadge.textContent = "Phase 1 / 8";
+      bannerPhaseDesc.textContent = `${CHAPTERS[0].title} (${CHAPTERS[0].timeRange})`;
+      progressBarFill.style.width = "0%";
+    }
+
+    /*************************************************************************
+     * 10. FILTERING, CUSTOM MESSAGES & HIGHLIGHT-TO-SEARCH
+     *************************************************************************/
+    window.filterBySpeaker = function(speakerId) {
+      const resetBtn = document.getElementById("resetSpeakerFilterBtn");
+      if (activeSpeakerFilter === speakerId) {
+        activeSpeakerFilter = null;
+        resetBtn.classList.add("hidden");
+      } else {
+        activeSpeakerFilter = speakerId;
+        resetBtn.classList.remove("hidden");
+      }
+      applyMessageFilters();
+    };
+
+    function applyMessageFilters() {
+      const rows = messagesContainer.querySelectorAll(".message-row");
+      rows.forEach(row => {
+        const sp = row.dataset.speaker;
+        const text = row.innerText.toLowerCase();
+        const matchSpeaker = !activeSpeakerFilter || sp === activeSpeakerFilter;
+        const matchText = !searchFilterQuery || text.includes(searchFilterQuery);
+        row.classList.toggle("hidden", !(matchSpeaker && matchText));
+      });
+    }
+
+    // Custom single-sentence user message composer
+    function sendCustomUserMessage(customText, stickerKey = null) {
+      const senderId = document.getElementById("customSenderSelect").value || "oyr";
+      let cleanText = (customText || "").trim();
+      if (!cleanText && !stickerKey) return;
+
+      // Enforce single sentence rule on custom messages too: split if multiple sentences
+      const sentences = cleanText
+        ? cleanText.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [cleanText]
+        : ["Sending a cheerful fellowship sticker to everyone!"];
+
+      sentences.forEach((sentence, idx) => {
+        let formatted = sentence.trim();
+        if (!/[.!?]$/.test(formatted)) formatted += "!";
+        const currentClock = headerClockBadge.textContent || "8:00 PM";
+        const customMsgObj = {
+          index: MESSAGES.length + idx,
+          speaker: senderId,
+          text: formatted,
+          time: currentClock,
+          sticker: idx === 0 ? stickerKey : null,
+          attr: null,
+          chapterId: currentRenderedChapter || 1
+        };
+        const el = createMessageElement(customMsgObj, true);
+        messagesContainer.appendChild(el);
+        audio.playNotificationTone(senderId === perspectiveSpeaker);
+      });
+
+      scrollToBottom(true);
+    }
+
+    window.sendCustomSticker = function(stickerKey) {
+      sendCustomUserMessage("", stickerKey);
+      document.getElementById("stickerDrawer").classList.add("hidden");
+    };
+
+    // Highlight-to-Search anywhere on the HTML document
+    const highlightPopover = document.getElementById("highlightSearchPopover");
+    const highlightSearchBtn = document.getElementById("highlightSearchBtn");
+    const highlightSearchQuery = document.getElementById("highlightSearchQuery");
+    const highlightCloseBtn = document.getElementById("highlightCloseBtn");
+    let currentSelectedText = "";
+
+    document.addEventListener("mouseup", (e) => {
+      if (highlightPopover.contains(e.target)) return;
+      setTimeout(() => {
+        const selection = window.getSelection();
+        const selectedStr = selection ? selection.toString().trim() : "";
+        if (selectedStr.length >= 2 && selectedStr.length <= 120) {
+          currentSelectedText = selectedStr;
+          highlightSearchQuery.textContent = `"${selectedStr}"`;
+
+          const range = selection.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+          const topPos = Math.max(12, rect.top - 46);
+          const leftPos = Math.min(window.innerWidth - 280, Math.max(12, rect.left));
+
+          highlightPopover.style.top = `${topPos}px`;
+          highlightPopover.style.left = `${leftPos}px`;
+          highlightPopover.classList.remove("hidden");
+          highlightPopover.classList.add("flex");
+        } else {
+          highlightPopover.classList.add("hidden");
+          highlightPopover.classList.remove("flex");
+        }
+      }, 20);
+    });
+
+    highlightSearchBtn.addEventListener("click", () => {
+      if (currentSelectedText) {
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(currentSelectedText)}`, "_blank", "noopener,noreferrer");
+      }
+    });
+
+    highlightCloseBtn.addEventListener("click", () => {
+      highlightPopover.classList.add("hidden");
+      highlightPopover.classList.remove("flex");
+      window.getSelection().removeAllRanges();
+    });
+
+    /*************************************************************************
+     * 11. EVENT LISTENERS & CONTROLS BINDING
+     *************************************************************************/
+    stepNextBtn.addEventListener("click", () => {
+      stopAutoPlay();
+      playNextMessageWithTyping();
+    });
+
+    autoPlayBtn.addEventListener("click", () => {
+      if (isAutoPlaying) {
+        stopAutoPlay();
+      } else {
+        startAutoPlay();
+      }
+    });
+
+    instantStepBtn.addEventListener("click", () => {
+      stopAutoPlay();
+      instantStepNext();
+    });
+
+    loadAllBtn.addEventListener("click", () => {
+      loadAllMessagesInstantly();
+    });
+
+    resetSimBtn.addEventListener("click", () => {
+      resetSimulation();
+      playNextMessageWithTyping();
+    });
+
+    speedSelect.addEventListener("change", (e) => {
+      speedMultiplier = parseFloat(e.target.value) || 1.0;
+    });
+
+    document.getElementById("toneSelect").addEventListener("change", (e) => {
+      audio.toneMode = e.target.value;
+      audio.playNotificationTone(false);
+    });
+
+    document.getElementById("testSoundBtn").addEventListener("click", () => {
+      audio.playNotificationTone(false);
+    });
+
+    document.getElementById("muteToggleBtn").addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      const icon = document.getElementById("muteIcon");
+      const label = document.getElementById("muteLabel");
+      if (audio.muted) {
+        icon.className = "fa-solid fa-volume-xmark text-rose-600";
+        label.textContent = "Muted";
+      } else {
+        icon.className = "fa-solid fa-volume-high";
+        label.textContent = "Sound ON";
+        audio.playNotificationTone(true);
+      }
+    });
+
+    // Wallpaper Theme Switcher
+    const themes = [
+      { cls: "", name: "Sky" },
+      { cls: "theme-sakura", name: "Sakura" },
+      { cls: "theme-mint", name: "Mint" }
+    ];
+    let themeIdx = 0;
+    document.getElementById("themeSwitchBtn").addEventListener("click", () => {
+      themeIdx = (themeIdx + 1) % themes.length;
+      chatWallpaper.className = `line-chat-wallpaper flex-1 overflow-y-auto px-4 md:px-8 py-5 space-y-3 relative ${themes[themeIdx].cls}`;
+      document.getElementById("themeNameLabel").textContent = themes[themeIdx].name;
+    });
+
+    // Perspective Switcher (Switch between OYR and Caleb on the right-hand green bubbles)
+    document.getElementById("perspectiveToggleBtn").addEventListener("click", () => {
+      perspectiveSpeaker = perspectiveSpeaker === "oyr" ? "caleb" : "oyr";
+      document.getElementById("myRailAvatar").innerHTML = CHARACTER_SVGS[perspectiveSpeaker];
+      document.querySelector("#perspectiveToggleBtn span").textContent =
+        perspectiveSpeaker === "oyr" ? "POV: OYR" : "POV: Caleb";
+
+      // Re-render currently visible messages with new perspective alignment
+      const upto = currentIndex;
+      messagesContainer.innerHTML = "";
+      currentRenderedChapter = 0;
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < upto; i++) {
+        const m = MESSAGES[i];
+        if (m.chapterId !== currentRenderedChapter) {
+          currentRenderedChapter = m.chapterId;
+          const chObj = CHAPTERS.find(c => c.id === currentRenderedChapter);
+          if (chObj) fragment.appendChild(createChapterDividerElement(chObj));
+        }
+        fragment.appendChild(createMessageElement(m, false));
+      }
+      messagesContainer.appendChild(fragment);
+      scrollToBottom(false);
+    });
+
+    // Left Navigation Rail Tabs
+    document.querySelectorAll(".rail-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetTab = btn.dataset.tab;
+        document.querySelectorAll(".rail-tab-btn").forEach(b => b.classList.remove("bg-white/25", "shadow-inner"));
+        btn.classList.add("bg-white/25", "shadow-inner");
+
+        ["chats", "members", "attributes", "culinary"].forEach(t => {
+          document.getElementById(`tab-${t}`).classList.toggle("hidden", t !== targetTab);
+        });
+      });
+    });
+
+    // Toggle Right Inspector
+    document.getElementById("toggleInspectorBtn").addEventListener("click", () => {
+      const panel = document.getElementById("rightInspectorPanel");
+      panel.classList.toggle("hidden");
+      panel.classList.toggle("lg:flex");
+    });
+
+    // Search Filter Input
+    const chatFilterInput = document.getElementById("chatFilterInput");
+    const clearFilterBtn = document.getElementById("clearFilterBtn");
+    chatFilterInput.addEventListener("input", (e) => {
+      searchFilterQuery = e.target.value.trim().toLowerCase();
+      clearFilterBtn.classList.toggle("hidden", !searchFilterQuery);
+      applyMessageFilters();
+    });
+    clearFilterBtn.addEventListener("click", () => {
+      chatFilterInput.value = "";
+      searchFilterQuery = "";
+      clearFilterBtn.classList.add("hidden");
+      applyMessageFilters();
+    });
+
+    document.getElementById("resetSpeakerFilterBtn").addEventListener("click", () => {
+      activeSpeakerFilter = null;
+      document.getElementById("resetSpeakerFilterBtn").classList.add("hidden");
+      applyMessageFilters();
+    });
+
+    // Sticker Drawer Toggle
+    document.getElementById("openStickerDrawerBtn").addEventListener("click", () => {
+      document.getElementById("stickerDrawer").classList.toggle("hidden");
+    });
+    document.getElementById("closeStickerDrawerBtn").addEventListener("click", () => {
+      document.getElementById("stickerDrawer").classList.add("hidden");
+    });
+
+    // Custom Composer Input with Tangible Key Clicks
+    const customMessageInput = document.getElementById("customMessageInput");
+    customMessageInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendCustomUserMessage(customMessageInput.value);
+        customMessageInput.value = "";
+      } else if (e.key.length === 1 || e.key === "Backspace") {
+        audio.playKeyClick(1.1);
+      }
+    });
+
+    document.getElementById("sendCustomBtn").addEventListener("click", () => {
+      sendCustomUserMessage(customMessageInput.value);
+      customMessageInput.value = "";
+    });
+
+    // Initialize and play the first message automatically on window load
+    window.onload = function() {
+      initUI();
+      playNextMessageWithTyping();
+    };
+  </script>
+</body>
+</html>
