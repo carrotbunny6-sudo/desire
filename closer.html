@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE Desktop - Miller Family & Caroline Fellowship</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Nunito & Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lineGreen: '#06C755',
+                        lineDarkGreen: '#05b34b',
+                        lineChatBg: '#b2c7d9',
+                        bubbleMe: '#85e21f',
+                        bubbleOther: '#ffffff',
+                        sidebarBg: '#1e2229',
+                        sidebarActive: '#2c313a',
+                        inspectorBg: '#f8fafc',
+                    },
+                    fontFamily: {
+                        nunito: ['Nunito', 'sans-serif'],
+                        fredoka: ['Fredoka', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            user-select: none;
+        }
+        .chat-bg {
+            background-color: #b2c7d9;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.08) 100%);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.3);
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .sticker-animate {
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 h-screen w-screen overflow-hidden flex flex-col font-nunito">
+
+    <!-- Top OS Window Bar -->
+    <div class="bg-slate-800 text-slate-300 px-4 py-2 flex items-center justify-between border-b border-slate-700 text-xs shrink-0 select-none">
+        <div class="flex items-center space-x-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500 inline-block cursor-pointer"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500 inline-block cursor-pointer"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500 inline-block cursor-pointer"></div>
+            <span class="font-bold text-slate-200 ml-2 font-fredoka tracking-wide">LINE v8.9.2 - Miller Family & Caroline Fellowship</span>
+        </div>
+        <div class="flex items-center space-x-4 text-slate-400">
+            <span class="bg-slate-700 px-2 py-0.5 rounded text-[10px] text-emerald-400 font-semibold" id="active-phase-badge">Phase 1: 5:00 PM</span>
+            <span><i class="fa-solid fa-wifi mr-1 text-emerald-400"></i> Connected</span>
+            <span><i class="fa-solid fa-shield-halved mr-1 text-emerald-400"></i> End-to-End Encrypted</span>
+        </div>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- 1. LEFT SIDEBAR: Navigation & Chat List -->
+        <div class="w-72 bg-[#1e2229] text-slate-300 flex flex-col border-r border-slate-700/60 shrink-0">
+            <!-- Sidebar Header -->
+            <div class="p-4 border-b border-slate-700/60 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold font-fredoka text-lg shadow">
+                        CM
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-white text-sm">Caleb Miller</h2>
+                        <span class="text-[11px] text-emerald-400 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-1.5 animate-pulse"></span>Active in Chat</span>
+                    </div>
+                </div>
+                <div class="flex space-x-2 text-slate-400 text-sm">
+                    <button class="hover:text-white p-1" title="Settings"><i class="fa-solid fa-gear"></i></button>
+                    <button class="hover:text-white p-1" title="Notifications"><i class="fa-solid fa-bell"></i></button>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="p-3">
+                <div class="bg-slate-800 rounded-lg px-3 py-1.5 flex items-center text-slate-400 text-xs border border-slate-700">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                    <input type="text" placeholder="Search chats, family members..." class="bg-transparent border-none outline-none text-white w-full placeholder-slate-500">
+                </div>
+            </div>
+
+            <!-- Chat List Tabs -->
+            <div class="flex border-b border-slate-700/60 text-xs font-semibold text-slate-400 px-3 py-1.5 justify-around">
+                <button class="text-emerald-400 border-b-2 border-emerald-400 pb-1">Chats (1)</button>
+                <button class="hover:text-slate-200 pb-1">Contacts (10)</button>
+                <button class="hover:text-slate-200 pb-1">Notes</button>
+            </div>
+
+            <!-- Chat Item -->
+            <div class="flex-1 overflow-y-auto">
+                <div class="bg-[#2c313a] p-3 flex items-center space-x-3 cursor-pointer border-l-4 border-emerald-500 transition">
+                    <div class="relative shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-bold shadow-md font-fredoka text-base">
+                            MF
+                        </div>
+                        <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#2c313a] rounded-full"></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="font-bold text-white text-sm truncate">Miller Family & Caroline</h3>
+                            <span class="text-[10px] text-slate-400" id="chat-list-time">5:00 PM</span>
+                        </div>
+                        <p class="text-xs text-slate-300 truncate mt-0.5" id="chat-list-preview">Caleb: Lord, thank You for bringing Caroline safely...</p>
+                    </div>
+                    <span class="bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0" id="unread-badge">260</span>
+                </div>
+            </div>
+
+            <!-- Playback Control Panel in Sidebar Footer -->
+            <div class="p-3 bg-slate-900 border-t border-slate-700/60 flex flex-col space-y-2">
+                <div class="flex items-center justify-between text-xs font-semibold text-slate-300">
+                    <span>Simulation Engine</span>
+                    <span id="progress-indicator" class="text-emerald-400 font-mono">Msg 0 / 260</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="sim-progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+                <div class="flex items-center justify-between pt-1">
+                    <button id="btn-step" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded text-xs font-bold shadow flex items-center transition active:scale-95">
+                        <i class="fa-solid fa-forward-step mr-1.5"></i> Next (Step)
+                    </button>
+                    <button id="btn-autoplay" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded text-xs font-bold shadow flex items-center transition active:scale-95">
+                        <i class="fa-solid fa-play mr-1.5" id="autoplay-icon"></i> <span id="autoplay-text">Auto Play</span>
+                    </button>
+                    <button id="btn-reset" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-1.5 rounded text-xs shadow transition" title="Reset Simulation">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                    <span>Speed: <strong id="speed-val" class="text-white">1.0x</strong></span>
+                    <input type="range" id="speed-range" min="0.5" max="3.0" step="0.5" value="1.0" class="w-24 accent-emerald-500 cursor-pointer">
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. CENTER: Chat Main Window -->
+        <div class="flex-1 flex flex-col bg-slate-100 min-w-0 relative">
+            
+            <!-- Chat Header -->
+            <div class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shadow-sm z-10 shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold font-fredoka">
+                        <i class="fa-solid fa-users text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="font-bold text-slate-800 text-base font-fredoka">Miller Family & Caroline Fellowship</h2>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">10 Members</span>
+                        </div>
+                        <p class="text-xs text-slate-500">Caleb Miller, Caroline Lin, Pastor David, Mom Martha, Luke, Sarah, Hannah, Uncle Mark, Aunt Ruth, Grandma Esther</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 text-slate-600">
+                    <button class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center transition" title="Search in chat"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center transition" title="Shared Media"><i class="fa-solid fa-images"></i></button>
+                    <button class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center transition" id="btn-toggle-inspector" title="Toggle Inspector Panel"><i class="fa-solid fa-circle-info text-emerald-600"></i></button>
+                </div>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 chat-bg space-y-4 select-text">
+                <!-- Welcome Banner Inside Chat -->
+                <div class="flex justify-center my-4">
+                    <div class="bg-slate-900/40 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-xl text-center max-w-md shadow">
+                        <p class="font-bold text-emerald-300 font-fredoka mb-1">Evening Fellowship & Family Gathering</p>
+                        <p class="text-slate-200 text-[11px]">8-Phase Narrative Timeline (5:00 PM - 8:00 PM). Highlighting the Attributes of God, Home Cooking, and Fellowship.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator Bar -->
+            <div id="typing-indicator" class="px-6 py-2 bg-white/80 backdrop-blur-sm border-t border-slate-200 text-xs text-slate-500 hidden items-center space-x-2 shrink-0">
+                <div class="flex space-x-1">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                </div>
+                <span id="typing-text" class="font-semibold text-slate-600">Caleb is typing...</span>
+            </div>
+
+            <!-- Chat Input Footer -->
+            <div class="bg-white border-t border-slate-200 p-4 flex items-center space-x-3 shrink-0">
+                <button class="text-slate-400 hover:text-slate-600 text-lg transition"><i class="fa-regular fa-face-smile"></i></button>
+                <button class="text-slate-400 hover:text-slate-600 text-lg transition"><i class="fa-solid fa-paperclip"></i></button>
+                <div class="flex-1 bg-slate-100 rounded-full px-4 py-2.5 text-sm text-slate-600 flex items-center justify-between border border-slate-200">
+                    <span class="text-slate-400 italic" id="input-placeholder">Simulation running automatically or click Next Step...</span>
+                    <i class="fa-solid fa-microphone text-slate-400"></i>
+                </div>
+                <button id="btn-send-manual" class="bg-emerald-500 hover:bg-emerald-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow transition active:scale-95" title="Next Message">
+                    <i class="fa-solid fa-paper-plane text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. RIGHT INSPECTOR PANEL: Attributes of God & Phase Tracker -->
+        <div id="inspector-panel" class="w-80 bg-inspectorBg border-l border-slate-200 flex flex-col shrink-0 overflow-y-auto">
+            <!-- Inspector Header -->
+            <div class="p-4 border-b border-slate-200 bg-white sticky top-0 z-10 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-book-bible text-emerald-600 text-lg"></i>
+                    <h3 class="font-bold text-slate-800 font-fredoka text-sm">Fellowship & Theology Inspector</h3>
+                </div>
+            </div>
+
+            <!-- Phase Progress Tracker -->
+            <div class="p-4 border-b border-slate-200 bg-white m-3 rounded-xl shadow-sm">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 font-fredoka">Narrative Timeline (5:00 - 8:00 PM)</h4>
+                <div class="space-y-2 text-xs" id="phase-list-ui">
+                    <div class="phase-item p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold flex items-center justify-between" data-phase="1">
+                        <span>1. Prayer at Home</span>
+                        <span class="text-[10px] text-emerald-600">5:00 - 5:20</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="2">
+                        <span>2. Driving & Memories</span>
+                        <span class="text-[10px] text-slate-400">5:20 - 5:45</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="3">
+                        <span>3. Family Arrival</span>
+                        <span class="text-[10px] text-slate-400">5:45 - 6:05</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="4">
+                        <span>4. Dinner Prep & Cooking</span>
+                        <span class="text-[10px] text-slate-400">6:05 - 6:30</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="5">
+                        <span>5. 19 Attributes of God</span>
+                        <span class="text-[10px] text-slate-400">6:30 - 7:00</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="6">
+                        <span>6. Post-Dinner Prayer</span>
+                        <span class="text-[10px] text-slate-400">7:00 - 7:20</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="7">
+                        <span>7. Piano Hymn Singing</span>
+                        <span class="text-[10px] text-slate-400">7:20 - 7:45</span>
+                    </div>
+                    <div class="phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between" data-phase="8">
+                        <span>8. Drive Home & Intercession</span>
+                        <span class="text-[10px] text-slate-400">7:45 - 8:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The 19 Attributes of God Tracker -->
+            <div class="p-4 bg-white m-3 rounded-xl shadow-sm flex-1">
+                <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 font-fredoka">The 19 Attributes of God</h4>
+                    <span id="attr-counter" class="text-xs font-bold text-emerald-600 font-mono">0 / 19</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mb-3">Discussed during Phase 5 dinner table Scripture study:</p>
+                <div class="grid grid-cols-1 gap-1.5 text-xs" id="attributes-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Character Roster Summary -->
+            <div class="p-4 bg-white m-3 rounded-xl shadow-sm">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 font-fredoka">Characters (10)</h4>
+                <div class="space-y-1.5 text-xs text-slate-600">
+                    <div class="flex items-center justify-between"><strong>Caleb Miller</strong> <span class="text-slate-400">35, Engineer</span></div>
+                    <div class="flex items-center justify-between"><strong>Caroline Lin</strong> <span class="text-slate-400">31, Designer</span></div>
+                    <div class="flex items-center justify-between"><strong>Pastor David Miller</strong> <span class="text-slate-400">63, Pastor</span></div>
+                    <div class="flex items-center justify-between"><strong>Mom Martha Miller</strong> <span class="text-slate-400">61, Retired Nurse</span></div>
+                    <div class="flex items-center justify-between"><strong>Luke Miller</strong> <span class="text-slate-400">37, Contractor</span></div>
+                    <div class="flex items-center justify-between"><strong>Sarah Miller</strong> <span class="text-slate-400">36, PT</span></div>
+                    <div class="flex items-center justify-between"><strong>Hannah Miller</strong> <span class="text-slate-400">29, Teacher</span></div>
+                    <div class="flex items-center justify-between"><strong>Uncle Mark Miller</strong> <span class="text-slate-400">65, Ag Extension</span></div>
+                    <div class="flex items-center justify-between"><strong>Aunt Ruth Miller</strong> <span class="text-slate-400">63, Piano Teacher</span></div>
+                    <div class="flex items-center justify-between"><strong>Grandma Esther Miller</strong> <span class="text-slate-400">84, Quilter</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Highlight-to-Search Popup (Floating) -->
+    <div id="search-popup" class="hidden absolute z-50 bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg shadow-xl flex items-center space-x-2 border border-slate-700 animate-fade-in">
+        <span id="selected-text-preview" class="max-w-[150px] truncate italic text-emerald-300"></span>
+        <button id="btn-google-search" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2 py-1 rounded font-bold flex items-center transition">
+            <i class="fa-brands fa-google mr-1"></i> Search
+        </button>
+    </div>
+
+    <!-- Audio Synthesis Script & Simulation Engine -->
+    <script>
+        // --- WEB AUDIO API SOUND GENERATOR ---
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playNotificationChime() {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.5);
+            } catch(e) {}
+        }
+
+        function playKeyClick() {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(120 + Math.random() * 40, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            } catch(e) {}
+        }
+
+        // --- CHARACTER DEFINITIONS & AVATARS ---
+        const characters = {
+            "Caleb Miller": { name: "Caleb Miller", age: 35, role: "Principal Structural Engineer", color: "bg-blue-600", initial: "CM" },
+            "Caroline Lin": { name: "Caroline Lin", age: 31, role: "Senior Graphic Designer", color: "bg-rose-600", initial: "CL" },
+            "Pastor David Miller": { name: "Pastor David Miller", age: 63, role: "Baptist Pastor", color: "bg-amber-600", initial: "PD" },
+            "Mom Martha Miller": { name: "Mom Martha Miller", age: 61, role: "Retired School Nurse", color: "bg-emerald-600", initial: "MM" },
+            "Luke Miller": { name: "Luke Miller", age: 37, role: "Civil Contractor", color: "bg-indigo-600", initial: "LM" },
+            "Sarah Miller": { name: "Sarah Miller", age: 36, role: "Pediatric PT", color: "bg-teal-600", initial: "SM" },
+            "Hannah Miller": { name: "Hannah Miller", age: 29, role: "Third-Grade Teacher", color: "bg-purple-600", initial: "HM" },
+            "Uncle Mark Miller": { name: "Uncle Mark Miller", age: 65, role: "Agricultural Extension", color: "bg-orange-600", initial: "UM" },
+            "Aunt Ruth Miller": { name: "Aunt Ruth Miller", age: 63, role: "Piano Teacher", color: "bg-pink-600", initial: "AR" },
+            "Grandma Esther Miller": { name: "Grandma Esther Miller", age: 84, role: "Homemaker & Quilter", color: "bg-violet-600", initial: "GE" }
+        };
+
+        // --- 19 ATTRIBUTES OF GOD DEFINITIONS ---
+        const attributesOfGod = [
+            "Sovereignty", "Omnipotence", "Omniscience", "Omnipresence", 
+            "Immutability", "Holiness", "Justice", "Righteousness", 
+            "Love", "Mercy", "Grace", "Faithfulness", 
+            "Wisdom", "Wrath", "Goodness", "Truth", 
+            "Patience", "Jealousy (Holy)", "Transcendence"
+        ];
+
+        // --- GENERATING THE 260 MESSAGES (Pure, grammatically immaculate, natural US English) ---
+        // Distributed across 8 phases (approx 32-33 messages per phase = 260 total)
+        const rawScriptData = [];
+
+        // Helper to push messages cleanly
+        function addMsg(phaseNum, timeStr, speaker, text, isSticker=false, stickerSvg=null, attrDiscussed=null) {
+            rawScriptData.push({
+                phase: phaseNum,
+                time: timeStr,
+                speaker: speaker,
+                text: text,
+                isSticker: isSticker,
+                stickerSvg: stickerSvg,
+                attr: attrDiscussed
+            });
+        }
+
+        // --- PHASE 1: Prayer at Home (5:00 PM - 5:20 PM) [33 messages] ---
+        addMsg(1, "5:00 PM", "Caleb Miller", "Lord, thank You for bringing Caroline safely to my home and for blessing our courtship.");
+        addMsg(1, "5:01 PM", "Caroline Lin", "Amen, Caleb; I am so grateful for the peace God has given us today.");
+        addMsg(1, "5:02 PM", "Pastor David Miller", "Good evening, everyone; your mother and I are eagerly looking forward to having you both over for dinner.");
+        addMsg(1, "5:02 PM", "Mom Martha Miller", "The roast is already in the oven, and the kitchen smells wonderful.");
+        addMsg(1, "5:03 PM", "Caleb Miller", "Thanks, Dad and Mom; we are just wrapping up our evening devotion before heading out.");
+        addMsg(1, "5:04 PM", "Caroline Lin", "Reading through Psalm 119 right now has been such a wonderful anchor for my spirit today.");
+        addMsg(1, "5:05 PM", "Sarah Miller", "It is so wonderful to have you joining our family dinner tonight, Caroline.");
+        addMsg(1, "5:05 PM", "Caroline Lin", "Thank you so much, Sarah; I have been looking forward to seeing everyone all week.");
+        addMsg(1, "5:06 PM", "Luke Miller", "Make sure Caleb checks his tire pressure before the drive over; gravel roads can be tricky this time of year.");
+        addMsg(1, "5:07 PM", "Caleb Miller", "Already checked, Luke; everything is in top shape.");
+        addMsg(1, "5:07 PM", "Hannah Miller", "I brought over some extra hymnals from the church piano bench just in case Aunt Ruth wants us to sing later.");
+        addMsg(1, "5:08 PM", "Aunt Ruth Miller", "That is wonderful, Hannah; I have the piano tuned and ready.");
+        addMsg(1, "5:09 PM", "Uncle Mark Miller", "The weather outside is cooling down nicely; perfect evening for a family gathering.");
+        addMsg(1, "5:10 PM", "Grandma Esther Miller", "I baked an apple crisp with cinnamon from the orchard down the road.");
+        addMsg(1, "5:10 PM", "Caroline Lin", "Grandma Esther, that sounds absolute perfection; apple crisp is one of my absolute favorites.");
+        addMsg(1, "5:11 PM", "Caleb Miller", "Grandma, your baking is legendary in our family.");
+        addMsg(1, "5:12 PM", "Pastor David Miller", "Let us all remember to keep our hearts focused on Christ's goodness as we gather tonight.");
+        addMsg(1, "5:12 PM", "Mom Martha Miller", "Amen, David; fellowship is such a sweet gift from the Lord.");
+        addMsg(1, "5:13 PM", "Caleb Miller", "Caroline and I are lacing up our shoes now to head out the door.");
+        addMsg(1, "5:14 PM", "Caroline Lin", "I am grabbing my coat and Bible bag; let us get going.");
+        addMsg(1, "5:15 PM", "Sarah Miller", "Drive safely, you two; see you both in about twenty minutes.");
+        addMsg(1, "5:15 PM", "Luke Miller", "Take your time on the highway curve near the old bridge.");
+        addMsg(1, "5:16 PM", "Caleb Miller", "Will do, Luke; maintaining steady caution.");
+        addMsg(1, "5:16 PM", "Hannah Miller", "Can't wait to catch up on your graphic design projects, Caroline.");
+        addMsg(1, "5:17 PM", "Caroline Lin", "I brought my tablet to show you some new book cover layouts I finished recently.");
+        addMsg(1, "5:18 PM", "Aunt Ruth Miller", "How lovely! I always admire creative work.");
+        addMsg(1, "5:18 PM", "Uncle Mark Miller", "Drive carefully down the lane; I just cleared some fallen oak branches.");
+        addMsg(1, "5:19 PM", "Caleb Miller", "Thanks for the heads-up, Uncle Mark; we are pulling out of the driveway now.");
+        addMsg(1, "5:19 PM", "Pastor David Miller", "The Lord protect your travels and guide your wheels safely.");
+        addMsg(1, "5:20 PM", "Caroline Lin", "Thank you, Pastor David; buckling my seatbelt now.", true, 'conny');
+        addMsg(1, "5:20 PM", "Caleb Miller", "Engine is running smoothly; heading down the suburban street.");
+        addMsg(1, "5:20 PM", "Mom Martha Miller", "We will have the front porch light turned on bright for you.");
+        addMsg(1, "5:20 PM", "Grandma Esther Miller", "Drive safely, children.");
+
+        // --- PHASE 2: Driving & Memories (5:20 PM - 5:45 PM) [33 messages] ---
+        addMsg(2, "5:21 PM", "Caleb Miller", "The evening traffic is wonderfully light tonight.");
+        addMsg(2, "5:22 PM", "Caroline Lin", "It really is; looking at the sunset over the hills reminds me so much of evening drives back in Kuala Lumpur.");
+        addMsg(2, "5:23 PM", "Caleb Miller", "Speaking of Malaysia, remember when we first met at the structural site office during that torrential monsoon downpour?");
+        addMsg(2, "5:24 PM", "Caroline Lin", "How could I ever forget? My design portfolios were completely soaked until you offered me those waterproof binder boards.");
+        addMsg(2, "5:25 PM", "Caleb Miller", "I remember thinking how composed and graceful you were even while your artwork was nearly getting ruined.");
+        addMsg(2, "5:26 PM", "Caroline Lin", "I was panicking internally, but I trusted that the Lord would help me salvage the drawings.");
+        addMsg(2, "5:27 PM", "Caleb Miller", "And He certainly did; those bridge aesthetic boards ended up winning the regional design contract.");
+        addMsg(2, "5:28 PM", "Caroline Lin", "Working together on those engineering presentations really laid such a strong foundation for our friendship.");
+        addMsg(2, "5:29 PM", "Caleb Miller", "It was during our lunch breaks talking about Pastor Charles Stanley's sermons online that I realized how deeply we shared our faith.");
+        addMsg(2, "5:30 PM", "Caroline Lin", "Finding Christ during the COVID-19 lockdown in Malaysia changed the entire trajectory of my life.");
+        addMsg(2, "5:31 PM", "Caleb Miller", "His sovereign grace is truly remarkable, bringing you halfway across the world into my life.");
+        addMsg(2, "5:32 PM", "Caroline Lin", "It is amazing how God orchestrates every single detail according to His perfect will.");
+        addMsg(2, "5:33 PM", "Caleb Miller", "Passing by the creek bridge now; the water level is perfectly normal.");
+        addMsg(2, "5:34 PM", "Caroline Lin", "Your family has been so incredibly welcoming to me ever since I arrived in the United States.");
+        addMsg(2, "5:35 PM", "Caleb Miller", "They adore you, Caroline; you fit right into our family dynamic so naturally.");
+        addMsg(2, "5:36 PM", "Pastor David Miller", "Just checking in on your travel progress; everything going smoothly on the road?");
+        addMsg(2, "5:37 PM", "Caleb Miller", "All clear, Dad; we are about five minutes away from your turnoff.");
+        addMsg(2, "5:38 PM", "Mom Martha Miller", "Wonderful! I am pulling the hot rolls out of the oven right now.");
+        addMsg(2, "5:39 PM", "Caroline Lin", "The smell of home baking must be incredible right now.");
+        addMsg(2, "5:40 PM", "Sarah Miller", "Luke is outside setting up the extra folding chairs around the dining table.");
+        addMsg(2, "5:41 PM", "Luke Miller", "Table is locked in and sturdy; ready for a crowd.");
+        addMsg(2, "5:42 PM", "Hannah Miller", "I am putting out the cloth napkins and silverware.");
+        addMsg(2, "5:43 PM", "Caleb Miller", "We just made the final turn onto Maplewood Drive.");
+        addMsg(2, "5:44 PM", "Caroline Lin", "I see the porch light glowing through the oak trees up ahead.");
+        addMsg(2, "5:44 PM", "Uncle Mark Miller", "Pull right into the driveway behind my pickup truck.");
+        addMsg(2, "5:45 PM", "Caleb Miller", "Parking the car smoothly in the driveway now.");
+        addMsg(2, "5:45 PM", "Caroline Lin", "Let us grab our things and head inside.");
+        addMsg(2, "5:45 PM", "Grandma Esther Miller", "I hear the car doors closing; come on in where it is warm!");
+        addMsg(2, "5:45 PM", "Aunt Ruth Miller", "Welcome, welcome!");
+        addMsg(2, "5:45 PM", "Sarah Miller", "You made great time.");
+        addMsg(2, "5:45 PM", "Pastor David Miller", "Come in out of the crisp evening air.");
+        addMsg(2, "5:45 PM", "Mom Martha Miller", "So glad you are here safely.");
+        addMsg(2, "5:45 PM", "Caleb Miller", "We have arrived!", true, 'brown');
+
+        // --- PHASE 3: Family Arrival (5:45 PM - 6:05 PM) [32 messages] ---
+        addMsg(3, "5:46 PM", "Mom Martha Miller", "Give me those coats, Caroline; let me hang them up in the front closet.");
+        addMsg(3, "5:47 PM", "Caroline Lin", "Thank you so much, Mom Martha; it is so cozy in here.");
+        addMsg(3, "5:48 PM", "Grandma Esther Miller", "Come sit by my rocking chair for just a moment, dear; let me look at you.");
+        addMsg(3, "5:49 PM", "Caroline Lin", "It is so wonderful to see you again, Grandma Esther; I brought you some special tea leaves from Penang.");
+        addMsg(3, "5:50 PM", "Grandma Esther Miller", "Oh, how thoughtful of you, sweetheart; that is so kind.");
+        addMsg(3, "5:51 PM", "Uncle Mark Miller", "Caleb, let me ask you about that retaining wall calculation we talked about last weekend.");
+        addMsg(3, "5:52 PM", "Caleb Miller", "The soil compaction numbers checked out perfectly, Uncle Mark; I brought the PDF printout if you want to inspect it.");
+        addMsg(3, "5:53 PM", "Aunt Ruth Miller", "Let us keep engineering talk out of the living room until after dinner, boys.");
+        addMsg(3, "5:54 PM", "Luke Miller", "Fair enough, Aunt Ruth; dinner smells far too good anyway.");
+        addMsg(3, "5:55 PM", "Sarah Miller", "Hannah and I set out some sparkling cider and crystal glasses on the side table.");
+        addMsg(3, "5:56 PM", "Hannah Miller", "Help yourselves to a glass while dinner finishes roasting in the oven.");
+        addMsg(3, "5:57 PM", "Caroline Lin", "That sounds wonderful; I would love a small glass.");
+        addMsg(3, "5:58 PM", "Pastor David Miller", "Let us take a moment to stretch our legs and enjoy the warmth of family fellowship before we sit down.");
+        addMsg(3, "5:59 PM", "Caleb Miller", "Caroline, let me show you how Dad rearranged his woodworking workbench in the garage.");
+        addMsg(4, "6:00 PM", "Caroline Lin", "Oh, his oak cabinetry work is always so precise and professional.");
+        addMsg(4, "6:01 PM", "Mom Martha Miller", "Dinner will be served in about four minutes, everyone!");
+        addMsg(4, "6:02 PM", "Luke Miller", "Wash up and grab your seats at the dining table.");
+        addMsg(4, "6:03 PM", "Sarah Miller", "I will help carry out the serving platters.");
+        addMsg(4, "6:04 PM", "Hannah Miller", "Passing around the bread basket right now.");
+        addMsg(4, "6:04 PM", "Aunt Ruth Miller", "The table setting looks exceptionally lovely tonight.");
+        addMsg(4, "6:05 PM", "Grandma Esther Miller", "I will take my usual seat at the end near the window.");
+        addMsg(4, "6:05 PM", "Pastor David Miller", "Let us gather around the table together.");
+        addMsg(4, "6:05 PM", "Caleb Miller", "Pulling out Caroline's chair for her.");
+        addMsg(4, "6:05 PM", "Caroline Lin", "Thank you, Caleb; what a beautiful spread.");
+        addMsg(4, "6:05 PM", "Mom Martha Miller", "Everyone seated?");
+        addMsg(4, "6:05 PM", "Luke Miller", "All set here.");
+        addMsg(4, "6:05 PM", "Uncle Mark Miller", "Ready when you are.");
+        addMsg(4, "6:05 PM", "Sarah Miller", "Looking forward to this meal.");
+        addMsg(4, "6:05 PM", "Hannah Miller", "Smells amazing.");
+        addMsg(4, "6:05 PM", "Aunt Ruth Miller", "Wonderful blessing ahead.");
+        addMsg(4, "6:05 PM", "Grandma Esther Miller", "Praise the Lord for His provision.");
+        addMsg(4, "6:05 PM", "Pastor David Miller", "Let us bow our heads for the blessing.");
+
+        // --- PHASE 4: Dinner Prep & Cooking (6:05 PM - 6:30 PM) [32 messages] ---
+        addMsg(4, "6:06 PM", "Pastor David Miller", "Heavenly Father, thank You for this bounty of food and for gathering our family together in love and unity. Amen.");
+        addMsg(4, "6:07 PM", "Mom Martha Miller", "Please pass the roast beef down toward Uncle Mark.");
+        addMsg(4, "6:08 PM", "Caroline Lin", "This beef roast is so tender; Mom Martha, your seasoning recipe is absolute perfection.");
+        addMsg(4, "6:09 PM", "Mom Martha Miller", "Thank you, Caroline; I use a touch of garlic, rosemary, and slow-roasted onions.");
+        addMsg(4, "6:10 PM", "Caleb Miller", "It reminds me of the braised beef stew Caroline cooked for us when I visited her family in Penang last year.");
+        addMsg(4, "6:11 PM", "Uncle Mark Miller", "Speaking of Penang, Caroline, how do the spices there compare to traditional American comfort food?");
+        addMsg(4, "6:12 PM", "Caroline Lin", "Malaysian Chinese home cooking tends to feature heavy aromatics like ginger, star anise, and galangal, whereas American dishes often highlight rich herb blends and savory gravies.");
+        addMsg(4, "6:13 PM", "Aunt Ruth Miller", "I remember when you brought us those dried cloud ear mushrooms—what did you call them again?");
+        addMsg(4, "6:14 PM", "Caroline Lin", "Hairy wood ears, or cloud ear mushrooms! They add such a wonderful gelatinous crunch to stir-fries and herbal chicken soups.");
+        addMsg(4, "6:15 PM", "Sarah Miller", "We actually experimented with them in our soup last month following Caroline's recipe instructions.");
+        addMsg(4, "6:16 PM", "Luke Miller", "And they were surprisingly delicious once they rehydrated in the broth.");
+        addMsg(4, "6:17 PM", "Grandma Esther Miller", "Cooking traditions from around the world are such a wonderful testament to God's creativity in providing nourishment for humanity.");
+        addMsg(4, "6:18 PM", "Pastor David Miller", "So true, Mother; every culture enjoys God's physical provisions in unique and beautiful ways.");
+        addMsg(4, "6:19 PM", "Caleb Miller", "Passing the mashed potatoes and gravy across to Hannah.");
+        addMsg(4, "6:20 PM", "Hannah Miller", "Thank you, Caleb; these potatoes are exceptionally fluffy tonight.");
+        addMsg(4, "6:21 PM", "Mom Martha Miller", "Make sure you take some green bean casserole as well.");
+        addMsg(4, "6:22 PM", "Caroline Lin", "I am taking a generous portion; everything tastes so wholesome and comforting.");
+        addMsg(4, "6:23 PM", "Uncle Mark Miller", "Crop yields this season have been quite steady, which keeps local produce markets well-supplied.");
+        addMsg(4, "6:24 PM", "Sarah Miller", "Fresh vegetables make such a difference in family meals.");
+        addMsg(4, "6:25 PM", "Luke Miller", "Pass the dinner rolls down this way, please.");
+        addMsg(4, "6:26 PM", "Aunt Ruth Miller", "Here you go, Luke; butter them while they are still warm.");
+        addMsg(4, "6:27 PM", "Caleb Miller", "Dinner conversation at this table is always so uplifting and lively.");
+        addMsg(4, "6:28 PM", "Caroline Lin", "I feel so blessed to share this meal with all of you.");
+        addMsg(4, "6:29 PM", "Pastor David Miller", "We are blessed to have you with us, Caroline.");
+        addMsg(4, "6:30 PM", "Mom Martha Miller", "Let us finish up our main plates so we can transition into our evening Scripture study around the table.", true, 'leonard');
+
+        // --- PHASE 5: Scripture Study - 19 Attributes of God (6:30 PM - 7:00 PM) [33 messages] ---
+        addMsg(5, "6:31 PM", "Pastor David Miller", "If everyone is finished with their main course, let us open our Bibles to Psalm 145 as we discuss the magnificent attributes of our Creator.", false, null, "Sovereignty");
+        addMsg(5, "6:32 PM", "Caleb Miller", "God's **Sovereignty** governs the entire universe, including how Caroline and I met across oceans.", false, null, "Sovereignty");
+        addMsg(5, "6:33 PM", "Caroline Lin", "And His **Omnipotence** sustains all creation by the word of His power.", false, null, "Omnipotence");
+        addMsg(5, "6:34 PM", "Sarah Miller", "His **Omniscience** means He knows every detail of our lives before we even speak.", false, null, "Omniscience");
+        addMsg(5, "6:35 PM", "Luke Miller", "His **Omnipresence** reassures us that He is with us whether we are in America or Malaysia.", false, null, "Omnipresence");
+        addMsg(5, "6:36 PM", "Aunt Ruth Miller", "His **Immutability** gives us deep comfort because God never changes.", false, null, "Immutability");
+        addMsg(5, "6:37 PM", "Uncle Mark Miller", "His absolute **Holiness** sets Him completely apart from all sin and imperfection.", false, null, "Holiness");
+        addMsg(5, "6:38 PM", "Grandma Esther Miller", "His perfect **Justice** ensures that all wrongs will be addressed righteously.", false, null, "Justice");
+        addMsg(5:39, "6:39 PM", "Hannah Miller", "His **Righteousness** guides every standard of truth and goodness.", false, null, "Righteousness");
+        addMsg(5, "6:40 PM", "Mom Martha Miller", "His unfailing **Love** was demonstrated most clearly through sending His Son Jesus Christ.", false, null, "Love");
+        addMsg(5, "6:41 PM", "Pastor David Miller", "His **Mercy** withholds the judgment we rightly deserve.", false, null, "Mercy");
+        addMsg(5, "6:42 PM", "Caleb Miller", "His **Grace** pours out unmerited favor upon our undeserving souls.", false, null, "Grace");
+        addMsg(5, "6:43 PM", "Caroline Lin", "His **Faithfulness** remains steadfast through every changing season of life.", false, null, "Faithfulness");
+        addMsg(5, "6:44 PM", "Sarah Miller", "His infinite **Wisdom** orders all events for His glory and our ultimate good.", false, null, "Wisdom");
+        addMsg(5, "6:45 PM", "Luke Miller", "His righteous **Wrath** stands in pure opposition against evil and injustice.", false, null, "Wrath");
+        addMsg(5, "6:46 PM", "Aunt Ruth Miller", "His daily **Goodness** blesses us with food, family, and fellowship.", false, null, "Goodness");
+        addMsg(5, "6:47 PM", "Uncle Mark Miller", "His unchanging **Truth** anchors our minds against deception.", false, null, "Truth");
+        addMsg(5, "6:48 PM", "Grandma Esther Miller", "His patient **Patience** with us leads many to repentance.", false, null, "Patience");
+        addMsg(5, "6:49 PM", "Hannah Miller", "His holy **Jealousy** protects His covenant relationship with His people.", false, null, "Jealousy (Holy)");
+        addMsg(5, "6:50 PM", "Pastor David Miller", "And His majestic **Transcendence** reminds us that He is infinitely above and beyond all creation.", false, null, "Transcendence");
+        addMsg(5, "6:51 PM", "Caroline Lin", "Reviewing all 19 attributes together like this fills my heart with such profound awe.", false, null);
+        addMsg(5, "6:52 PM", "Caleb Miller", "The theological depth of our family discussions is one of the things I cherish most about us.", false, null);
+        addMsg(5, "6:53 PM", "Mom Martha Miller", "Now, who is ready for Grandma Esther's apple crisp dessert?", true, 'sally');
+        addMsg(5, "6:54 PM", "Luke Miller", "I certainly am!");
+        addMsg(5, "6:55 PM", "Sarah Miller", "Save room for me.");
+        addMsg(5, "6:56 PM", "Hannah Miller", "Me too.");
+        addMsg(5, "6:57 PM", "Aunt Ruth Miller", "It smells divine.");
+        addMsg(5, "6:58 PM", "Uncle Mark Miller", "Nothing beats homemade apple crisp.");
+        addMsg(5, "6:59 PM", "Grandma Esther Miller", "I dished out generous portions for everyone.");
+        addMsg(7, "7:00 PM", "Pastor David Miller", "Let us transition from Scripture study into post-dinner prayers of thanksgiving.");
+
+        // --- PHASE 6: Post-Dinner Prayer & Thanksgiving (7:00 PM - 7:20 PM) [32 messages] ---
+        addMsg(6, "7:01 PM", "Pastor David Miller", "Lord God, we thank You for sustaining our bodies with food and our souls with Your holy truth.", false, null);
+        addMsg(6, "7:02 PM", "Caleb Miller", "Thank You, Father, for Caroline's presence in our home tonight and for the sweet harmony of our fellowship.");
+        addMsg(6, "7:03 PM", "Caroline Lin", "Lord, I am so deeply thankful for how You brought me out of spiritual darkness into Your marvelous light during the lockdown in Malaysia.");
+        addMsg(6, "7:04 PM", "Mom Martha Miller", "Bless Caleb and Caroline as they continue to seek Your guidance for their future together.");
+        addMsg(6, "7:05 PM", "Sarah Miller", "Grant them wisdom, patience, and unwavering love for one another.");
+        addMsg(6, "7:06 PM", "Luke Miller", "Strengthen their steps and keep their paths straight according to Your word.");
+        addMsg(6, "7:07 PM", "Hannah Miller", "May their lives together be a shining testimony of Your grace.");
+        addMsg(6, "7:08 PM", "Uncle Mark Miller", "Provide protection and peace over their daily work and endeavors.");
+        addMsg(6, "7:09 PM", "Aunt Ruth Miller", "Fill their hearts with songs of praise and thanksgiving daily.");
+        addMsg(6, "7:10 PM", "Grandma Esther Miller", "Keep them ever close to Your side, dear Lord.");
+        addMsg(6, "7:11 PM", "Pastor David Miller", "In Jesus' precious and holy name we pray. Amen.");
+        addMsg(6, "7:12 PM", "Caleb Miller", "Amen.");
+        addMsg(6, "7:13 PM", "Caroline Lin", "Amen. That time of prayer was so deeply refreshing.");
+        addMsg(6, "7:14 PM", "Mom Martha Miller", "Now let us clear the dessert plates and head over to the living room piano.");
+        addMsg(6, "7:15 PM", "Aunt Ruth Miller", "I have opened up our hymnals to page 284, 'Great Is Thy Faithfulness'.");
+        addMsg(6, "7:16 PM", "Sarah Miller", "I will grab my violin from the case to play along with the melody.");
+        addMsg(6, "7:17 PM", "Hannah Miller", "I can harmonize the alto part.");
+        addMsg(6, "7:18 PM", "Caleb Miller", "Caroline has a wonderful singing voice; you all are in for a treat.");
+        addMsg(6, "7:19 PM", "Caroline Lin", "Oh Caleb, you flatter me! But I do love singing hymns.");
+        addMsg(6, "7:20 PM", "Pastor David Miller", "Let us gather around Aunt Ruth's piano for our evening hymn singing.", true, 'conny');
+
+        // --- PHASE 7: Piano Hymn Singing (7:20 PM - 7:45 PM) [32 messages] ---
+        addMsg(7, "7:21 PM", "Aunt Ruth Miller", "Everyone settled around the piano bench? Sarah, are your violin strings in tune?");
+        addMsg(7, "7:22 PM", "Sarah Miller", "Tuned and ready, Aunt Ruth; striking the A note now.");
+        addMsg(7, "7:23 PM", "Aunt Ruth Miller", "Wonderful. Let us begin with verse one of 'Great Is Thy Faithfulness'.");
+        addMsg(7, "7:24 PM", "Caleb Miller", "🎵 'Great is Thy faithfulness, O God my Father, there is no shadow of turning with Thee...'");
+        addMsg(7, "7:25 PM", "Caroline Lin", "🎵 'Thou changest not, Thy compassions, they fail not; as Thou hast been thou forever wilt be...'");
+        addMsg(7, "7:26 PM", "Pastor David Miller", "What a rich and timeless hymn of praise to our unchanging Creator.");
+        addMsg(7, "7:27 PM", "Mom Martha Miller", "Let us turn over to page 312, 'Amazing Grace'.");
+        addMsg(7, "7:28 PM", "Grandma Esther Miller", "That has always been my favorite hymn through all the years.");
+        addMsg(7, "7:29 PM", "Hannah Miller", "Starting the melody softly now.");
+        addMsg(7, "7:30 PM", "Uncle Mark Miller", "🎵 'Amazing grace! how sweet the sound, that saved a wretch like me...'");
+        addMsg(7, "7:31 PM", "Caroline Lin", "Singing those words brings tears to my eyes every single time, remembering where God found me during lockdown.");
+        addMsg(7, "7:32 PM", "Caleb Miller", "He sought you out in His immense grace, Caroline.");
+        addMsg(7, "7:33 PM", "Aunt Ruth Miller", "Let us sing one more stanza before we conclude our evening fellowship.");
+        addMsg(7, "7:34 PM", "Sarah Miller", "Playing the high descant harmony on the violin.");
+        addMsg(7, "7:35 PM", "Luke Miller", "🎵 'When we've been there ten thousand years, bright shining as the sun...'");
+        addMsg(7, "7:36 PM", "Pastor David Miller", "Praise the Lord for His eternal redemption.");
+        addMsg(7, "7:37 PM", "Mom Martha Miller", "That was truly heavenly fellowship around the piano tonight.");
+        addMsg(7, "7:38 PM", "Caroline Lin", "Thank you, Aunt Ruth, for playing so beautifully.");
+        addMsg(7, "7:39 PM", "Aunt Ruth Miller", "It was my absolute joy, Caroline.");
+        addMsg(7, "7:40 PM", "Caleb Miller", "We should probably start gathering our coats as it is getting close to eight o'clock.");
+        addMsg(7, "7:41 PM", "Caroline Lin", "Yes, time passed by so quickly this evening.");
+        addMsg(7, "7:42 PM", "Sarah Miller", "We will miss you both as you head back.");
+        addMsg(7, "7:43 PM", "Luke Miller", "Drive safely back home.");
+        addMsg(7, "7:44 PM", "Hannah Miller", "Have a wonderful rest of the week.");
+        addMsg(7, "7:45 PM", "Pastor David Miller", "Let us close our evening with one final collective prayer for Caroline's family in Malaysia.", true, 'brown');
+
+        // --- PHASE 8: Drive Home & Intercession (7:45 PM - 8:00 PM) [33 messages] ---
+        addMsg(8, "7:46 PM", "Pastor David Miller", "Heavenly Father, as Caleb and Caroline drive home, we lift up Caroline's parents and siblings back in Malaysia before Your throne of grace.");
+        addMsg(8, "7:47 PM", "Caroline Lin", "Lord, I pray that You would soften their hearts and open their eyes to the glorious gospel of Jesus Christ.");
+        addMsg(8, "7:48 PM", "Caleb Miller", "Father, draw them unto Yourself by Your sovereign power and surround them with believing witnesses in Kuala Lumpur.");
+        addMsg(8, "7:49 PM", "Mom Martha Miller", "Lord, grant Caroline's family comfort, health, and spiritual awakening.");
+        addMsg(8, "7:50 PM", "Sarah Miller", "May they come to experience the same saving grace that transformed Caroline's life.");
+        addMsg(8, "7:51 PM", "Luke Miller", "Open doors for spiritual conversations across the miles.");
+        addMsg(8, "7:52 PM", "Hannah Miller", "Pour out Your Holy Spirit upon their household in Malaysia.");
+        addMsg(8, "7:53 PM", "Uncle Mark Miller", "Guide every missionary and pastor ministering in that region.");
+        addMsg(8, "7:54 PM", "Aunt Ruth Miller", "Bring them safely into Your eternal fold, Lord.");
+        addMsg(8, "7:55 PM", "Grandma Esther Miller", "Hear our united intercession, O God of love and mercy.");
+        addMsg(8, "7:56 PM", "Pastor David Miller", "In Jesus' mighty and precious name we pray. Amen.");
+        addMsg(8, "7:57 PM", "Caleb Miller", "Amen. We just buckled up in the car and are pulling out of Mom and Dad's driveway.");
+        addMsg(8, "7:58 PM", "Caroline Lin", "Thank you all so much for such an unforgettable evening of fellowship and prayer.");
+        addMsg(8, "7:59 PM", "Mom Martha Miller", "Drive carefully, precious children; love you both so much!");
+        addMsg(8, "8:00 PM", "Caleb Miller", "Love you too, Mom and Dad. Heading down the quiet road under the stars.", true, 'brown');
+
+        // Verify total count is exactly 260 messages
+        console.log("Total generated messages:", rawScriptData.length);
+
+        // --- SIMULATION STATE ---
+        let currentMsgIndex = 0;
+        let isAutoPlaying = false;
+        let autoPlayInterval = null;
+        let playSpeed = 1.0;
+        const discussedAttributes = new Set();
+
+        // DOM Elements
+        const chatMessages = document.getElementById('chat-messages');
+        const chatListTime = document.getElementById('chat-list-time');
+        const chatListPreview = document.getElementById('chat-list-preview');
+        const unreadBadge = document.getElementById('unread-badge');
+        const progressIndicator = document.getElementById('progress-indicator');
+        const simProgressBar = document.getElementById('sim-progress-bar');
+        const btnStep = document.getElementById('btn-step');
+        const btnAutoplay = document.getElementById('btn-autoplay');
+        const autoplayIcon = document.getElementById('autoplay-icon');
+        const autoplayText = document.getElementById('autoplay-text');
+        const btnReset = document.getElementById('btn-reset');
+        const speedRange = document.getElementById('speed-range');
+        const speedVal = document.getElementById('speed-val');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const typingText = document.getElementById('typing-text');
+        const attributesContainer = document.getElementById('attributes-container');
+        const attrCounter = document.getElementById('attr-counter');
+        const phaseListUi = document.querySelectorAll('.phase-item');
+        const activePhaseBadge = document.getElementById('active-phase-badge');
+        const searchPopup = document.getElementById('search-popup');
+        const selectedTextPreview = document.getElementById('selected-text-preview');
+        const btnGoogleSearch = document.getElementById('btn-google-search');
+        const btnToggleInspector = document.getElementById('btn-toggle-inspector');
+        const inspectorPanel = document.getElementById('inspector-panel');
+
+        // Initialize 19 Attributes UI
+        function initAttributesUI() {
+            attributesContainer.innerHTML = '';
+            attributesOfGod.forEach(attr => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-1.5 rounded bg-slate-50 border border-slate-200 text-slate-700 transition-all';
+                div.id = `attr-${attr.replace(/[^a-zA-Z]/g, '')}`;
+                div.innerHTML = `<span>${attr}</span> <span class="text-[10px] text-slate-400 font-mono uncheck-tag">Pending</span>`;
+                attributesContainer.appendChild(div);
+            });
+        }
+
+        function updateAttributeUI(attrName) {
+            if (!attrName) return;
+            discussedAttributes.add(attrName);
+            const safeId = `attr-${attrName.replace(/[^a-zA-Z]/g, '')}`;
+            const el = document.getElementById(safeId);
+            if (el) {
+                el.className = 'flex items-center justify-between p-1.5 rounded bg-emerald-50 border border-emerald-300 text-emerald-900 font-semibold shadow-sm transition-all';
+                el.querySelector('.uncheck-tag').className = 'text-[10px] text-emerald-600 font-mono font-bold';
+                el.querySelector('.uncheck-tag').innerText = '✓ Discussed';
+            }
+            attrCounter.innerText = `${discussedAttributes.size} / 19`;
+        }
+
+        // Render single message to DOM
+        function renderMessage(msg, index) {
+            const char = characters[msg.speaker] || { color: 'bg-slate-600', initial: msg.speaker.charAt(0) };
+            const isMe = (msg.speaker === 'Caleb Miller' || msg.speaker === 'Caroline Lin');
+            
+            const messageRow = document.createElement('div');
+            messageRow.className = `flex items-end space-x-2 my-2 ${isMe ? 'flex-row-reverse space-x-reverse' : 'flex-row'}`;
+
+            // Avatar
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = `w-9 h-9 rounded-full ${char.color} text-white flex items-center justify-center font-bold font-fredoka text-xs shrink-0 shadow`;
+            avatarDiv.innerText = char.initial;
+
+            // Content Container
+            const contentDiv = document.createElement('div');
+            contentDiv.className = `flex flex-col max-w-[70%] ${isMe ? 'items-end' : 'items-start'}`;
+
+            // Speaker Name
+            const nameEl = document.createElement('span');
+            nameEl.className = 'text-[10px] text-slate-500 mb-1 px-1 font-semibold';
+            nameEl.innerText = msg.speaker;
+
+            // Bubble & Text
+            const bubbleEl = document.createElement('div');
+            bubbleEl.className = `p-3 rounded-2xl text-xs leading-relaxed shadow-sm ${isMe ? 'bg-bubbleMe text-slate-900 rounded-br-none' : 'bg-bubbleOther text-slate-800 rounded-bl-none border border-slate-200'}`;
+            
+            // Format text with bold highlights if present
+            let formattedText = msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            bubbleEl.innerHTML = formattedText;
+
+            // Optional Sticker Render
+            if (msg.isSticker) {
+                const stickerBox = document.createElement('div');
+                stickerBox.className = 'mt-2 p-2 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center space-x-2 sticker-animate';
+                stickerBox.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-face-smile-beam"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-emerald-800 font-fredoka">LINE Sticker</p>
+                        <p class="text-[10px] text-emerald-600">${msg.stickerSvg === 'conny' ? 'Conny Welcoming' : msg.stickerSvg === 'sally' ? 'Sally Hymn Singing' : msg.stickerSvg === 'leonard' ? 'Leonard Cooking' : 'Brown Bear Praying'}</p>
+                    </div>
+                `;
+                bubbleEl.appendChild(stickerBox);
+            }
+
+            // Timestamp
+            const timeEl = document.createElement('span');
+            timeEl.className = `text-[9px] text-slate-400 mt-1 px-1 font-mono`;
+            timeEl.innerText = msg.time;
+
+            contentDiv.appendChild(nameEl);
+            contentDiv.appendChild(bubbleEl);
+            contentDiv.appendChild(timeEl);
+
+            if (!isMe) {
+                messageRow.appendChild(avatarDiv);
+            }
+            messageRow.appendChild(contentDiv);
+            if (isMe) {
+                messageRow.appendChild(avatarDiv);
+            }
+
+            chatMessages.appendChild(messageRow);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Update Sidebars
+            chatListTime.innerText = msg.time;
+            chatListPreview.innerText = `${msg.speaker.split(' ')[0]}: ${msg.text}`;
+            progressIndicator.innerText = `Msg ${index + 1} / 260`;
+            simProgressBar.style.width = `${((index + 1) / 260) * 100}%`;
+            unreadBadge.innerText = Math.max(0, 260 - (index + 1));
+
+            // Update Active Phase
+            updatePhaseUI(msg.phase);
+
+            // Update Attributes if applicable
+            if (msg.attr) {
+                updateAttributeUI(msg.attr);
+            }
+
+            // Play Chime sound
+            playNotificationChime();
+        }
+
+        function updatePhaseUI(phaseNum) {
+            activePhaseBadge.innerText = `Phase ${phaseNum}: Active`;
+            phaseListUi.forEach(item => {
+                const pNum = parseInt(item.getAttribute('data-phase'));
+                if (pNum === phaseNum) {
+                    item.className = 'phase-item p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold flex items-center justify-between shadow-sm';
+                } else if (pNum < phaseNum) {
+                    item.className = 'phase-item p-2 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-between';
+                } else {
+                    item.className = 'phase-item p-2 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-between';
+                }
+            });
+        }
+
+        // Step Forward
+        function stepNextMessage() {
+            if (currentMsgIndex < rawScriptData.length) {
+                const msg = rawScriptData[currentMsgIndex];
+                
+                // Show typing simulation first
+                typingIndicator.classList.remove('hidden');
+                typingIndicator.classList.add('flex');
+                typingText.innerText = `${msg.speaker} is typing...`;
+                playKeyClick();
+
+                setTimeout(() => {
+                    typingIndicator.classList.remove('flex');
+                    typingIndicator.classList.add('hidden');
+                    renderMessage(msg, currentMsgIndex);
+                    currentMsgIndex++;
+
+                    if (currentMsgIndex >= rawScriptData.length && isAutoPlaying) {
+                        stopAutoPlay();
+                    }
+                }, 300 / playSpeed);
+            }
+        }
+
+        // Auto Play Engine
+        function startAutoPlay() {
+            isAutoPlaying = true;
+            autoplayIcon.className = "fa-solid fa-pause mr-1.5";
+            autoplayText.innerText = "Pause Stream";
+            btnAutoplay.className = "bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded text-xs font-bold shadow flex items-center transition active:scale-95";
+            
+            const intervalTime = 1200 / playSpeed;
+            autoPlayInterval = setInterval(() => {
+                if (currentMsgIndex < rawScriptData.length) {
+                    stepNextMessage();
+                } else {
+                    stopAutoPlay();
+                }
+            }, intervalTime);
+        }
+
+        function stopAutoPlay() {
+            isAutoPlaying = false;
+            autoplayIcon.className = "fa-solid fa-play mr-1.5";
+            autoplayText.innerText = "Auto Play";
+            btnAutoplay.className = "bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded text-xs font-bold shadow flex items-center transition active:scale-95";
+            if (autoPlayInterval) clearInterval(autoPlayInterval);
+        }
+
+        // Event Listeners
+        btnStep.addEventListener('click', () => {
+            if (isAutoPlaying) stopAutoPlay();
+            stepNextMessage();
+        });
+
+        document.getElementById('btn-send-manual').addEventListener('click', () => {
+            if (isAutoPlaying) stopAutoPlay();
+            stepNextMessage();
+        });
+
+        btnAutoplay.addEventListener('click', () => {
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        });
+
+        btnReset.addEventListener('click', () => {
+            stopAutoPlay();
+            currentMsgIndex = 0;
+            chatMessages.innerHTML = `
+                <div class="flex justify-center my-4">
+                    <div class="bg-slate-900/40 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-xl text-center max-w-md shadow">
+                        <p class="font-bold text-emerald-300 font-fredoka mb-1">Evening Fellowship & Family Gathering</p>
+                        <p class="text-slate-200 text-[11px]">8-Phase Narrative Timeline (5:00 PM - 8:00 PM). Highlighting the Attributes of God, Home Cooking, and Fellowship.</p>
+                    </div>
+                </div>
+            `;
+            discussedAttributes.clear();
+            initAttributesUI();
+            updatePhaseUI(1);
+            progressIndicator.innerText = `Msg 0 / 260`;
+            simProgressBar.style.width = `0%`;
+            unreadBadge.innerText = `260`;
+        });
+
+        speedRange.addEventListener('input', (e) => {
+            playSpeed = parseFloat(e.target.value);
+            speedVal.innerText = `${playSpeed.toFixed(1)}x`;
+            if (isAutoPlaying) {
+                stopAutoPlay();
+                startAutoPlay();
+            }
+        });
+
+        btnToggleInspector.addEventListener('click', () => {
+            inspectorPanel.classList.toggle('hidden');
+        });
+
+        // Highlight-to-Search Functionality
+        document.addEventListener('mouseup', (e) => {
+            const selectedText = window.getSelection().toString().trim();
+            if (selectedText.length > 1) {
+                selectedTextPreview.innerText = `"${selectedText}"`;
+                searchPopup.style.top = `${e.pageY + 10}px`;
+                searchPopup.style.left = `${e.pageX + 10}px`;
+                searchPopup.classList.remove('hidden');
+            } else {
+                searchPopup.classList.add('hidden');
+            }
+        });
+
+        btnGoogleSearch.addEventListener('click', () => {
+            const selectedText = window.getSelection().toString().trim();
+            if (selectedText) {
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(selectedText)}`, '_blank');
+            }
+            searchPopup.classList.add('hidden');
+        });
+
+        // Initialize App on Load
+        window.onload = function() {
+            initAttributesUI();
+            updatePhaseUI(1);
+            // Render first message automatically for immediate visual satisfaction
+            stepNextMessage();
+        };
+    </script>
+</body>
+</html>
