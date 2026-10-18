@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>LINE Cute Fellowship — Saturday Morning Prayer & Scripture Study</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Rounded Modern Fonts: Fredoka, Quicksand, Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            sans: ['Nunito', 'Quicksand', 'sans-serif'],
+            rounded: ['Quicksand', 'sans-serif']
+          },
+          colors: {
+            line: {
+              green: '#06C755',
+              greenSoft: '#E6F9EE',
+              greenBubble: '#B2F2BB',
+              sky: '#8CC0DE',
+              skyBg: '#D8EAFE',
+              pinkBg: '#FFE5EC',
+              mintBg: '#DCFCE7',
+              creamBg: '#FFFDF7',
+              lavenderBg: '#F3E8FF',
+              cocoa: '#4A3728',
+              cocoaLight: '#7D6350',
+              coral: '#FF758F',
+              sunny: '#FFD166'
+            }
+          },
+          boxShadow: {
+            'cute': '0 8px 25px -4px rgba(74, 55, 40, 0.08), 0 4px 10px -2px rgba(74, 55, 40, 0.04)',
+            'bubble': '0 3px 10px rgba(74, 55, 40, 0.07)',
+            'pop': '0 10px 30px -5px rgba(255, 117, 143, 0.35)',
+            'drawer': '0 0 35px rgba(0, 0, 0, 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+      --sal: env(safe-area-inset-left, 0px);
+      --sar: env(safe-area-inset-right, 0px);
+    }
+
+    body {
+      font-family: 'Nunito', 'Quicksand', sans-serif;
+      color: #4A3728;
+      background: linear-gradient(135deg, #FFF0F5 0%, #E8F5E9 50%, #E3F2FD 100%);
+      overflow: hidden;
+      touch-action: manipulation;
+      height: 100vh;
+      height: 100dvh;
+      padding-top: var(--sat);
+      padding-bottom: var(--sab);
+      padding-left: var(--sal);
+      padding-right: var(--sar);
+    }
+
+    h1, h2, h3, .font-cute {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* iPad Smooth Momentum Scrolling */
+    .touch-scroll {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(125, 99, 80, 0.25);
+      border-radius: 9999px;
+    }
+
+    /* Chat Wallpaper Patterns */
+    .chat-wallpaper-sky {
+      background-color: #CFE2F3;
+      background-image:
+        radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.45) 8%, transparent 8.5%),
+        radial-gradient(circle at 80% 65%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 10%, transparent 10.5%),
+        radial-gradient(circle at 50% 90%, rgba(255, 240, 245, 0.45) 0%, rgba(255, 240, 245, 0.45) 6%, transparent 6.5%);
+      background-size: 160px 160px;
+    }
+    .chat-wallpaper-sakura {
+      background-color: #FFE5EC;
+      background-image:
+        radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 7%, transparent 7.5%),
+        radial-gradient(circle at 75% 75%, rgba(255, 194, 209, 0.45) 0%, rgba(255, 194, 209, 0.45) 9%, transparent 9.5%);
+      background-size: 140px 140px;
+    }
+    .chat-wallpaper-meadow {
+      background-color: #E2F6E9;
+      background-image:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.65) 8%, transparent 8.5%),
+        radial-gradient(circle at 70% 80%, rgba(167, 243, 208, 0.5) 0%, rgba(167, 243, 208, 0.5) 11%, transparent 11.5%);
+      background-size: 150px 150px;
+    }
+    .chat-wallpaper-cream {
+      background-color: #FFF8EA;
+      background-image:
+        radial-gradient(circle at 15% 40%, rgba(255, 229, 180, 0.4) 0%, rgba(255, 229, 180, 0.4) 8%, transparent 8.5%),
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 10%, transparent 10.5%);
+      background-size: 140px 140px;
+    }
+
+    /* LINE Bubbles */
+    .bubble-incoming {
+      position: relative;
+      background: #FFFFFF;
+      border-radius: 20px 20px 20px 6px;
+      border: 2px solid rgba(74, 55, 40, 0.06);
+    }
+    .bubble-incoming::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 12px;
+      width: 13px;
+      height: 13px;
+      background: #FFFFFF;
+      border-left: 2px solid rgba(74, 55, 40, 0.06);
+      border-top: 2px solid rgba(74, 55, 40, 0.06);
+      transform: skewX(25deg) rotate(-15deg);
+      border-radius: 3px 0 0 0;
+    }
+
+    .bubble-outgoing {
+      position: relative;
+      background: linear-gradient(135deg, #9BF6A8 0%, #7AE582 100%);
+      border-radius: 20px 20px 6px 20px;
+      border: 2px solid rgba(6, 199, 85, 0.2);
+    }
+    .bubble-outgoing::before {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 12px;
+      width: 13px;
+      height: 13px;
+      background: #7AE582;
+      transform: skewX(-25deg) rotate(15deg);
+      border-radius: 0 3px 0 0;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.9) translateY(8px); }
+      70% { transform: scale(1.02) translateY(-2px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop-in {
+      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes mascotBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-4px) rotate(3deg); }
+    }
+    .animate-mascot-bounce {
+      animation: mascotBounce 1.1s ease-in-out infinite;
+    }
+
+    @keyframes typingDot {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+    .typing-dot-1 { animation: typingDot 1.2s infinite 0s; }
+    .typing-dot-2 { animation: typingDot 1.2s infinite 0.2s; }
+    .typing-dot-3 { animation: typingDot 1.2s infinite 0.4s; }
+
+    ::selection {
+      background-color: #FFB3C6;
+      color: #4A3728;
+    }
+
+    .btn-cute {
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      -webkit-touch-callout: none;
+      user-select: none;
+    }
+    .btn-cute:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: #06C755;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="h-full w-full flex flex-col select-none">
+
+  <!-- IPADOS AUDIO & TTS ACTIVATION PROMPT (Hides on first touch) -->
+  <div id="iosUnlockBanner" onclick="unlockIosAudioAndSpeech()" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-3 py-1.5 text-center text-xs font-cute font-bold flex items-center justify-center gap-2 cursor-pointer shadow-md shrink-0 z-50">
+    <i class="ph-fill ph-speaker-high text-base animate-bounce"></i>
+    <span>iPad Air 2 Voice Mode: Tap anywhere to activate Text-to-Speech (TTS) & chime audio</span>
+    <span class="bg-white/20 px-2 py-0.5 rounded-full text-[10px]">Tap to Unmute</span>
+  </div>
+
+  <!-- TOP APP HEADER WITH IPAD DRAWER TOGGLES & TTS CONTROLS -->
+  <header class="bg-white/95 backdrop-blur-md border-b-2 border-pink-100 px-3.5 py-2 flex flex-col gap-2 shrink-0 z-30 shadow-sm">
+    <!-- Row 1: Brand, Title, Drawers Toggle & TTS Switch -->
+    <div class="flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[#06C755] to-[#00A843] flex items-center justify-center shadow-md border-2 border-white shrink-0">
+          <span class="font-cute font-bold text-white text-xs tracking-tight">LINE</span>
+          <span class="absolute -top-1.5 -right-1.5 bg-[#FF758F] text-white text-[9px] font-cute font-bold px-1.5 py-0.2 rounded-full border border-white shadow">TTS</span>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 truncate">
+            <h1 class="font-cute font-bold text-base text-[#4A3728] truncate leading-tight">Grace Baptist Fellowship (11)</h1>
+            <span class="hidden md:inline-flex bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-cute font-semibold px-2 py-0.5 rounded-full items-center gap-1">
+              <i class="ph-fill ph-sun-horizon text-amber-500"></i> Sat 8:00–10:30 AM
+            </span>
+          </div>
+          <p class="text-[11px] text-[#7D6350] font-medium truncate">
+            150 Spoken Messages • iPadOS 15.8.7 Compatible Text-to-Speech
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Items: Drawer Toggles, TTS Toggle, and Sound Mute -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <!-- iPad Left Drawer Toggle: Roster -->
+        <button id="btnToggleRoster" onclick="toggleLeftDrawer()" class="btn-cute px-2.5 py-2 rounded-xl bg-pink-50 hover:bg-pink-100 border border-pink-200 text-[#4A3728] font-cute font-bold text-xs flex items-center gap-1 shadow-sm" title="View 11 Fellowship Participants">
+          <i class="ph-fill ph-users-three text-[#06C755] text-base"></i>
+          <span class="hidden sm:inline">Roster</span>
+        </button>
+
+        <!-- iPad Right Drawer Toggle: Divine Attributes -->
+        <button id="btnToggleAttributes" onclick="toggleRightDrawer()" class="btn-cute px-2.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-[#4A3728] font-cute font-bold text-xs flex items-center gap-1 shadow-sm" title="View 20 Attributes of God">
+          <i class="ph-fill ph-crown-simple text-amber-500 text-base"></i>
+          <span class="hidden sm:inline">Attributes</span>
+          <span id="headerAttrBadge" class="bg-amber-200 text-amber-900 text-[10px] px-1.5 py-0.2 rounded-full font-bold">0/20</span>
+        </button>
+
+        <!-- TTS Toggle Button -->
+        <button id="btnToggleTts" onclick="toggleTtsMode()" class="btn-cute px-2.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 font-cute font-bold text-xs flex items-center gap-1 shadow-sm" title="Enable or Disable Message Text-to-Speech">
+          <i id="iconTtsToggle" class="ph-fill ph-speaker-simple-high text-[#06C755] text-base"></i>
+          <span id="labelTtsToggle" class="hidden sm:inline">TTS: ON</span>
+        </button>
+
+        <!-- Mute Audio / Keystrokes Toggle -->
+        <button id="btnAudioToggle" class="btn-cute w-9 h-9 rounded-xl bg-[#06C755] text-white flex items-center justify-center shadow-sm" title="Toggle Sound">
+          <i id="iconAudioToggle" class="ph-fill ph-bell text-base"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Row 2: Touch Playback Bar with Step Controls & Speed -->
+    <div class="flex items-center justify-between gap-1.5 overflow-x-auto py-0.5 no-scrollbar">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <!-- Reset Button -->
+        <button id="btnReset" class="btn-cute px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-[#7D6350] border border-pink-100 text-xs font-cute font-bold flex items-center gap-1 shadow-sm">
+          <i class="ph-bold ph-arrow-counter-clockwise"></i>
+          <span>Reset</span>
+        </button>
+
+        <!-- Auto Play / Pause Toggle -->
+        <button id="btnAutoPlay" class="btn-cute px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#06C755] to-[#12B886] text-white font-cute font-bold text-xs flex items-center gap-1.5 shadow-md">
+          <i id="iconAutoPlay" class="ph-fill ph-play text-sm"></i>
+          <span id="labelAutoPlay">Auto-Play & Speak</span>
+        </button>
+
+        <!-- Step 1 Message with Typing & TTS -->
+        <button id="btnStepOne" class="btn-cute px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#FF758F] to-[#FF8FA3] text-white font-cute font-bold text-xs flex items-center gap-1 shadow-md" title="Step 1 Message with live typing & voice">
+          <i class="ph-fill ph-chat-centered-dots text-sm"></i>
+          <span>Step 1 (Voice)</span>
+        </button>
+
+        <!-- Instant +1 -->
+        <button id="btnInstantOne" class="btn-cute px-2.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-[#4A3728] font-cute font-bold text-xs flex items-center gap-1 shadow-sm" title="Deliver and speak next message immediately">
+          <i class="ph-bold ph-skip-forward"></i>
+          <span>+1</span>
+        </button>
+      </div>
+
+      <!-- Clock & Counter -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <span id="liveClockBadge" class="bg-[#4A3728] text-white font-cute font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
+          8:00 AM
+        </span>
+        <span id="messageCounterBadge" class="text-xs font-cute font-bold text-[#7D6350] bg-white border border-pink-200 px-2.5 py-1 rounded-full shadow-sm">
+          0 / 150
+        </span>
+      </div>
+
+      <!-- Speed Selector -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <div class="flex items-center gap-1 bg-white border border-pink-200 rounded-xl px-2 py-1 shadow-sm">
+          <span class="text-[10px] font-cute font-bold text-[#7D6350]">Speed:</span>
+          <select id="selectSpeed" class="bg-transparent text-xs font-cute font-bold text-[#4A3728] focus:outline-none cursor-pointer">
+            <option value="0.7">0.7x</option>
+            <option value="1" selected>1.0x</option>
+            <option value="1.8">1.8x</option>
+            <option value="3.2">3.2x</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <div class="flex-1 flex overflow-hidden relative">
+    <div id="drawerScrim" onclick="closeDrawers()" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-30 hidden transition-opacity duration-300"></div>
+
+    <!-- LEFT DRAWER: PARTICIPANTS & PHASES -->
+    <aside id="leftDrawer" class="fixed xl:static top-0 bottom-0 left-0 z-40 w-80 max-w-[85vw] bg-white border-r-2 border-pink-100 flex flex-col shrink-0 transform -translate-x-full xl:translate-x-0 transition-transform duration-300 ease-out shadow-drawer xl:shadow-none">
+      <div class="p-3 border-b border-pink-100 bg-gradient-to-r from-pink-50/70 to-emerald-50/70 flex items-center justify-between">
+        <span class="font-cute font-bold text-sm text-[#4A3728] flex items-center gap-1.5">
+          <i class="ph-fill ph-users-three text-[#06C755] text-lg"></i>
+          <span>Prayer Circle Roster (11)</span>
+        </span>
+        <button onclick="closeDrawers()" class="xl:hidden w-8 h-8 rounded-full bg-white text-[#7D6350] hover:text-rose-500 border border-pink-100 flex items-center justify-center">
+          <i class="ph-bold ph-x text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Phase Jump Navigation -->
+      <div class="p-2 border-b border-pink-50 bg-[#FFFDF7]">
+        <div class="text-[10px] font-cute font-bold uppercase tracking-wider text-[#7D6350] mb-1.5 px-1">Jump to Phase:</div>
+        <div class="grid grid-cols-5 gap-1 bg-white p-1 rounded-xl border border-pink-100 shadow-inner">
+          <button onclick="jumpToPhase(0)" class="phase-btn btn-cute py-1.5 rounded-lg text-[10px] font-cute font-bold bg-pink-100 text-pink-900">I. Adore</button>
+          <button onclick="jumpToPhase(30)" class="phase-btn btn-cute py-1.5 rounded-lg text-[10px] font-cute font-bold hover:bg-amber-100 text-[#7D6350]">II. Word</button>
+          <button onclick="jumpToPhase(60)" class="phase-btn btn-cute py-1.5 rounded-lg text-[10px] font-cute font-bold hover:bg-purple-100 text-[#7D6350]">III. Repent</button>
+          <button onclick="jumpToPhase(90)" class="phase-btn btn-cute py-1.5 rounded-lg text-[10px] font-cute font-bold hover:bg-emerald-100 text-[#7D6350]">IV. Hymns</button>
+          <button onclick="jumpToPhase(120)" class="phase-btn btn-cute py-1.5 rounded-lg text-[10px] font-cute font-bold hover:bg-sky-100 text-[#7D6350]">V. Thanks</button>
+        </div>
+      </div>
+
+      <div id="participantsList" class="flex-1 overflow-y-auto touch-scroll p-2 space-y-1"></div>
+
+      <div class="p-3 bg-gradient-to-r from-amber-50 to-pink-50 border-t border-pink-100 text-xs text-[#7D6350]">
+        <div class="flex items-center gap-1.5 font-cute font-bold text-[#4A3728] mb-0.5">
+          <i class="ph-fill ph-waveform text-emerald-600"></i>
+          <span>TTS Voice Active</span>
+        </div>
+        <p class="leading-snug text-[11px]">
+          Every message is read aloud in real-time. Tap the speaker icon on any message to replay it.
+        </p>
+      </div>
+    </aside>
+
+    <!-- CENTER CHAT ROOM -->
+    <main class="flex-1 flex flex-col relative overflow-hidden">
+      <!-- Sub-header & Timeline Slider -->
+      <div class="bg-white/90 backdrop-blur-md border-b border-pink-100 px-4 py-2 flex flex-col gap-1.5 z-10">
+        <div class="flex items-center justify-between gap-2">
+          <span id="currentPhaseBadge" class="bg-gradient-to-r from-pink-500 to-rose-400 text-white font-cute font-bold text-xs px-3 py-1 rounded-full shadow-sm truncate">
+            Phase I: Saturday Morning Adoration (8:00 AM – 8:29 AM)
+          </span>
+
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="setWallpaper('sky')" class="w-5 h-5 rounded-full bg-[#CFE2F3] border-2 border-white shadow ring-2 ring-sky-400"></button>
+            <button onclick="setWallpaper('sakura')" class="w-5 h-5 rounded-full bg-[#FFE5EC] border-2 border-white shadow hover:ring-2 ring-pink-400"></button>
+            <button onclick="setWallpaper('meadow')" class="w-5 h-5 rounded-full bg-[#E2F6E9] border-2 border-white shadow hover:ring-2 ring-emerald-400"></button>
+            <button onclick="setWallpaper('cream')" class="w-5 h-5 rounded-full bg-[#FFF8EA] border-2 border-white shadow hover:ring-2 ring-amber-400"></button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-cute font-bold text-[#7D6350] w-12 shrink-0">8:00 AM</span>
+          <input id="timelineSlider" type="range" min="0" max="150" value="0" class="flex-1 accent-[#06C755] h-2 bg-pink-100 rounded-lg cursor-pointer" />
+          <span class="text-[10px] font-cute font-bold text-[#7D6350] w-14 shrink-0 text-right">10:30 AM</span>
+        </div>
+      </div>
+
+      <!-- Messages Viewport -->
+      <div id="chatViewport" class="flex-1 overflow-y-auto touch-scroll p-4 sm:p-6 space-y-4 chat-wallpaper-sky transition-colors duration-300 select-text">
+        <div class="max-w-xl mx-auto bg-white/90 backdrop-blur-sm rounded-3xl p-4 shadow-cute border-2 border-white text-center select-none">
+          <div class="flex justify-center -space-x-2 mb-2" id="bannerMiniAvatars"></div>
+          <h2 class="font-cute font-bold text-base text-[#4A3728]">
+            Saturday Morning Prayer & Scripture Fellowship
+          </h2>
+          <p class="text-xs text-[#7D6350] mt-1 leading-relaxed">
+            Welcome to our 2.5-hour Saturday morning gathering (8:00 AM – 10:30 AM EST). Eleven conservative Baptist believers unite in prayer, KJV/ESV Scripture study, confession, and classic hymns.
+          </p>
+          <div class="mt-2.5 inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 px-3 py-1 rounded-full text-[11px] font-cute font-semibold border border-emerald-200">
+            <i class="ph-fill ph-speaker-high text-[#06C755]"></i>
+            <span>iPad Air 2 TTS is enabled: Each message speaks automatically as it arrives.</span>
+          </div>
+        </div>
+
+        <div id="messagesContainer" class="space-y-4 pb-4"></div>
+
+        <!-- Live Typing Indicator -->
+        <div id="incomingTypingContainer" class="hidden animate-pop-in select-none">
+          <div class="flex items-start gap-2.5 max-w-xl">
+            <div id="typingAvatarBox" class="w-11 h-11 rounded-2xl bg-white p-1 shadow-md border-2 border-pink-200 shrink-0 animate-mascot-bounce"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span id="typingSenderName" class="font-cute font-bold text-xs text-[#4A3728] bg-white/80 px-2.5 py-0.5 rounded-full shadow-sm"></span>
+                <span class="text-[10px] font-cute font-semibold text-pink-600 bg-pink-50 px-2 py-0.5 rounded-full border border-pink-200 flex items-center gap-1">
+                  <i class="ph-fill ph-keyboard"></i> typing prayer...
+                </span>
+              </div>
+              <div class="bubble-incoming px-4 py-2.5 shadow-bubble inline-flex flex-col gap-1 min-w-[200px]">
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center gap-1.5 bg-pink-50 px-2 py-0.5 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-[#FF758F] typing-dot-1"></span>
+                    <span class="w-2 h-2 rounded-full bg-[#FF758F] typing-dot-2"></span>
+                    <span class="w-2 h-2 rounded-full bg-[#FF758F] typing-dot-3"></span>
+                  </div>
+                  <span id="typingProgressPct" class="text-[10px] font-cute font-bold text-[#7D6350]">0%</span>
+                </div>
+                <p id="typingGhostPreview" class="text-xs text-[#7D6350]/85 italic font-medium leading-relaxed"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticker Drawer -->
+      <div id="stickerDrawer" class="hidden absolute bottom-16 left-4 right-4 max-w-md mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-3.5 shadow-pop border-2 border-pink-200 z-30 animate-pop-in">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-cute font-bold text-xs text-[#4A3728] flex items-center gap-1.5">
+            <i class="ph-fill ph-smiley-wink text-pink-500 text-base"></i>
+            <span>LINE Cute Stickers</span>
+          </span>
+          <button onclick="toggleStickerDrawer()" class="text-[#7D6350] hover:text-rose-500 p-1">
+            <i class="ph-bold ph-x text-sm"></i>
+          </button>
+        </div>
+        <div id="stickerGrid" class="grid grid-cols-4 gap-2"></div>
+      </div>
+
+      <!-- Bottom Compose Bar -->
+      <div class="bg-white border-t-2 border-pink-100 p-2.5 shrink-0 z-20 select-none">
+        <div class="flex items-center gap-2 max-w-4xl mx-auto">
+          <button onclick="toggleStickerDrawer()" class="btn-cute w-10 h-10 rounded-2xl bg-pink-50 hover:bg-pink-100 text-pink-500 border border-pink-200 flex items-center justify-center shrink-0 shadow-sm" title="Stickers">
+            <i class="ph-fill ph-smiley text-2xl"></i>
+          </button>
+
+          <div class="flex items-center gap-1.5 bg-emerald-50/90 border border-emerald-200 px-2 py-1 rounded-2xl shrink-0">
+            <div id="selfMiniAvatar" class="w-7 h-7 rounded-xl bg-white p-0.5 shadow-sm"></div>
+            <div class="leading-tight hidden sm:block">
+              <div class="text-[10px] font-cute font-bold text-[#4A3728]">Josiah</div>
+              <div class="text-[9px] font-cute font-semibold text-[#06C755]">You</div>
+            </div>
+          </div>
+
+          <div class="flex-1 relative">
+            <input
+              id="composeInput"
+              type="text"
+              readonly
+              inputmode="none"
+              placeholder="Waiting for your turn, or tap 'Step 1' above..."
+              class="w-full bg-[#FFF9FB] border-2 border-pink-200 focus:border-[#06C755] rounded-2xl px-3.5 py-2 text-base font-medium text-[#4A3728] placeholder-[#7D6350]/60 focus:outline-none transition-all shadow-inner"
+            />
+            <span id="selfTypingBadge" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 bg-[#06C755] text-white text-[9px] font-cute font-bold px-2 py-0.5 rounded-full animate-pulse">
+              TYPING...
+            </span>
+          </div>
+
+          <button id="btnComposeSend" onclick="triggerStepOne()" class="btn-cute px-3.5 h-10 rounded-2xl bg-gradient-to-r from-[#06C755] to-[#00B248] text-white font-cute font-bold text-xs flex items-center gap-1 shadow-md shrink-0">
+            <i class="ph-fill ph-paper-plane-right text-base"></i>
+            <span class="hidden md:inline">Send/Next</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT DRAWER: ATTRIBUTES & HYMNS -->
+    <aside id="rightDrawer" class="fixed xl:static top-0 bottom-0 right-0 z-40 w-80 max-w-[85vw] bg-white border-l-2 border-pink-100 flex flex-col shrink-0 transform translate-x-full xl:translate-x-0 transition-transform duration-300 ease-out shadow-drawer xl:shadow-none">
+      <div class="p-3.5 border-b border-pink-100 bg-gradient-to-br from-pink-50/70 via-white to-amber-50/70 flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <span class="font-cute font-bold text-xs uppercase tracking-wider text-pink-600 flex items-center gap-1">
+            <i class="ph-fill ph-crown-simple text-amber-500"></i>
+            <span>Illuminated Attribute</span>
+          </span>
+          <div class="flex items-center gap-1.5">
+            <span id="attributeCountBadge" class="text-[10px] font-cute font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full border border-amber-300">
+              0 / 20 Done
+            </span>
+            <button onclick="closeDrawers()" class="xl:hidden w-8 h-8 rounded-full bg-white text-[#7D6350] hover:text-rose-500 border border-pink-100 flex items-center justify-center">
+              <i class="ph-bold ph-x text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="activeAttributeCard" class="bg-white rounded-2xl p-3 border-2 border-pink-100 shadow-sm">
+          <div class="font-cute font-bold text-sm text-[#4A3728]" id="activeAttrName">
+            Awaiting Prayer Step...
+          </div>
+          <div class="text-[11px] text-[#7D6350] mt-1 leading-relaxed" id="activeAttrDesc">
+            Tap <strong>Auto-Play</strong> or <strong>Step 1</strong> to begin Saturday prayer and hear each attribute spoken.
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-pink-50 flex items-center justify-between text-[10px] font-cute font-semibold text-emerald-700">
+            <span id="activeScriptureRef"><i class="ph-fill ph-book-open-text"></i> Psalm 145:3</span>
+            <span id="activeSpeakerTag" class="text-pink-600">Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 flex-1 overflow-y-auto touch-scroll">
+        <h3 class="font-cute font-bold text-xs text-[#7D6350] uppercase tracking-wider mb-2">Divine Attributes</h3>
+        <div id="attributesChecklist" class="grid grid-cols-2 gap-1.5"></div>
+
+        <div class="mt-4 pt-3 border-t border-pink-100">
+          <h3 class="font-cute font-bold text-xs text-[#7D6350] uppercase tracking-wider mb-2 flex items-center gap-1">
+            <i class="ph-fill ph-music-notes-plus text-pink-500"></i>
+            <span>Classic Hymns (9:30 AM)</span>
+          </h3>
+          <div class="space-y-1 text-xs">
+            <div onclick="jumpToMessageIndex(90); closeDrawers();" class="p-2 rounded-xl bg-pink-50/70 hover:bg-pink-100/80 border border-pink-200/60 cursor-pointer transition">
+              <div class="font-cute font-bold text-[#4A3728]">1. Holy, Holy, Holy! (Msgs 91–97)</div>
+              <div class="text-[10px] text-[#7D6350]">Reginald Heber • Trinity & Holiness</div>
+            </div>
+            <div onclick="jumpToMessageIndex(97); closeDrawers();" class="p-2 rounded-xl bg-amber-50/70 hover:bg-amber-100/80 border border-amber-200/60 cursor-pointer transition">
+              <div class="font-cute font-bold text-[#4A3728]">2. Great Is Thy Faithfulness (Msgs 98–105)</div>
+              <div class="text-[10px] text-[#7D6350]">Thomas Chisholm • Immutability & Mercy</div>
+            </div>
+            <div onclick="jumpToMessageIndex(105); closeDrawers();" class="p-2 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200/60 cursor-pointer transition">
+              <div class="font-cute font-bold text-[#4A3728]">3. Come, Thou Fount (Msgs 106–112)</div>
+              <div class="text-[10px] text-[#7D6350]">Robert Robinson • Grace & Perseverance</div>
+            </div>
+            <div onclick="jumpToMessageIndex(112); closeDrawers();" class="p-2 rounded-xl bg-sky-50/70 hover:bg-sky-100/80 border border-sky-200/60 cursor-pointer transition">
+              <div class="font-cute font-bold text-[#4A3728]">4. Amazing Grace (Msgs 113–120)</div>
+              <div class="text-[10px] text-[#7D6350]">John Newton • Redemption & Sovereign Love</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- FLOATING TOUCH HIGHLIGHT POPUP -->
+  <div id="selectionSearchPopup" class="hidden fixed z-50 bg-white rounded-2xl p-2 shadow-pop border-2 border-[#FF758F] flex items-center gap-1.5 animate-pop-in">
+    <div class="px-2 py-1 bg-pink-50 rounded-xl max-w-[150px] truncate text-xs font-cute font-bold text-[#4A3728]" id="selectedTextPreview"></div>
+    <button id="btnSearchGoogle" class="btn-cute bg-[#06C755] hover:bg-[#05b34c] text-white text-xs font-cute font-bold px-2.5 py-1.5 rounded-xl flex items-center gap-1 shadow-sm">
+      <i class="ph-bold ph-magnifying-glass"></i>
+      <span>Google</span>
+    </button>
+    <button id="btnSearchBible" class="btn-cute bg-amber-500 hover:bg-amber-600 text-white text-xs font-cute font-bold px-2.5 py-1.5 rounded-xl flex items-center gap-1 shadow-sm">
+      <i class="ph-fill ph-book-bookmark"></i>
+      <span>BibleGateway</span>
+    </button>
+    <button id="btnCopySelection" class="btn-cute bg-pink-100 hover:bg-pink-200 text-[#4A3728] text-xs font-cute font-bold px-2 py-1.5 rounded-xl flex items-center gap-1">
+      <i class="ph-bold ph-copy"></i>
+    </button>
+  </div>
+
+  <div id="cuteToast" class="hidden fixed bottom-6 right-6 z-50 bg-[#4A3728] text-white px-4 py-2.5 rounded-2xl shadow-lg font-cute font-semibold text-xs flex items-center gap-2 animate-pop-in select-none">
+    <i class="ph-fill ph-sparkle text-amber-300 text-base"></i>
+    <span id="cuteToastText">Ready</span>
+  </div>
+
+  <script>
+    /*************************************************************************
+     * 1. MASCOT AVATARS & STICKERS
+     *************************************************************************/
+    const MASCOT_SVGS = {
+      pastor_caleb: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#FFE8D6"/>
+          <circle cx="24" cy="26" r="14" fill="#8D5B4C"/>
+          <circle cx="24" cy="26" r="7" fill="#D4A373"/>
+          <circle cx="76" cy="26" r="14" fill="#8D5B4C"/>
+          <circle cx="76" cy="26" r="7" fill="#D4A373"/>
+          <circle cx="50" cy="54" r="32" fill="#8D5B4C"/>
+          <ellipse cx="29" cy="58" rx="6" ry="4" fill="#FF8FA3" opacity="0.75"/>
+          <ellipse cx="71" cy="58" rx="6" ry="4" fill="#FF8FA3" opacity="0.75"/>
+          <ellipse cx="50" cy="60" rx="13" ry="11" fill="#FFF3E6"/>
+          <ellipse cx="50" cy="56" rx="5" ry="3.8" fill="#3D2622"/>
+          <path d="M50 59.5 L50 65 M45 65 Q50 69 55 65" stroke="#3D2622" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="38" cy="48" r="3.5" fill="#2B1B17"/>
+          <circle cx="62" cy="48" r="3.5" fill="#2B1B17"/>
+          <circle cx="36.8" cy="46.8" r="1.2" fill="#FFF"/>
+          <circle cx="60.8" cy="46.8" r="1.2" fill="#FFF"/>
+          <circle cx="38" cy="48" r="8.5" fill="none" stroke="#F4A261" stroke-width="2.5"/>
+          <circle cx="62" cy="48" r="8.5" fill="none" stroke="#F4A261" stroke-width="2.5"/>
+          <line x1="46.5" y1="48" x2="53.5" y2="48" stroke="#F4A261" stroke-width="2.5"/>
+          <rect x="66" y="72" width="18" height="22" rx="3" fill="#5E3023" stroke="#FFF" stroke-width="2"/>
+          <path d="M75 76 L75 88 M71 80 L79 80" stroke="#FFD166" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `,
+      brother_josiah: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#D8F3DC"/>
+          <ellipse cx="36" cy="22" rx="8" ry="20" transform="rotate(-8 36 22)" fill="#FFFFFF" stroke="#4A3728" stroke-width="2"/>
+          <ellipse cx="36" cy="22" rx="4" ry="13" transform="rotate(-8 36 22)" fill="#FFB5C2"/>
+          <ellipse cx="64" cy="22" rx="8" ry="20" transform="rotate(8 64 22)" fill="#FFFFFF" stroke="#4A3728" stroke-width="2"/>
+          <ellipse cx="64" cy="22" rx="4" ry="13" transform="rotate(8 64 22)" fill="#FFB5C2"/>
+          <circle cx="50" cy="58" r="30" fill="#FFFFFF" stroke="#4A3728" stroke-width="2"/>
+          <ellipse cx="31" cy="60" rx="6.5" ry="4" fill="#FF8FA3" opacity="0.8"/>
+          <ellipse cx="69" cy="60" rx="6.5" ry="4" fill="#FF8FA3" opacity="0.8"/>
+          <circle cx="39" cy="53" r="4" fill="#3D2622"/>
+          <circle cx="61" cy="53" r="4" fill="#3D2622"/>
+          <circle cx="37.5" cy="51.5" r="1.5" fill="#FFFFFF"/>
+          <circle cx="59.5" cy="51.5" r="1.5" fill="#FFFFFF"/>
+          <ellipse cx="50" cy="59" rx="4" ry="3" fill="#FF758F"/>
+          <path d="M45 64 Q50 69 55 64" stroke="#3D2622" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M26 82 Q50 94 74 82" stroke="#06C755" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </svg>
+      `,
+      sister_hannah: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#FFF3B0"/>
+          <circle cx="50" cy="56" r="31" fill="#FFD166"/>
+          <path d="M50 25 L36 17 L39 31 Z" fill="#FF5D8F"/>
+          <path d="M50 25 L64 17 L61 31 Z" fill="#FF5D8F"/>
+          <circle cx="50" cy="25" r="4.5" fill="#FF8FA3"/>
+          <circle cx="29" cy="59" r="5.5" fill="#FF758F" opacity="0.65"/>
+          <circle cx="71" cy="59" r="5.5" fill="#FF758F" opacity="0.65"/>
+          <circle cx="38" cy="51" r="3.8" fill="#3D2622"/>
+          <circle cx="62" cy="51" r="3.8" fill="#3D2622"/>
+          <circle cx="37" cy="49.5" r="1.3" fill="#FFF"/>
+          <circle cx="61" cy="49.5" r="1.3" fill="#FFF"/>
+          <ellipse cx="50" cy="58" rx="8" ry="5.5" fill="#F77F00"/>
+          <path d="M45 58 Q50 61 55 58" stroke="#FFF" stroke-width="1.5" fill="none"/>
+          <circle cx="77" cy="28" r="9" fill="#FFF" opacity="0.9"/>
+          <text x="73" y="32" font-size="13" fill="#FF5D8F" font-weight="bold">♪</text>
+        </svg>
+      `,
+      deacon_samuel: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#E2ECE9"/>
+          <circle cx="33" cy="34" r="13" fill="#74C69D"/>
+          <circle cx="67" cy="34" r="13" fill="#74C69D"/>
+          <circle cx="33" cy="34" r="8" fill="#FFFFFF"/>
+          <circle cx="67" cy="34" r="8" fill="#FFFFFF"/>
+          <circle cx="33" cy="34" r="4.5" fill="#2B1B17"/>
+          <circle cx="67" cy="34" r="4.5" fill="#2B1B17"/>
+          <circle cx="31.5" cy="32.5" r="1.5" fill="#FFF"/>
+          <circle cx="65.5" cy="32.5" r="1.5" fill="#FFF"/>
+          <ellipse cx="50" cy="58" rx="34" ry="26" fill="#74C69D"/>
+          <ellipse cx="50" cy="64" rx="24" ry="15" fill="#D8F3DC"/>
+          <ellipse cx="26" cy="56" rx="5.5" ry="3.5" fill="#FF8FA3" opacity="0.75"/>
+          <ellipse cx="74" cy="56" rx="5.5" ry="3.5" fill="#FF8FA3" opacity="0.75"/>
+          <path d="M35 55 Q50 66 65 55" stroke="#2D6A4F" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M50 82 L37 75 L37 89 Z" fill="#E63946"/>
+          <path d="M50 82 L63 75 L63 89 Z" fill="#E63946"/>
+          <circle cx="50" cy="82" r="4" fill="#FFB703"/>
+        </svg>
+      `,
+      sister_abigail: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#FDE2E4"/>
+          <ellipse cx="20" cy="52" rx="10" ry="6" transform="rotate(-20 20 52)" fill="#FFE5D9"/>
+          <ellipse cx="80" cy="52" rx="10" ry="6" transform="rotate(20 80 52)" fill="#FFE5D9"/>
+          <circle cx="50" cy="54" r="29" fill="#FFE5D9"/>
+          <circle cx="35" cy="30" r="12" fill="#FFFFFF"/>
+          <circle cx="50" cy="27" r="14" fill="#FFFFFF"/>
+          <circle cx="65" cy="30" r="12" fill="#FFFFFF"/>
+          <circle cx="38" cy="31" r="4.5" fill="#FF8FA3"/>
+          <circle cx="50" cy="29" r="5" fill="#FFD166"/>
+          <circle cx="62" cy="31" r="4.5" fill="#A8DADC"/>
+          <circle cx="39" cy="54" r="3.6" fill="#4A3728"/>
+          <circle cx="61" cy="54" r="3.6" fill="#4A3728"/>
+          <circle cx="38" cy="52.5" r="1.2" fill="#FFF"/>
+          <circle cx="60" cy="52.5" r="1.2" fill="#FFF"/>
+          <ellipse cx="30" cy="60" rx="5" ry="3" fill="#FF758F" opacity="0.6"/>
+          <ellipse cx="70" cy="60" rx="5" ry="3" fill="#FF758F" opacity="0.6"/>
+          <path d="M46 62 Q50 66 54 62" stroke="#4A3728" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      `,
+      brother_ethan: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#E0FBFC"/>
+          <ellipse cx="22" cy="52" rx="10" ry="20" transform="rotate(12 22 52)" fill="#B5651D"/>
+          <ellipse cx="78" cy="52" rx="10" ry="20" transform="rotate(-12 78 52)" fill="#B5651D"/>
+          <circle cx="50" cy="52" r="29" fill="#F4A261"/>
+          <ellipse cx="50" cy="59" rx="14" ry="11" fill="#FFF8F0"/>
+          <circle cx="38" cy="46" r="4" fill="#2B1B17"/>
+          <circle cx="62" cy="46" r="4" fill="#2B1B17"/>
+          <circle cx="36.8" cy="44.8" r="1.3" fill="#FFF"/>
+          <circle cx="60.8" cy="44.8" r="1.3" fill="#FFF"/>
+          <ellipse cx="50" cy="55" rx="5.5" ry="4" fill="#3D2622"/>
+          <path d="M46 62 Q50 68 54 62" fill="#FF758F"/>
+          <rect x="28" y="75" width="44" height="11" rx="5.5" fill="#457B9D"/>
+          <rect x="54" y="80" width="10" height="14" rx="4" fill="#457B9D"/>
+        </svg>
+      `,
+      sister_lydia: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#F3E8FF"/>
+          <circle cx="25" cy="27" r="13" fill="#B07D62"/>
+          <circle cx="75" cy="27" r="13" fill="#B07D62"/>
+          <path d="M68 22 L56 16 L59 29 Z" fill="#9D4EDD"/>
+          <path d="M68 22 L80 16 L77 29 Z" fill="#9D4EDD"/>
+          <circle cx="68" cy="22" r="4" fill="#F72585"/>
+          <circle cx="50" cy="55" r="30" fill="#B07D62"/>
+          <ellipse cx="50" cy="61" rx="12" ry="10" fill="#FFF0F3"/>
+          <circle cx="38" cy="49" r="3.6" fill="#2B1B17"/>
+          <circle cx="62" cy="49" r="3.6" fill="#2B1B17"/>
+          <circle cx="37" cy="47.5" r="1.2" fill="#FFF"/>
+          <circle cx="61" cy="47.5" r="1.2" fill="#FFF"/>
+          <ellipse cx="29" cy="56" rx="5.5" ry="3.5" fill="#FF758F" opacity="0.8"/>
+          <ellipse cx="71" cy="56" rx="5.5" ry="3.5" fill="#FF758F" opacity="0.8"/>
+          <ellipse cx="50" cy="57" rx="4.5" ry="3.2" fill="#4A3728"/>
+          <path d="M46 63 Q50 67 54 63" stroke="#4A3728" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      `,
+      brother_micah: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#FFEDD8"/>
+          <polygon points="22,42 26,14 44,32" fill="#E76F51"/>
+          <polygon points="26,38 28,20 40,32" fill="#FFE5D9"/>
+          <polygon points="78,42 74,14 56,32" fill="#E76F51"/>
+          <polygon points="74,38 72,20 60,32" fill="#FFE5D9"/>
+          <circle cx="50" cy="56" r="30" fill="#E76F51"/>
+          <path d="M22 58 Q36 48 50 62 Q64 48 78 58 Q74 84 50 86 Q26 84 22 58 Z" fill="#FFFFFF"/>
+          <rect x="30" y="43" width="16" height="12" rx="4" fill="none" stroke="#264653" stroke-width="2.5"/>
+          <rect x="54" y="43" width="16" height="12" rx="4" fill="none" stroke="#264653" stroke-width="2.5"/>
+          <line x1="46" y1="49" x2="54" y2="49" stroke="#264653" stroke-width="2.5"/>
+          <circle cx="38" cy="49" r="3.2" fill="#264653"/>
+          <circle cx="62" cy="49" r="3.2" fill="#264653"/>
+          <circle cx="50" cy="60" r="4" fill="#264653"/>
+          <path d="M45 66 Q50 70 55 66" stroke="#264653" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      `,
+      sister_ruth: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#E8EAF6"/>
+          <circle cx="50" cy="54" r="30" fill="#FFFFFF" stroke="#C5CAE9" stroke-width="2"/>
+          <path d="M23 72 Q50 92 77 72" stroke="#9575CD" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path d="M34 49 Q39 44 44 49" stroke="#4A3728" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M56 49 Q61 44 66 49" stroke="#4A3728" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="56" r="5" fill="#FF8FA3" opacity="0.65"/>
+          <circle cx="70" cy="56" r="5" fill="#FF8FA3" opacity="0.65"/>
+          <polygon points="45,55 55,55 50,63" fill="#FFB703"/>
+          <path d="M53 60 Q68 58 75 50" stroke="#52B788" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="66" cy="54" rx="4" ry="2" transform="rotate(-25 66 54)" fill="#52B788"/>
+        </svg>
+      `,
+      brother_noah: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#E6F4EA"/>
+          <circle cx="24" cy="40" r="9" fill="#7F5539"/>
+          <circle cx="76" cy="40" r="9" fill="#7F5539"/>
+          <circle cx="50" cy="56" r="29" fill="#9C6644"/>
+          <path d="M24 38 Q50 18 76 38 Z" fill="#2A9D8F"/>
+          <rect x="20" y="34" width="60" height="6" rx="3" fill="#264653"/>
+          <circle cx="43" cy="60" r="9" fill="#EDE0D4"/>
+          <circle cx="57" cy="60" r="9" fill="#EDE0D4"/>
+          <polygon points="45,54 55,54 50,60" fill="#3D2622"/>
+          <circle cx="38" cy="46" r="3.5" fill="#2B1B17"/>
+          <circle cx="62" cy="46" r="3.5" fill="#2B1B17"/>
+          <circle cx="37" cy="44.8" r="1.2" fill="#FFF"/>
+          <circle cx="61" cy="44.8" r="1.2" fill="#FFF"/>
+        </svg>
+      `,
+      sister_martha: `
+        <svg viewBox="0 0 100 100" class="w-full h-full">
+          <rect width="100" height="100" rx="26" fill="#FFF0F3"/>
+          <circle cx="50" cy="52" r="34" fill="#FFCAD4"/>
+          <circle cx="50" cy="55" r="28" fill="#FFE66D"/>
+          <circle cx="30" cy="58" r="5.5" fill="#FF758F" opacity="0.7"/>
+          <circle cx="70" cy="58" r="5.5" fill="#FF758F" opacity="0.7"/>
+          <circle cx="39" cy="50" r="3.8" fill="#3D2622"/>
+          <circle cx="61" cy="50" r="3.8" fill="#3D2622"/>
+          <circle cx="37.8" cy="48.8" r="1.3" fill="#FFF"/>
+          <circle cx="59.8" cy="48.8" r="1.3" fill="#FFF"/>
+          <ellipse cx="50" cy="58" rx="9" ry="5" fill="#FF9F1C"/>
+          <path d="M50 84 L44 78 A4 4 0 0 1 50 73 A4 4 0 0 1 56 78 Z" fill="#FF5D8F"/>
+        </svg>
+      `
+    };
+
+    const CUTE_STICKERS = {
+      praying_bear: {
+        title: "Amen Bear",
+        svg: `
+          <svg viewBox="0 0 140 120" class="w-24 h-20 drop-shadow-md">
+            <circle cx="70" cy="60" r="52" fill="#FFF8F0" stroke="#FFB5C2" stroke-width="3"/>
+            <circle cx="44" cy="30" r="12" fill="#8D5B4C"/>
+            <circle cx="96" cy="30" r="12" fill="#8D5B4C"/>
+            <circle cx="70" cy="58" r="28" fill="#8D5B4C"/>
+            <ellipse cx="70" cy="64" rx="11" ry="9" fill="#FFF3E6"/>
+            <path d="M54 50 Q59 45 64 50" stroke="#2B1B17" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M76 50 Q81 45 86 50" stroke="#2B1B17" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="50" cy="60" rx="5" ry="3" fill="#FF758F" opacity="0.8"/>
+            <ellipse cx="90" cy="60" rx="5" ry="3" fill="#FF758F" opacity="0.8"/>
+            <ellipse cx="64" cy="82" rx="7" ry="12" transform="rotate(-15 64 82)" fill="#D4A373" stroke="#5E3023" stroke-width="2"/>
+            <ellipse cx="76" cy="82" rx="7" ry="12" transform="rotate(15 76 82)" fill="#D4A373" stroke="#5E3023" stroke-width="2"/>
+            <text x="70" y="110" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="14" fill="#D90429">AMEN!</text>
+          </svg>
+        `
+      },
+      scripture_bunny: {
+        title: "Word Bunny",
+        svg: `
+          <svg viewBox="0 0 140 120" class="w-24 h-20 drop-shadow-md">
+            <circle cx="70" cy="60" r="52" fill="#E8F8F5" stroke="#06C755" stroke-width="3"/>
+            <ellipse cx="58" cy="24" rx="7" ry="16" fill="#FFF" stroke="#4A3728" stroke-width="2"/>
+            <ellipse cx="82" cy="24" rx="7" ry="16" fill="#FFF" stroke="#4A3728" stroke-width="2"/>
+            <circle cx="70" cy="54" r="24" fill="#FFF" stroke="#4A3728" stroke-width="2"/>
+            <circle cx="61" cy="50" r="3.5" fill="#4A3728"/>
+            <circle cx="79" cy="50" r="3.5" fill="#4A3728"/>
+            <ellipse cx="70" cy="56" rx="3.5" ry="2.5" fill="#FF758F"/>
+            <path d="M42 74 L70 80 L98 74 L98 94 L70 100 L42 94 Z" fill="#FFD166" stroke="#4A3728" stroke-width="2"/>
+            <line x1="70" y1="80" x2="70" y2="100" stroke="#4A3728" stroke-width="2"/>
+            <text x="70" y="113" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="12" fill="#06C755">TRUTH</text>
+          </svg>
+        `
+      },
+      repentant_lamb: {
+        title: "Clean Lamb",
+        svg: `
+          <svg viewBox="0 0 140 120" class="w-24 h-20 drop-shadow-md">
+            <circle cx="70" cy="60" r="52" fill="#FFF0F5" stroke="#FF8FA3" stroke-width="3"/>
+            <circle cx="70" cy="56" r="26" fill="#FFE5D9"/>
+            <circle cx="56" cy="34" r="10" fill="#FFF"/>
+            <circle cx="70" cy="31" r="12" fill="#FFF"/>
+            <circle cx="84" cy="34" r="10" fill="#FFF"/>
+            <circle cx="60" cy="54" r="3.5" fill="#4A3728"/>
+            <circle cx="80" cy="54" r="3.5" fill="#4A3728"/>
+            <path d="M55 60 Q52 66 55 69 Q58 66 55 60 Z" fill="#4CC9F0"/>
+            <path d="M70 88 L62 80 A5 5 0 0 1 70 74 A5 5 0 0 1 78 80 Z" fill="#FFFFFF" stroke="#FF5D8F" stroke-width="2"/>
+            <text x="70" y="111" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="12" fill="#C9184A">GRACE</text>
+          </svg>
+        `
+      },
+      hymn_chick: {
+        title: "Singing Chick",
+        svg: `
+          <svg viewBox="0 0 140 120" class="w-24 h-20 drop-shadow-md">
+            <circle cx="70" cy="60" r="52" fill="#FFFBEB" stroke="#FFD166" stroke-width="3"/>
+            <circle cx="70" cy="58" r="26" fill="#FFD166"/>
+            <circle cx="60" cy="50" r="3.5" fill="#4A3728"/>
+            <circle cx="80" cy="50" r="3.5" fill="#4A3728"/>
+            <ellipse cx="70" cy="60" rx="7" ry="6" fill="#F77F00"/>
+            <text x="34" y="42" font-size="18" fill="#FF5D8F" font-weight="bold">♪</text>
+            <text x="98" y="38" font-size="20" fill="#06C755" font-weight="bold">♫</text>
+            <text x="70" y="110" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="13" fill="#B45309">SING!</text>
+          </svg>
+        `
+      },
+      thanksgiving_frog: {
+        title: "Grateful Frog",
+        svg: `
+          <svg viewBox="0 0 140 120" class="w-24 h-20 drop-shadow-md">
+            <circle cx="70" cy="60" r="52" fill="#ECFDF5" stroke="#34D399" stroke-width="3"/>
+            <circle cx="55" cy="38" r="10" fill="#74C69D"/>
+            <circle cx="85" cy="38" r="10" fill="#74C69D"/>
+            <circle cx="55" cy="38" r="5" fill="#FFF"/>
+            <circle cx="85" cy="38" r="5" fill="#FFF"/>
+            <circle cx="55" cy="38" r="3" fill="#2B1B17"/>
+            <circle cx="85" cy="38" r="3" fill="#2B1B17"/>
+            <ellipse cx="70" cy="58" rx="28" ry="20" fill="#74C69D"/>
+            <path d="M56 58 Q70 68 84 58" stroke="#1B4332" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M70 90 L60 80 A6 6 0 0 1 70 72 A6 6 0 0 1 80 80 Z" fill="#FF4D6D"/>
+            <text x="70" y="111" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="12" fill="#047857">GLORIA!</text>
+          </svg>
+        `
+      }
+    };
+
+    /*************************************************************************
+     * 2. PARTICIPANTS METADATA (11 BELIEVERS)
+     *************************************************************************/
+    const PARTICIPANTS = [
+      { id: "pastor_caleb", name: "Pastor Caleb Vance", role: "Senior Pastor • Savannah, GA", isSelf: false, avatarKey: "pastor_caleb" },
+      { id: "brother_josiah", name: "Brother Josiah Miller (You)", role: "Youth Leader • Columbus, OH", isSelf: true, avatarKey: "brother_josiah" },
+      { id: "sister_hannah", name: "Sister Hannah Sterling", role: "Choir & Piano • Roanoke, VA", isSelf: false, avatarKey: "sister_hannah" },
+      { id: "deacon_samuel", name: "Deacon Samuel Boone", role: "Senior Deacon • Lexington, KY", isSelf: false, avatarKey: "deacon_samuel" },
+      { id: "sister_abigail", name: "Sister Abigail Thornton", role: "Sunday School • Asheville, NC", isSelf: false, avatarKey: "sister_abigail" },
+      { id: "brother_ethan", name: "Brother Ethan Aldrich", role: "Missions Lead • Waco, TX", isSelf: false, avatarKey: "brother_ethan" },
+      { id: "sister_lydia", name: "Sister Lydia Prescott", role: "Women's Ministry • Franklin, TN", isSelf: false, avatarKey: "sister_lydia" },
+      { id: "brother_micah", name: "Brother Micah Holloway", role: "Seminary Student • Wheaton, IL", isSelf: false, avatarKey: "brother_micah" },
+      { id: "sister_ruth", name: "Sister Ruth Carmichael", role: "Prayer Warrior • Greenville, SC", isSelf: false, avatarKey: "sister_ruth" },
+      { id: "brother_noah", name: "Brother Noah Whitaker", role: "Deacon & Builder • Lancaster, PA", isSelf: false, avatarKey: "brother_noah" },
+      { id: "sister_martha", name: "Sister Martha Lindqvist", role: "Hospitality Lead • Stillwater, MN", isSelf: false, avatarKey: "sister_martha" }
+    ];
+
+    /*************************************************************************
+     * 3. 20 ATTRIBUTES OF GOD
+     *************************************************************************/
+    const DIVINE_ATTRIBUTES = [
+      { id: "aseity", name: "Aseity (Self-Existence)", ref: "Exodus 3:14", desc: "God is uncaused, wholly independent, and possesses life in and of Himself." },
+      { id: "immutability", name: "Immutability", ref: "Malachi 3:6", desc: "God never changes in His nature, perfections, purposes, or promises." },
+      { id: "eternality", name: "Eternality", ref: "Psalm 90:2", desc: "God has no beginning and no end, reigning above all time." },
+      { id: "omnipresence", name: "Omnipresence", ref: "Psalm 139:7-10", desc: "God is fully present everywhere across creation with His whole being." },
+      { id: "omniscience", name: "Omniscience", ref: "Psalm 139:1-4", desc: "God knows all things actual and possible, past, present, and future effortlessly." },
+      { id: "omnipotence", name: "Omnipotence", ref: "Jeremiah 32:17", desc: "God possesses infinite power to accomplish all His holy will." },
+      { id: "sovereignty", name: "Absolute Sovereignty", ref: "Daniel 4:35", desc: "God rules supreme over every atom, nation, and heart in the universe." },
+      { id: "holiness", name: "Majestic Holiness", ref: "Isaiah 6:3", desc: "God is utterly transcendent, morally pure, and separate from all sin." },
+      { id: "veracity", name: "Veracity & Truth", ref: "Titus 1:2", desc: "God is the fountain of all truth who cannot lie or deceive." },
+      { id: "wisdom", name: "Infinite Wisdom", ref: "Romans 11:33", desc: "God chooses the highest ends and the most glorious means to fulfill them." },
+      { id: "righteousness", name: "Righteousness & Justice", ref: "Deuteronomy 32:4", desc: "God is the perfect standard of right and renders to every creature fairly." },
+      { id: "wrath", name: "Holy Wrath Against Sin", ref: "Romans 1:18", desc: "God's righteous, pure, and settled opposition against all evil and iniquity." },
+      { id: "patience", name: "Longsuffering & Patience", ref: "2 Peter 3:9", desc: "God bears long with sinners, withholding immediate judgment to lead us to repentance." },
+      { id: "mercy", name: "Tender Mercy", ref: "Lamentations 3:22-23", desc: "God's compassionate, pitiful kindness toward the miserable and contrite." },
+      { id: "grace", name: "Saving Grace", ref: "Ephesians 2:8-9", desc: "God's unmerited, sovereign favor lavished upon undeserving sinners through Christ." },
+      { id: "love", name: "Everlasting Love", ref: "1 John 4:8-10", desc: "God eternally gives of Himself for the eternal good and joy of His beloved." },
+      { id: "faithfulness", name: "Covenant Faithfulness", ref: "Deuteronomy 7:9", desc: "God unfailingly keeps every word and covenant promise to a thousand generations." },
+      { id: "goodness", name: "Abundant Goodness", ref: "Psalm 145:9", desc: "God is generous, benevolent, and kind in everything He designs and gives." },
+      { id: "providence", name: "Fatherly Providence", ref: "Romans 8:28", desc: "God preserves, governs, and orchestrates all events for His glory and our good." },
+      { id: "glory", name: "Infinite Glory & Beauty", ref: "Psalm 19:1", desc: "The radiant manifestation of all of God's attributes shining in perfection." }
+    ];
+
+    /*************************************************************************
+     * 4. 150-MESSAGE SATURDAY PRAYER SCRIPT
+     *************************************************************************/
+    const RAW_SCRIPT = [
+      // PHASE I: 8:00 AM - 8:29 AM (Messages 1-30)
+      { s: "pastor_caleb", a: "aseity", ref: "Exodus 3:14", text: "Good Saturday morning, beloved brothers and sisters of Grace Baptist Church, as we gather at eight o'clock sharp to bow our hearts before the great I AM WHO I AM, who exists in glorious self-sufficiency and needs nothing outside of Himself.", sticker: "praying_bear" },
+      { s: "sister_hannah", a: "aseity", ref: "Acts 17:25", text: "Blessed be your holy name, O Lord our God, for you are not served by human hands as though you needed anything, since you yourself give to all mankind life and breath and everything." },
+      { s: "deacon_samuel", a: "eternality", ref: "Psalm 90:2", text: "Before the mountains were brought forth, or ever you had formed the earth and the world, from everlasting to everlasting you are God, reigning untouched by the passing of our earthly years." },
+      { s: "brother_josiah", a: "immutability", ref: "Malachi 3:6", text: "Heavenly Father, we praise you this crisp Saturday morning because you declare in Malachi 3:6 that you the Lord do not change, and therefore we, the sons and daughters of Jacob, are not consumed." },
+      { s: "sister_abigail", a: "immutability", ref: "James 1:17", text: "Every good gift and every perfect gift comes down from you, the Father of lights, with whom there is no variation or shadow due to change." },
+      { s: "brother_ethan", a: "omnipresence", ref: "Jeremiah 23:24", text: "Lord God of hosts, even though the eleven of us are praying from our living rooms and kitchen tables across town, you fill heaven and earth with your undivided, glorious presence." },
+      { s: "sister_lydia", a: "omniscience", ref: "Psalm 147:5", text: "Great is our Lord and abundant in power, and your understanding is beyond measure, encompassing every star in the cosmos and every quiet sigh within our chests." },
+      { s: "brother_micah", a: "omnipotence", ref: "Jeremiah 32:17", text: "Ah, Lord God, it is you who have made the heavens and the earth by your great power and by your outstretched arm, and nothing is too hard for you." },
+      { s: "sister_ruth", a: "sovereignty", ref: "Psalm 115:3", text: "Our God is in the heavens, and you do all that you please with unchallenged authority and tender majesty." },
+      { s: "brother_noah", a: "aseity", ref: "John 5:26", text: "We marvel in humble awe, O Father, that just as you have life in yourself, so also you have granted the eternal Son to have life in Himself." },
+      { s: "sister_martha", a: "eternality", ref: "Isaiah 57:15", text: "For thus says the One who is high and lifted up, who inhabits eternity, whose name is Holy: you dwell in the high and holy place, and also with him who is of a contrite and lowly spirit." },
+      { s: "pastor_caleb", a: "holiness", ref: "Exodus 15:11", text: "Who is like you, O Lord, among the gods, and who is like you, majestic in holiness, awesome in glorious deeds, doing wonders?" },
+      { s: "brother_josiah", a: "omnipresence", ref: "Psalm 139:7-8", text: "Where shall we go from your Spirit, O Lord, or where shall we flee from your presence, seeing that if we ascend to heaven you are there, and if we make our bed in Sheol, you are there?" },
+      { s: "sister_hannah", a: "omniscience", ref: "Hebrews 4:13", text: "No creature is hidden from your sight, O All-Knowing King, but all things are naked and exposed to the eyes of Him to whom we must give an account." },
+      { s: "deacon_samuel", a: "omnipotence", ref: "Job 42:2", text: "We confess with Job this morning that you can do all things, O Almighty Creator, and that no purpose of yours can ever be thwarted by man or angel." },
+      { s: "sister_abigail", a: "sovereignty", ref: "Proverbs 16:33", text: "Even the lot is cast into the lap, Lord, but its every decision is wholly from you, who governs every detail of our Saturday and our eternity." },
+      { s: "brother_ethan", a: "immutability", ref: "Psalm 102:27", text: "Though the heavens and the earth will wear out like a garment, you are the same, O Eternal Rock, and your years have no end." },
+      { s: "sister_lydia", a: "veracity", ref: "Numbers 23:19", text: "God is not man, that He should lie, or a son of man, that He should change His mind, for has He said, and will He not do it?" },
+      { s: "brother_micah", a: "wisdom", ref: "Romans 11:33", text: "Oh, the depth of the riches and wisdom and knowledge of God, how unsearchable are your judgments and how inscrutable your ways!" },
+      { s: "sister_ruth", a: "holiness", ref: "1 Samuel 2:2", text: "There is none holy like the Lord, for there is none besides you, and there is no rock like our God in all the ages." },
+      { s: "brother_noah", a: "omnipotence", ref: "Isaiah 40:26", text: "When we looked up at the dawn sky over our workshops and homes this morning, we remembered that you bring out the starry host by number and call them all by name by the greatness of your might." },
+      { s: "sister_martha", a: "goodness", ref: "Psalm 119:68", text: "You are good and do good in all your works, O Lord, so teach us your statutes as we open our Bibles together today." },
+      { s: "pastor_caleb", a: "glory", ref: "Psalm 29:2", text: "Ascribe to the Lord the glory due His name, worship the Lord in the splendor of holiness, and let every distraction of the past week melt away before His throne." },
+      { s: "brother_josiah", a: "sovereignty", ref: "1 Chronicles 29:11", text: "Yours, O Lord, is the greatness and the power and the glory and the victory and the majesty, for all that is in the heavens and in the earth is yours." },
+      { s: "sister_hannah", a: "eternality", ref: "1 Timothy 1:17", text: "To the King of the ages, immortal, invisible, the only God, be honor and glory forever and ever as we lift our voices in prayer." },
+      { s: "deacon_samuel", a: "righteousness", ref: "Psalm 89:14", text: "Righteousness and justice are the foundation of your throne, O Lord, and steadfast love and faithfulness go before you wherever you rule." },
+      { s: "sister_abigail", a: "omniscience", ref: "Matthew 10:30", text: "How comforting it is to our hearts, precious Father, that your omniscience is so intimate that even the very hairs of our heads are all numbered by you." },
+      { s: "brother_ethan", a: "omnipresence", ref: "Acts 17:27-28", text: "You are actually not far from each one of us this morning, Lord, for in you we live and move and have our being." },
+      { s: "sister_lydia", a: "wisdom", ref: "Daniel 2:20", text: "Blessed be the name of God forever and ever, to whom belong wisdom and might, and who reveals deep and hidden things to His children." },
+      { s: "brother_micah", a: "glory", ref: "Revelation 4:11", text: "Worthy are you, our Lord and God, to receive glory and honor and power, for you created all things, and by your will they existed and were created." },
+
+      // PHASE II: 8:30 AM - 8:59 AM (Messages 31-60)
+      { s: "pastor_caleb", a: "veracity", ref: "Psalm 139:1-2", text: "Now as the clock strikes eight-thirty, let us open our King James and English Standard Version Bibles to Psalm 139 and Isaiah 6, asking the Holy Spirit to search our daily walks through the living mirror of God's Word.", sticker: "scripture_bunny" },
+      { s: "deacon_samuel", a: "omniscience", ref: "Psalm 139:1-3", text: "David writes in Psalm 139:1–3, 'O Lord, thou hast searched me, and known me; thou knowest my downsitting and mine uprising, thou understandest my thought afar off,' which reminds me that God sees my motives before I ever speak a word." },
+      { s: "brother_josiah", a: "omniscience", ref: "Psalm 139:4", text: "When I read verse four—'For there is not a word in my tongue, but, lo, O Lord, thou knowest it altogether'—I am deeply convicted about how casually I sometimes speak when coaching youth or conversing at work during the week." },
+      { s: "sister_hannah", a: "holiness", ref: "Psalm 19:14", text: "That verse pierces my heart too, Brother Josiah, and it makes me pray with the Psalmist that the words of my mouth and the meditation of my heart would be acceptable in the sight of the Lord, my Rock and my Redeemer." },
+      { s: "sister_abigail", a: "veracity", ref: "Hebrews 4:12", text: "As a Sunday School teacher preparing lessons for the children, Hebrews 4:12 reminds me that the word of God is living and active, sharper than any two-edged sword, discerning the thoughts and intentions of my own heart first." },
+      { s: "brother_ethan", a: "omnipresence", ref: "Psalm 139:9-10", text: "In my missions correspondence this week, I meditated on Psalm 139:9–10, realizing that even if a missionary takes the wings of the morning and dwells in the uttermost parts of the sea, God's right hand shall hold him fast." },
+      { s: "sister_lydia", a: "wisdom", ref: "Psalm 139:14", text: "When we examine our lives in light of verse fourteen—'I will praise thee; for I am fearfully and wonderfully made'—we see that all self-pity or vanity is a forgetfulness of the Creator's infinite wisdom." },
+      { s: "brother_micah", a: "holiness", ref: "Isaiah 6:1-3", text: "Turning over to Isaiah chapter 6, verses 1 through 3, we behold the seraphim covering their faces and crying, 'Holy, holy, holy is the Lord of hosts; the whole earth is full of his glory.'" },
+      { s: "sister_ruth", a: "holiness", ref: "Isaiah 6:5", text: "Notice how Isaiah, the most righteous prophet in Judah, immediately cried out in verse 5, 'Woe is me! For I am lost; for I am a man of unclean lips, and I dwell in the midst of a people of unclean lips; for my eyes have seen the King, the Lord of hosts!'" },
+      { s: "brother_noah", a: "righteousness", ref: "Proverbs 11:1", text: "Applying Isaiah's vision to my carpentry business in Lancaster, I must examine whether every measurement, invoice, and promise I make to a customer reflects the spotless integrity of the Holy King I claim to serve." },
+      { s: "sister_martha", a: "goodness", ref: "Luke 10:41-42", text: "In my own kitchen and hospitality ministry, the Scripture's mirror exposes how easily I become anxious and troubled about many things like Martha of Bethany, instead of sitting first at the feet of Jesus to hear His word." },
+      { s: "pastor_caleb", a: "veracity", ref: "James 1:22", text: "Thank you for that honest reflection, Sister Martha, because James 1:22 commands us to be doers of the word, and not hearers only, deceiving ourselves with mere outward religion." },
+      { s: "brother_josiah", a: "righteousness", ref: "1 John 2:15-16", text: "When I examine how I spend my evening hours on my computer or phone, 1 John 2:15 warns me not to love the world or the things in the world, lest the passing desires of the eyes dull my hunger for Christ." },
+      { s: "deacon_samuel", a: "patience", ref: "Ephesians 4:29", text: "Looking closely at Ephesians 4:29—'Let no corrupting talk come out of your mouths, but only such as is good for building up'—I have to ask the Lord if my words around the dinner table always minister grace to my wife and grandchildren." },
+      { s: "sister_hannah", a: "glory", ref: "Colossians 3:16-17", text: "As I practice at the church piano, Colossians 3:17 challenges me to examine whether I am playing to be praised by the congregation or doing everything purely in the name of the Lord Jesus, giving thanks to God the Father through Him." },
+      { s: "sister_abigail", a: "love", ref: "1 Corinthians 13:4-5", text: "In our real-life family interactions on busy weekday mornings, 1 Corinthians 13:4–5 tests us directly by showing that true godly love is patient and kind, and is not irritable or resentful when plans go awry." },
+      { s: "brother_ethan", a: "providence", ref: "Matthew 6:33-34", text: "Whenever financial worries for our church missions budget tempt me to fret, our Lord's command in Matthew 6:33 calls me to seek first the kingdom of God and His righteousness, trusting our Heavenly Father's unfailing provision." },
+      { s: "sister_lydia", a: "wisdom", ref: "Proverbs 3:5-6", text: "Self-examination under Proverbs 3:5–6 reveals how frequently I lean on my own lifelong habits and human understanding instead of acknowledging the Lord in every single decision." },
+      { s: "brother_micah", a: "veracity", ref: "2 Timothy 2:15", text: "Even in my seminary Greek and theology classes, I must guard my heart with 2 Timothy 2:15 so that I study to present myself approved to God as a humble workman, rather than puffing myself up with academic pride." },
+      { s: "sister_ruth", a: "faithfulness", ref: "Lamentations 3:40", text: "Lamentations 3:40 gives us our sacred duty for this morning's prayer meeting: 'Let us test and examine our ways, and return to the Lord!'" },
+      { s: "brother_noah", a: "holiness", ref: "1 Peter 1:15-16", text: "As Peter writes in 1 Peter 1:15–16, just as He who called us is holy, we also must be holy in all our conduct, from Monday morning on the jobsite to Saturday morning in our homes." },
+      { s: "sister_martha", a: "mercy", ref: "Psalm 51:6", text: "Behold, Lord, you delight in truth in the inward being, and you teach us wisdom in the secret heart where no human eye can see." },
+      { s: "pastor_caleb", a: "omniscience", ref: "Psalm 139:23-24", text: "Let us therefore make David's closing prayer in Psalm 139:23–24 our personal plea right now: 'Search me, O God, and know my heart! Try me and know my thoughts! And see if there be any grievous way in me, and lead me in the way everlasting!'" },
+      { s: "brother_josiah", a: "veracity", ref: "Psalm 119:105", text: "Your word is truly a lamp to my feet and a light to my path, O Lord, exposing the hidden corners of compromise that I had excused all week long." },
+      { s: "sister_hannah", a: "righteousness", ref: "Psalm 19:12", text: "Who can discern his errors, O Lord, so declare me innocent from hidden faults as your Scripture shines into my conscience." },
+      { s: "deacon_samuel", a: "wisdom", ref: "Proverbs 4:23", text: "Above all else, help us to keep our hearts with all vigilance this weekend, Father, for from the heart flow all the springs of life." },
+      { s: "sister_abigail", a: "grace", ref: "Romans 8:1", text: "Even as the Law of God rightly convicts us of our daily shortcomings, how glorious it is to read in Romans 8:1 that there is therefore now no condemnation for those who are in Christ Jesus." },
+      { s: "brother_ethan", a: "holiness", ref: "Titus 2:11-12", text: "Indeed, Sister Abigail, for the saving grace of God has appeared, training us to renounce ungodliness and worldly passions, and to live self-controlled, upright, and godly lives in the present age." },
+      { s: "sister_lydia", a: "love", ref: "Galatians 2:20", text: "May our self-examination today lead each of us to say with the Apostle Paul that we have been crucified with Christ, and it is no longer we who live, but Christ who lives in us." },
+      { s: "brother_micah", a: "veracity", ref: "John 17:17", text: "Sanctify us in the truth this Saturday morning, O Father, for your word is truth." },
+
+      // PHASE III: 9:00 AM - 9:29 AM (Messages 61-90)
+      { s: "pastor_caleb", a: "wrath", ref: "Romans 1:18", text: "As we enter our nine o'clock hour of humble confession and repentance, we acknowledge that the wrath of God is righteously revealed from heaven against all ungodliness and unrighteousness of men, and that our sins are never trivial before a thrice-holy God.", sticker: "repentant_lamb" },
+      { s: "pastor_caleb", a: "mercy", ref: "Proverbs 28:13", text: "I will go first as your pastor and confess before the Lord that this week I allowed pride and impatience to creep into my spirit when ministry plans were delayed, forgetting that I am only an unworthy undershepherd of Christ's flock." },
+      { s: "deacon_samuel", a: "patience", ref: "1 John 1:8-9", text: "Merciful Father, I confess that on Wednesday evening I spoke sharply in frustration instead of reflecting your gentle longsuffering, and I repent of my quick temper before your throne." },
+      { s: "brother_josiah", a: "holiness", ref: "Psalm 51:3-4", text: "Lord God, I confess that I wasted precious morning time scrolling through trivial news earlier this week when I should have been interceding for our church youth, and against you, you only, have I sinned." },
+      { s: "sister_hannah", a: "glory", ref: "Isaiah 42:8", text: "Forgive me, O Lord, for the subtle vanity in my heart whenever I seek the approval of people around me rather than resting wholly in your glorious smile." },
+      { s: "sister_abigail", a: "providence", ref: "Philippians 4:6", text: "Righteous Father, I confess the sin of anxious unbelief over my family's schedule and finances this week, which treated your fatherly providence as if it were insufficient." },
+      { s: "brother_ethan", a: "love", ref: "Revelation 2:4", text: "Lord Jesus, I repent of those moments this week when my busyness in outward service caused my heart to drift from the warmth of my first love for you." },
+      { s: "sister_lydia", a: "righteousness", ref: "Matthew 7:3", text: "Search and cleanse my heart, O God, for I confess that I harbored a critical, judgmental thought toward a neighbor on Thursday instead of praying for her with Christlike compassion." },
+      { s: "brother_micah", a: "wisdom", ref: "1 Corinthians 8:1", text: "Father of truth, I repent of intellectual arrogance when debating doctrine with classmates, forgetting that knowledge puffs up while love builds up." },
+      { s: "sister_ruth", a: "faithfulness", ref: "Psalm 32:5", text: "I acknowledge my sin to you, O Lord, and I do not cover my iniquity of weary complaining when my arthritis flared up on Tuesday, for you deserve my trust in every discomfort." },
+      { s: "brother_noah", a: "grace", ref: "Luke 18:13", text: "Like the tax collector standing far off in Luke 18:13, I beat my breast this morning and pray without excuse, 'God, be merciful to me, a sinner!'" },
+      { s: "sister_martha", a: "patience", ref: "James 4:6", text: "Lord, I confess the self-reliance that made me try to carry every household burden in my own strength rather than humbling myself to receive your abundant grace." },
+      { s: "pastor_caleb", a: "wrath", ref: "Habakkuk 1:13", text: "We tremble with reverence, O Holy God, knowing that your eyes are too pure to look upon evil with approval, and that every single sin we just confessed deserved your eternal, righteous wrath." },
+      { s: "brother_micah", a: "righteousness", ref: "Romans 3:25-26", text: "Yet we marvel at the cross of Calvary, where God put forward Jesus Christ as a propitiation by His blood, so that God might be both perfectly just and the justifier of the one who has faith in Jesus!" },
+      { s: "deacon_samuel", a: "wrath", ref: "Isaiah 53:5-6", text: "All we like sheep have gone astray and turned every one to his own way, O Lord, yet you laid upon your sinless Son the iniquity of us all, satisfying your holy justice forever." },
+      { s: "brother_josiah", a: "mercy", ref: "1 John 1:9", text: "We cling with all our hearts to your promise in 1 John 1:9 that if we confess our sins, you are faithful and just to forgive us our sins and to cleanse us from all unrighteousness." },
+      { s: "sister_hannah", a: "grace", ref: "Psalm 51:10", text: "Create in me a clean heart, O God, and renew a right and steadfast spirit within me as we turn away from every known sin this morning." },
+      { s: "sister_abigail", a: "mercy", ref: "Psalm 103:12", text: "As far as the east is from the west, O compassionate Father, so far do you remove our transgressions from us through the shed blood of our Savior." },
+      { s: "brother_ethan", a: "patience", ref: "Romans 2:4", text: "How deeply we thank you, Lord, for the riches of your kindness and forbearance and patience, knowing that your kindness is meant to lead us to genuine, daily repentance." },
+      { s: "sister_lydia", a: "mercy", ref: "Micah 7:18-19", text: "Who is a God like you, pardoning iniquity and passing over transgression for the remnant of His inheritance, who delights in steadfast love and casts all our sins into the depths of the sea?" },
+      { s: "sister_ruth", a: "grace", ref: "Isaiah 1:18", text: "Though our sins were like scarlet, you have washed them as white as snow, and though they were red like crimson, they have become like pure wool in Christ." },
+      { s: "brother_noah", a: "righteousness", ref: "2 Corinthians 5:21", text: "We stand amazed at the great exchange of the Gospel, whereby for our sake you made Him to be sin who knew no sin, so that in Him we might become the righteousness of God." },
+      { s: "sister_martha", a: "love", ref: "Psalm 51:17", text: "The sacrifices of God are a broken spirit, O Lord, and a broken and contrite heart you will never despise." },
+      { s: "pastor_caleb", a: "grace", ref: "Hebrews 4:16", text: "Because our Great High Priest Jesus has passed through the heavens and offered Himself once for all, let us now draw near with confidence to the throne of grace to receive mercy and find grace to help in time of need." },
+      { s: "brother_josiah", a: "holiness", ref: "Romans 6:11-12", text: "By the power of your indwelling Spirit, Father, help us this coming week to consider ourselves dead to sin and alive to God in Christ Jesus." },
+      { s: "sister_hannah", a: "mercy", ref: "Psalm 32:1-2", text: "Blessed indeed is the one whose transgression is forgiven, whose sin is covered, and against whom the Lord counts no iniquity!" },
+      { s: "deacon_samuel", a: "faithfulness", ref: "Psalm 85:2", text: "You have forgiven the iniquity of your people, O Lord, and you have covered all their sin by your covenant faithfulness." },
+      { s: "sister_abigail", a: "goodness", ref: "Psalm 130:4", text: "With you there is plentiful forgiveness, O Lord, so that you may be revered with joyful, filial awe by all your redeemed children." },
+      { s: "brother_ethan", a: "grace", ref: "Ephesians 1:7", text: "In Christ we have redemption through His blood, the forgiveness of our trespasses, according to the riches of your glorious grace." },
+      { s: "sister_lydia", a: "glory", ref: "Psalm 51:15", text: "O Lord, open our cleansed lips now as the clock reaches nine-thirty, and our mouths will declare your praise in joyful hymns!" },
+
+      // PHASE IV: 9:30 AM - 9:59 AM (Messages 91-120)
+      { s: "sister_hannah", a: "holiness", ref: "Revelation 4:8", text: "Brothers and sisters, I am sitting at the piano now at nine-thirty, and let us lift our hearts together to sing our first classic hymn, 'Holy, Holy, Holy! Lord God Almighty!'", sticker: "hymn_chick" },
+      { s: "pastor_caleb", a: "holiness", ref: "Isaiah 6:3", text: "♪ 'Holy, holy, holy! Lord God Almighty! Early in the morning our song shall rise to Thee; Holy, holy, holy, merciful and mighty! God in three Persons, blessed Trinity!' ♪" },
+      { s: "deacon_samuel", a: "eternality", ref: "Revelation 4:10", text: "♪ 'Holy, holy, holy! All the saints adore Thee, casting down their golden crowns around the glassy sea; cherubim and seraphim falling down before Thee, Which wert, and art, and evermore shalt be!' ♪" },
+      { s: "sister_abigail", a: "glory", ref: "1 Timothy 6:16", text: "♪ 'Holy, holy, holy! Though the darkness hide Thee, though the eye of sinful man Thy glory may not see; only Thou art holy; there is none beside Thee, perfect in power, in love, and purity!' ♪" },
+      { s: "brother_josiah", a: "omnipotence", ref: "Psalm 145:10", text: "♪ 'Holy, holy, holy! Lord God Almighty! All Thy works shall praise Thy name, in earth, and sky, and sea; Holy, holy, holy; merciful and mighty! God in three Persons, blessed Trinity!' ♪" },
+      { s: "brother_micah", a: "holiness", ref: "Matthew 28:19", text: "How deeply that hymn thrills my soul, reminding us that the triune God—Father, Son, and Holy Spirit—harmonizes infinite holiness with boundless mercy!" },
+      { s: "sister_ruth", a: "faithfulness", ref: "Lamentations 3:22-23", text: "Amen, Brother Micah, and now let us sing Thomas Chisholm's beloved Baptist hymn based on Lamentations 3:22–23, 'Great Is Thy Faithfulness!'" },
+      { s: "sister_hannah", a: "immutability", ref: "James 1:17", text: "♪ 'Great is Thy faithfulness, O God my Father; there is no shadow of turning with Thee; Thou changest not, Thy compassions, they fail not; as Thou hast been Thou forever wilt be!' ♪" },
+      { s: "brother_noah", a: "faithfulness", ref: "Lamentations 3:23", text: "♪ 'Great is Thy faithfulness! Great is Thy faithfulness! Morning by morning new mercies I see; all I have needed Thy hand hath provided; Great is Thy faithfulness, Lord, unto me!' ♪" },
+      { s: "sister_martha", a: "providence", ref: "Genesis 8:22", text: "♪ 'Summer and winter, and springtime and harvest, sun, moon and stars in their courses above, join with all nature in manifold witness to Thy great faithfulness, mercy and love!' ♪" },
+      { s: "brother_ethan", a: "mercy", ref: "Philippians 4:7", text: "♪ 'Pardon for sin and a peace that endureth, Thine own dear presence to cheer and to guide; strength for today and bright hope for tomorrow, blessings all mine, with ten thousand beside!' ♪" },
+      { s: "sister_lydia", a: "faithfulness", ref: "Psalm 36:5", text: "Every time we sing 'Morning by morning new mercies I see,' I think of how faithfully the Lord has carried our congregation through every season of trial and joy." },
+      { s: "deacon_samuel", a: "goodness", ref: "Psalm 145:7", text: "Truly the Lord's faithfulness reaches to the clouds, and His covenant promises have never once failed any believer who trusted in His name." },
+      { s: "pastor_caleb", a: "grace", ref: "1 Samuel 7:12", text: "Let us now lift up our third hymn of the morning, Robert Robinson's 'Come, Thou Fount of Every Blessing,' celebrating the streams of sovereign grace that keep our hearts faithful." },
+      { s: "sister_hannah", a: "mercy", ref: "Psalm 68:19", text: "♪ 'Come, Thou Fount of every blessing, tune my heart to sing Thy grace; streams of mercy, never ceasing, call for songs of loudest praise!' ♪" },
+      { s: "brother_josiah", a: "faithfulness", ref: "1 Samuel 7:12", text: "♪ 'Here I raise my Ebenezer; hither by Thy help I'm come; and I hope, by Thy good pleasure, safely to arrive at home!' ♪" },
+      { s: "sister_abigail", a: "love", ref: "Luke 15:4-5", text: "♪ 'Jesus sought me when a stranger, wandering from the fold of God; He, to rescue me from danger, interposed His precious blood!' ♪" },
+      { s: "brother_micah", a: "grace", ref: "Romans 8:38-39", text: "♪ 'O to grace how great a debtor daily I'm constrained to be! Let Thy goodness, like a fetter, bind my wandering heart to Thee!' ♪" },
+      { s: "sister_ruth", a: "love", ref: "Jeremiah 31:3", text: "♪ 'Prone to wander, Lord, I feel it, prone to leave the God I love; here's my heart, O take and seal it, seal it for Thy courts above!' ♪" },
+      { s: "brother_noah", a: "sovereignty", ref: "Philippians 1:6", text: "What a comfort it is that even when our weak human hearts feel prone to wander, He who began a good work in us will bring it to completion at the day of Jesus Christ!" },
+      { s: "sister_martha", a: "goodness", ref: "Psalm 23:6", text: "Yes, Brother Noah, surely goodness and mercy shall pursue us all the days of our lives, and we shall dwell in the house of the Lord forever." },
+      { s: "sister_hannah", a: "grace", ref: "Ephesians 2:8", text: "For our fourth and final hymn before our ten o'clock thanksgiving prayer, let us sing John Newton's timeless testimony of redemption, 'Amazing Grace, How Sweet the Sound!'" },
+      { s: "pastor_caleb", a: "grace", ref: "1 Timothy 1:15", text: "♪ 'Amazing grace! How sweet the sound that saved a wretch like me! I once was lost, but now am found; was blind, but now I see!' ♪" },
+      { s: "deacon_samuel", a: "grace", ref: "Psalm 111:10", text: "♪ ''Twas grace that taught my heart to fear, and grace my fears relieved; how precious did that grace appear the hour I first believed!' ♪" },
+      { s: "brother_ethan", a: "providence", ref: "2 Timothy 4:18", text: "♪ 'Through many dangers, toils, and snares, I have already come; 'tis grace hath brought me safe thus far, and grace will lead me home!' ♪" },
+      { s: "sister_lydia", a: "veracity", ref: "Psalm 73:26", text: "♪ 'The Lord has promised good to me, His Word my hope secures; He will my Shield and Portion be, as long as life endures!' ♪" },
+      { s: "brother_josiah", a: "eternality", ref: "Revelation 22:5", text: "♪ 'When we've been there ten thousand years, bright shining as the sun, we've no less days to sing God's praise than when we'd first begun!' ♪", sticker: "hymn_chick" },
+      { s: "sister_abigail", a: "glory", ref: "Psalm 104:33", text: "Praise God from whom all blessings flow, for singing those four great hymns together has filled my whole home with the joy of the Lord!" },
+      { s: "brother_micah", a: "love", ref: "Zephaniah 3:17", text: "Even more astonishing than our singing to God, Zephaniah 3:17 tells us that the Lord our God is in our midst as a mighty One who will rejoice over us with gladness and exult over us with loud singing!" },
+      { s: "sister_ruth", a: "goodness", ref: "Psalm 92:1-2", text: "It is truly good to give thanks to the Lord and to sing praises to your name, O Most High, declaring your steadfast love in the morning and your faithfulness by night." },
+
+      // PHASE V: 10:00 AM - 10:29 AM (Messages 121-150)
+      { s: "pastor_caleb", a: "goodness", ref: "1 Thessalonians 5:18", text: "As we enter our final half hour at ten o'clock, let us pour out overflowing thanksgiving to God in everything, for this is the will of God in Christ Jesus for us.", sticker: "thanksgiving_frog" },
+      { s: "deacon_samuel", a: "grace", ref: "2 Corinthians 9:15", text: "Above every earthly blessing, Father, we thank you with all our souls for your inexpressible gift of Jesus Christ our crucified and risen Lord." },
+      { s: "brother_josiah", a: "veracity", ref: "Psalm 119:160", text: "We thank you, O God of Truth, for preserving your inspired, inerrant, and infallible Word in our hands so that we may know your mind and walk in your light." },
+      { s: "sister_hannah", a: "love", ref: "Romans 5:5", text: "We thank you, Heavenly Father, for pouring your love into our hearts through the Holy Spirit who has been given to us as the seal of our inheritance." },
+      { s: "sister_abigail", a: "providence", ref: "Psalm 68:5-6", text: "We thank you for placing us within a loving, Bible-believing Baptist church family where we bear one another's burdens and spur one another on toward love and good deeds." },
+      { s: "brother_ethan", a: "sovereignty", ref: "Matthew 28:18-20", text: "We thank you, Sovereign Lord of the harvest, for opening doors for the Gospel around the globe and allowing our congregation to support faithful missionaries on six continents." },
+      { s: "sister_lydia", a: "mercy", ref: "Psalm 103:2-4", text: "Bless the Lord, O my soul, and forget not all His benefits, who forgives all our iniquity, who heals all our diseases, and who crowns us with steadfast love and mercy." },
+      { s: "brother_micah", a: "wisdom", ref: "Colossians 2:3", text: "We thank you, Father, that in Christ are hidden all the treasures of wisdom and knowledge, guarding our minds from the hollow philosophies of this passing age." },
+      { s: "sister_ruth", a: "faithfulness", ref: "Psalm 37:25", text: "Having walked with you for sixty-eight years, O Lord, I thank you from the depths of my heart that I have never seen the righteous forsaken or His children begging for bread." },
+      { s: "brother_noah", a: "goodness", ref: "Matthew 6:11", text: "We thank you for our daily bread, for roofs over our heads, for health in our bodies, and for meaningful work to do with our hands to provide for our families and give to those in need." },
+      { s: "sister_martha", a: "patience", ref: "Psalm 145:8", text: "We thank you that you are gracious and merciful, slow to anger and abounding in steadfast love toward us every single day of our lives." },
+      { s: "pastor_caleb", a: "sovereignty", ref: "1 Timothy 2:1-2", text: "We also thank you for the religious liberty we enjoy in the United States this morning, and we intercede for our president, governors, judges, and local leaders, that we may lead peaceful and quiet lives, godly and dignified in every way." },
+      { s: "brother_josiah", a: "omnipotence", ref: "Ephesians 3:20", text: "We thank you in advance, O Omnipotent Father, for what you will do in our youth group and Sunday worship tomorrow, because you are able to do far more abundantly than all that we ask or think." },
+      { s: "deacon_samuel", a: "providence", ref: "Psalm 121:7-8", text: "We thank you for watching over our elderly shut-ins, our expectant mothers, and our young children, keeping our going out and our coming in from this time forth and forevermore." },
+      { s: "sister_hannah", a: "glory", ref: "Psalm 96:9", text: "We thank you for the privilege of corporate worship tomorrow on the Lord's Day, where we will gather in the sanctuary to worship the Lord in the splendor of holiness." },
+      { s: "sister_abigail", a: "faithfulness", ref: "Deuteronomy 7:9", text: "We thank you that you are the faithful God who keeps covenant and steadfast love with those who love you and keep your commandments to a thousand generations." },
+      { s: "brother_ethan", a: "omnipresence", ref: "Matthew 28:20", text: "We thank you, Lord Jesus, for your unbreakable promise that behold, you are with us always, even to the end of the age." },
+      { s: "sister_lydia", a: "immutability", ref: "Hebrews 13:8", text: "We thank you that amidst a shifting and turbulent world, Jesus Christ is the same yesterday and today and forever." },
+      { s: "brother_micah", a: "righteousness", ref: "2 Peter 3:13", text: "We thank you that according to your sure promise, we are waiting for new heavens and a new earth in which righteousness dwells forever." },
+      { s: "sister_ruth", a: "love", ref: "Romans 8:38-39", text: "We thank you that neither death nor life, nor angels nor rulers, nor things present nor things to come, nor anything else in all creation, will be able to separate us from the love of God in Christ Jesus our Lord." },
+      { s: "brother_noah", a: "aseity", ref: "Acts 17:28", text: "We thank you, O Self-Existent Fountain of Life, that every heartbeat we have shared over these two and a half hours of prayer is a direct gift from your sustaining hand." },
+      { s: "sister_martha", a: "goodness", ref: "Psalm 107:1", text: "Oh give thanks to the Lord, for He is good, for His steadfast love endures forever!" },
+      { s: "pastor_caleb", a: "omniscience", ref: "Romans 8:26-27", text: "We thank you, O Omniscient Spirit of God, that even when we do not know what to pray for as we ought, you intercede for the saints according to the will of God." },
+      { s: "brother_josiah", a: "grace", ref: "2 Corinthians 12:9", text: "We thank you, Lord Jesus, that your grace is sufficient for us in every weakness, for your power is made perfect in weakness." },
+      { s: "sister_hannah", a: "wisdom", ref: "Jude 1:24-25", text: "Now to Him who is able to keep us from stumbling and to present us blameless before the presence of His glory with great joy, to the only wise God our Savior, be glory and majesty!" },
+      { s: "deacon_samuel", a: "holiness", ref: "1 Chronicles 16:34", text: "What a blessed, Spirit-filled two and a half hours of Saturday morning prayer this has been, illuminating the glorious attributes of our great God!" },
+      { s: "sister_abigail", a: "love", ref: "Hebrews 10:24-25", text: "I love each of you dearly in the Lord, and I cannot wait to see everyone in Sunday School and morning worship tomorrow at nine-thirty sharp!" },
+      { s: "brother_ethan", a: "providence", ref: "Numbers 6:24-26", text: "May the Lord bless you and keep you, may the Lord make His face to shine upon you and be gracious to you, and may the Lord lift up His countenance upon you and give you peace." },
+      { s: "sister_ruth", a: "faithfulness", ref: "Psalm 115:1", text: "Not to us, O Lord, not to us, but to your name give glory, for the sake of your steadfast love and your faithfulness!" },
+      { s: "pastor_caleb", a: "glory", ref: "Romans 11:36", text: "For from Him and through Him and to Him are all things, and to God alone be the glory forever and ever, in Jesus' precious and holy name we pray, Amen!", sticker: "praying_bear" }
+    ];
+
+    function formatMessageTimestamp(index) {
+      const totalMinutes = 8 * 60 + index;
+      const hours24 = Math.floor(totalMinutes / 60);
+      const mins = totalMinutes % 60;
+      const hours12 = hours24 > 12 ? hours24 - 12 : hours24;
+      const minsStr = mins < 10 ? "0" + mins : "" + mins;
+      return `${hours12}:${minsStr} AM`;
+    }
+
+    const MESSAGES = RAW_SCRIPT.map((item, idx) => {
+      const senderObj = PARTICIPANTS.find(p => p.id === item.s);
+      const attrObj = DIVINE_ATTRIBUTES.find(a => a.id === item.a);
+      return {
+        index: idx,
+        number: idx + 1,
+        time: formatMessageTimestamp(idx),
+        sender: senderObj,
+        attribute: attrObj,
+        scriptureRef: item.ref,
+        text: item.text,
+        stickerKey: item.sticker || null
+      };
+    });
+
+    /*************************************************************************
+     * 5. IPADOS 15.8.7 COMPATIBLE TEXT-TO-SPEECH (TTS) & AUDIO SYNTHESIZER
+     *************************************************************************/
+    let audioCtx = null;
+    let isAudioMuted = false;
+    let isTtsEnabled = true;
+    let isSpeechUnlocked = false;
+    let availableVoices = [];
+
+    // Retained globally to prevent iOS 15 Garbage Collection Bug!
+    window._activeUtterance = null;
+    window._ttsWatchdog = null;
+
+    // Distinct Voice Profile for Each of the 11 Believers
+    const SPEAKER_VOICE_PROFILES = {
+      pastor_caleb: { gender: "male", pitch: 0.92, rate: 0.94 },
+      brother_josiah: { gender: "male", pitch: 1.05, rate: 1.0 },
+      sister_hannah: { gender: "female", pitch: 1.25, rate: 0.98 },
+      deacon_samuel: { gender: "male", pitch: 0.80, rate: 0.88 },
+      sister_abigail: { gender: "female", pitch: 1.18, rate: 0.96 },
+      brother_ethan: { gender: "male", pitch: 1.02, rate: 1.04 },
+      sister_lydia: { gender: "female", pitch: 1.12, rate: 0.95 },
+      brother_micah: { gender: "male", pitch: 0.96, rate: 1.02 },
+      sister_ruth: { gender: "female", pitch: 1.06, rate: 0.86 },
+      brother_noah: { gender: "male", pitch: 0.86, rate: 0.94 },
+      sister_martha: { gender: "female", pitch: 1.20, rate: 1.0 }
+    };
+
+    function loadVoices() {
+      if ("speechSynthesis" in window) {
+        availableVoices = window.speechSynthesis.getVoices() || [];
+      }
+    }
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices();
+    }
+
+    // Clean text before sending to speech synthesis (removes musical notes & symbols that cause iOS speech to choke)
+    function cleanTextForSpeech(raw) {
+      return raw
+        .replace(/[♪♫]/g, '')
+        .replace(/['"“”‘’]/g, '')
+        .replace(/—/g, ', ')
+        .trim();
+    }
+
+    // iOS 15 Audio & Speech Activation Primer
+    function unlockIosAudioAndSpeech() {
+      if (isSpeechUnlocked) return;
+      isSpeechUnlocked = true;
+
+      // 1. Prime Web Audio API
+      ensureAudioContext();
+      if (audioCtx) {
+        const buffer = audioCtx.createBuffer(1, 1, 22050);
+        const source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtx.destination);
+        source.start(0);
+      }
+
+      // 2. Prime SpeechSynthesis Engine (bypasses iOS 15 silent block)
+      if ("speechSynthesis" in window) {
+        try {
+          const primer = new SpeechSynthesisUtterance(" ");
+          primer.volume = 0.01;
+          primer.rate = 2.0;
+          window.speechSynthesis.speak(primer);
+        } catch (e) {}
+      }
+
+      const banner = document.getElementById("iosUnlockBanner");
+      if (banner) banner.classList.add("hidden");
+      showCuteToast("iPadOS 15 Audio & Voice TTS Unlocked!");
+    }
+
+    window.addEventListener("touchstart", unlockIosAudioAndSpeech, { passive: true });
+    window.addEventListener("touchend", unlockIosAudioAndSpeech, { passive: true });
+    window.addEventListener("click", unlockIosAudioAndSpeech, { passive: true });
+
+    function ensureAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+    }
+
+    // Safari 14-second cutoff watchdog
+    function startTtsWatchdog() {
+      clearInterval(window._ttsWatchdog);
+      window._ttsWatchdog = setInterval(() => {
+        if (window.speechSynthesis && window.speechSynthesis.speaking) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        } else {
+          clearInterval(window._ttsWatchdog);
+        }
+      }, 10000);
+    }
+
+    function stopTtsWatchdog() {
+      clearInterval(window._ttsWatchdog);
+      window._ttsWatchdog = null;
+    }
+
+    // Main iPad-Compatible TTS Speaking Engine
+    function speakMessage(msg, onCompleteCallback) {
+      if (!isTtsEnabled || !("speechSynthesis" in window)) {
+        if (onCompleteCallback) onCompleteCallback();
+        return;
+      }
+
+      // Cancel any ongoing speech
+      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        window.speechSynthesis.cancel();
+      }
+
+      // 60ms delay ensures iOS 15 finishes internal cancel routine
+      setTimeout(() => {
+        try {
+          const cleanText = cleanTextForSpeech(msg.text);
+          const utterance = new SpeechSynthesisUtterance(cleanText);
+
+          // CRITICAL FOR IOS: Retain utterance on window to prevent premature GC!
+          window._activeUtterance = utterance;
+
+          utterance.lang = "en-US";
+          const profile = SPEAKER_VOICE_PROFILES[msg.sender.id] || { pitch: 1.0, rate: 1.0 };
+          utterance.pitch = profile.pitch;
+          utterance.rate = profile.rate;
+
+          // Select best matching iOS English voice
+          if (availableVoices.length > 0) {
+            const enVoices = availableVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith("en"));
+            if (enVoices.length > 0) {
+              const target = profile.gender;
+              const match = enVoices.find(v => {
+                const n = v.name.toLowerCase();
+                if (target === "female") {
+                  return n.includes("samantha") || n.includes("victoria") || n.includes("karen") || n.includes("female");
+                } else {
+                  return n.includes("alex") || n.includes("daniel") || n.includes("fred") || n.includes("male");
+                }
+              });
+              if (match) utterance.voice = match;
+              else utterance.voice = enVoices[0];
+            }
+          }
+
+          let hasCompleted = false;
+          function handleDone() {
+            if (hasCompleted) return;
+            hasCompleted = true;
+            stopTtsWatchdog();
+            window._activeUtterance = null;
+            if (onCompleteCallback) onCompleteCallback();
+          }
+
+          utterance.onend = handleDone;
+          utterance.onerror = (e) => {
+            console.warn("TTS notice:", e);
+            handleDone();
+          };
+
+          // iPadOS 15 safety timeout in case WebKit event drops
+          const expectedMs = Math.max(3500, cleanText.length * 85);
+          setTimeout(() => {
+            if (!hasCompleted) {
+              handleDone();
+            }
+          }, expectedMs);
+
+          startTtsWatchdog();
+          window.speechSynthesis.speak(utterance);
+
+        } catch (err) {
+          console.error("SpeechSynthesis error:", err);
+          window._activeUtterance = null;
+          if (onCompleteCallback) onCompleteCallback();
+        }
+      }, 60);
+    }
+
+    function speakMessageById(index) {
+      unlockIosAudioAndSpeech();
+      const msg = MESSAGES[index];
+      if (msg) {
+        showCuteToast(`Speaking: ${msg.sender.name.split(" ")[0]}...`);
+        speakMessage(msg, null);
+      }
+    }
+
+    function toggleTtsMode() {
+      isTtsEnabled = !isTtsEnabled;
+      const btn = document.getElementById("btnToggleTts");
+      const icon = document.getElementById("iconTtsToggle");
+      const label = document.getElementById("labelTtsToggle");
+
+      if (isTtsEnabled) {
+        btn.className = "btn-cute px-2.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 font-cute font-bold text-xs flex items-center gap-1 shadow-sm";
+        icon.className = "ph-fill ph-speaker-simple-high text-[#06C755] text-base";
+        label.textContent = "TTS: ON";
+        showCuteToast("Text-to-Speech active!");
+        unlockIosAudioAndSpeech();
+      } else {
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+        btn.className = "btn-cute px-2.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-600 font-cute font-bold text-xs flex items-center gap-1 shadow-sm";
+        icon.className = "ph-fill ph-speaker-simple-slash text-gray-500 text-base";
+        label.textContent = "TTS: OFF";
+        showCuteToast("Text-to-Speech muted");
+      }
+    }
+
+    // Keystroke Synthesizer
+    function playKeystrokeSound(isSelfKeystroke = false) {
+      if (isAudioMuted) return;
+      try {
+        ensureAudioContext();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle";
+        const baseFreq = isSelfKeystroke ? 210 : 185;
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.exponentialRampToValueAtTime(65, now + 0.045);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.048);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } catch (e) {}
+    }
+
+    // Notification Chime
+    function playNotificationChord(isOutgoing = false) {
+      if (isAudioMuted) return;
+      try {
+        ensureAudioContext();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const notes = [1046.50, 1318.51, 1567.98];
+        const pitchShift = isOutgoing ? 1.08 : 1.0;
+
+        notes.forEach((f, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          const t = now + idx * 0.06;
+          osc.frequency.setValueAtTime(f * pitchShift, t);
+
+          gain.gain.setValueAtTime(0.001, t);
+          gain.gain.linearRampToValueAtTime(0.08, t + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.0008, t + 0.18);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(t);
+          osc.stop(t + 0.20);
+        });
+      } catch (e) {}
+    }
+
+    /*************************************************************************
+     * 6. SIMULATION & PLAYBACK ENGINE
+     *************************************************************************/
+    let currentMessageIdx = 0;
+    let isAutoPlaying = false;
+    let isCurrentlyTyping = false;
+    let stopAfterCurrentMessage = false;
+    let typingTimerId = null;
+    let nextMessageDelayId = null;
+    let illuminatedAttributesSet = new Set();
+
+    function getSpeedMultiplier() {
+      return parseFloat(document.getElementById("selectSpeed").value) || 1.0;
+    }
+
+    function initApp() {
+      renderParticipantsRoster();
+      renderAttributesChecklist();
+      renderBannerMiniAvatars();
+      renderStickerDrawer();
+      document.getElementById("selfMiniAvatar").innerHTML = MASCOT_SVGS.brother_josiah;
+
+      document.getElementById("btnAutoPlay").addEventListener("click", () => {
+        unlockIosAudioAndSpeech();
+        toggleAutoPlay();
+      });
+      document.getElementById("btnStepOne").addEventListener("click", () => {
+        unlockIosAudioAndSpeech();
+        triggerStepOne();
+      });
+      document.getElementById("btnInstantOne").addEventListener("click", () => {
+        unlockIosAudioAndSpeech();
+        triggerInstantOne();
+      });
+      document.getElementById("btnReset").addEventListener("click", resetSimulation);
+      document.getElementById("btnAudioToggle").addEventListener("click", toggleAudioMute);
+
+      const slider = document.getElementById("timelineSlider");
+      slider.addEventListener("input", (e) => {
+        const targetCount = parseInt(e.target.value, 10);
+        jumpToMessageIndex(targetCount);
+      });
+
+      setupHighlightToSearch();
+    }
+
+    // IPAD DRAWER HANDLERS
+    function toggleLeftDrawer() {
+      const drawer = document.getElementById("leftDrawer");
+      const scrim = document.getElementById("drawerScrim");
+      document.getElementById("rightDrawer").classList.add("translate-x-full");
+
+      if (drawer.classList.contains("-translate-x-full")) {
+        drawer.classList.remove("-translate-x-full");
+        scrim.classList.remove("hidden");
+      } else {
+        drawer.classList.add("-translate-x-full");
+        scrim.classList.add("hidden");
+      }
+    }
+
+    function toggleRightDrawer() {
+      const drawer = document.getElementById("rightDrawer");
+      const scrim = document.getElementById("drawerScrim");
+      document.getElementById("leftDrawer").classList.add("-translate-x-full");
+
+      if (drawer.classList.contains("translate-x-full")) {
+        drawer.classList.remove("translate-x-full");
+        scrim.classList.remove("hidden");
+      } else {
+        drawer.classList.add("translate-x-full");
+        scrim.classList.add("hidden");
+      }
+    }
+
+    function closeDrawers() {
+      document.getElementById("leftDrawer").classList.add("-translate-x-full");
+      document.getElementById("rightDrawer").classList.add("translate-x-full");
+      document.getElementById("drawerScrim").classList.add("hidden");
+    }
+
+    function renderParticipantsRoster() {
+      const container = document.getElementById("participantsList");
+      container.innerHTML = PARTICIPANTS.map(p => `
+        <div id="roster-${p.id}" class="flex items-center gap-2.5 p-2 rounded-2xl border border-transparent hover:border-pink-200 hover:bg-pink-50/50 transition-all">
+          <div class="w-10 h-10 rounded-2xl bg-white p-0.5 shadow-sm border border-pink-100 shrink-0 relative">
+            ${MASCOT_SVGS[p.avatarKey]}
+            <span id="roster-dot-${p.id}" class="w-2.5 h-2.5 rounded-full bg-[#06C755] border-2 border-white absolute -bottom-0.5 -right-0.5"></span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="font-cute font-bold text-xs text-[#4A3728] truncate">${p.name}</span>
+              <span id="roster-status-${p.id}" class="hidden text-[9px] font-cute font-bold text-pink-600 bg-pink-100 px-1.5 py-0.2 rounded-full">speaking...</span>
+            </div>
+            <div class="text-[10px] text-[#7D6350] truncate">${p.role}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderBannerMiniAvatars() {
+      const box = document.getElementById("bannerMiniAvatars");
+      box.innerHTML = PARTICIPANTS.slice(0, 7).map(p => `
+        <div class="w-8 h-8 rounded-full bg-white p-0.5 border-2 border-pink-200 shadow-sm">
+          ${MASCOT_SVGS[p.avatarKey]}
+        </div>
+      `).join("");
+    }
+
+    function renderAttributesChecklist() {
+      const grid = document.getElementById("attributesChecklist");
+      grid.innerHTML = DIVINE_ATTRIBUTES.map(attr => `
+        <button
+          id="attr-badge-${attr.id}"
+          onclick="openWebSearch('${attr.name} attribute of God Bible theology');"
+          title="${attr.desc} (${attr.ref})"
+          class="text-left p-1.5 rounded-xl border border-pink-100 bg-gray-50/70 text-[#7D6350] transition-all flex flex-col justify-between"
+        >
+          <div class="flex items-center justify-between gap-1">
+            <span class="font-cute font-bold text-[10px] leading-tight truncate">${attr.name}</span>
+            <i id="attr-icon-${attr.id}" class="ph-bold ph-circle text-xs text-gray-300 shrink-0"></i>
+          </div>
+          <span class="text-[9px] opacity-75 mt-0.5">${attr.ref}</span>
+        </button>
+      `).join("");
+    }
+
+    function renderStickerDrawer() {
+      const grid = document.getElementById("stickerGrid");
+      grid.innerHTML = Object.entries(CUTE_STICKERS).map(([key, st]) => `
+        <button onclick="sendPreviewSticker('${key}')" class="btn-cute bg-pink-50/60 hover:bg-pink-100 border border-pink-200 rounded-2xl p-1.5 flex flex-col items-center text-center">
+          <div class="w-16 h-16 flex items-center justify-center">${st.svg}</div>
+          <span class="font-cute font-bold text-[10px] text-[#4A3728] mt-0.5">${st.title.split(" ")[0]}</span>
+        </button>
+      `).join("");
+    }
+
+    function toggleStickerDrawer() {
+      document.getElementById("stickerDrawer").classList.toggle("hidden");
+    }
+
+    function sendPreviewSticker(stickerKey) {
+      unlockIosAudioAndSpeech();
+      playNotificationChord(true);
+      const st = CUTE_STICKERS[stickerKey];
+      if (!st) return;
+      const container = document.getElementById("messagesContainer");
+      const wrapper = document.createElement("div");
+      wrapper.className = "flex justify-end animate-pop-in";
+      wrapper.innerHTML = `
+        <div class="flex items-end gap-2 max-w-xs">
+          <div class="text-right text-[10px] font-cute font-bold text-[#4A3728]/70 leading-tight mb-1">
+            <div class="text-[#06C755]">Read 10</div>
+            <div>Sticker</div>
+          </div>
+          <div class="bg-white/90 p-2.5 rounded-3xl shadow-cute border-2 border-emerald-200">
+            ${st.svg}
+          </div>
+        </div>
+      `;
+      container.appendChild(wrapper);
+      scrollToBottom();
+      toggleStickerDrawer();
+    }
+
+    function updateContextualUI(msg) {
+      document.getElementById("liveClockBadge").textContent = msg.time;
+      document.getElementById("messageCounterBadge").textContent = `${msg.number} / 150`;
+      document.getElementById("timelineSlider").value = msg.number;
+
+      const phaseBadge = document.getElementById("currentPhaseBadge");
+      if (msg.index < 30) {
+        phaseBadge.textContent = "Phase I: Saturday Morning Adoration (8:00 AM – 8:29 AM)";
+        phaseBadge.className = "bg-gradient-to-r from-pink-500 to-rose-400 text-white font-cute font-bold text-xs px-3 py-1 rounded-full shadow-sm truncate";
+      } else if (msg.index < 60) {
+        phaseBadge.textContent = "Phase II: Scripture Study & Self-Examination (8:30 AM – 8:59 AM)";
+        phaseBadge.className = "bg-gradient-to-r from-amber-500 to-orange-400 text-white font-cute font-bold text-xs px-3 py-1 rounded-full shadow-sm truncate";
+      } else if (msg.index < 90) {
+        phaseBadge.textContent = "Phase III: Humble Confession & Repentance (9:00 AM – 9:29 AM)";
+        phaseBadge.className = "bg-gradient-to-r from-purple-500 to-indigo-400 text-white font-cute font-bold text-xs px-3 py-1 rounded-full shadow-sm truncate";
+      } else if (msg.index < 120) {
+        phaseBadge.textContent = "Phase IV: Joyful Baptist Hymn Singing (9:30 AM – 9:59 AM)";
+        phaseBadge.className = "bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-cute font-bold text-xs px-3 py-1 rounded-full shadow-sm truncate";
+      } else {
+        phaseBadge.textContent = "Phase V: Overflowing Thanksgiving Prayer (10:00 AM – 10:29 AM)";
+        phaseBadge.className = "bg-gradient-to-r from-sky-500 to-blue-500 text-white font-cute font-bold text-xs px-3 py-1 rounded-full shadow-sm truncate";
+      }
+
+      if (msg.attribute) {
+        illuminatedAttributesSet.add(msg.attribute.id);
+        const countTxt = `${illuminatedAttributesSet.size}/20`;
+        document.getElementById("attributeCountBadge").textContent = `${countTxt} Done`;
+        document.getElementById("headerAttrBadge").textContent = countTxt;
+        document.getElementById("activeAttrName").textContent = msg.attribute.name;
+        document.getElementById("activeAttrDesc").textContent = msg.attribute.desc;
+        document.getElementById("activeScriptureRef").innerHTML = `<i class="ph-fill ph-book-open-text"></i> ${msg.scriptureRef}`;
+        document.getElementById("activeSpeakerTag").textContent = msg.sender.name.split(" (")[0];
+
+        const badgeEl = document.getElementById(`attr-badge-${msg.attribute.id}`);
+        const iconEl = document.getElementById(`attr-icon-${msg.attribute.id}`);
+        if (badgeEl && iconEl) {
+          badgeEl.className = "text-left p-1.5 rounded-xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 transition-all flex flex-col justify-between shadow-sm";
+          iconEl.className = "ph-fill ph-check-circle text-xs text-[#06C755] shrink-0";
+        }
+      }
+    }
+
+    function appendMessageBubble(msg, animate = true) {
+      const container = document.getElementById("messagesContainer");
+
+      if (msg.index === 0 || msg.index === 30 || msg.index === 60 || msg.index === 90 || msg.index === 120) {
+        const titles = {
+          0: "8:00 AM • Phase I: Adoration & Incommunicable Attributes",
+          30: "8:30 AM • Phase II: Scripture Study & Self-Examination",
+          60: "9:00 AM • Phase III: Humble Confession & Forgiving Mercy",
+          90: "9:30 AM • Phase IV: Joyful Classic Baptist Hymn Singing",
+          120: "10:00 AM • Phase V: Overflowing Thanksgiving & Benediction"
+        };
+        const divider = document.createElement("div");
+        divider.className = "flex justify-center my-3 select-none";
+        divider.innerHTML = `
+          <div class="bg-[#4A3728]/80 backdrop-blur-sm text-white text-[11px] font-cute font-bold px-3.5 py-1 rounded-full shadow-sm flex items-center gap-1.5">
+            <i class="ph-fill ph-clock-countdown text-amber-300"></i>
+            <span>${titles[msg.index]}</span>
+          </div>
+        `;
+        container.appendChild(divider);
+      }
+
+      const wrapper = document.createElement("div");
+      const animClass = animate ? "animate-pop-in" : "";
+
+      const stickerHtml = msg.stickerKey && CUTE_STICKERS[msg.stickerKey]
+        ? `<div class="mt-2 bg-white/95 p-1.5 rounded-2xl border border-pink-100 inline-block shadow-sm select-none">${CUTE_STICKERS[msg.stickerKey].svg}</div>`
+        : "";
+
+      if (msg.sender.isSelf) {
+        wrapper.className = `flex justify-end ${animClass}`;
+        wrapper.innerHTML = `
+          <div class="flex items-end gap-2 max-w-xl">
+            <div class="text-right text-[10px] font-cute font-bold text-[#4A3728]/80 shrink-0 leading-tight pb-1 select-none flex flex-col items-end">
+              <button onclick="speakMessageById(${msg.index})" class="btn-cute mb-1 w-6 h-6 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 flex items-center justify-center shadow-xs" title="Speak Aloud">
+                <i class="ph-fill ph-speaker-high text-xs"></i>
+              </button>
+              <div class="text-[#059669]">Read 10</div>
+              <div>${msg.time}</div>
+            </div>
+
+            <div class="flex flex-col items-end">
+              <div class="flex items-center gap-1 mb-1 select-none">
+                <span class="text-[9px] font-cute font-bold bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.2 rounded-full">
+                  ${msg.attribute.name.split(" ")[0]} • ${msg.scriptureRef}
+                </span>
+                <span class="font-cute font-bold text-[11px] text-[#4A3728] bg-white/85 px-2 py-0.2 rounded-full shadow-sm">
+                  #${msg.number} • You
+                </span>
+              </div>
+
+              <div class="bubble-outgoing px-3.5 py-2.5 shadow-bubble text-[#1E3A2F] text-sm sm:text-[15px] font-semibold leading-relaxed">
+                ${msg.text}
+              </div>
+              ${stickerHtml}
+            </div>
+
+            <div class="w-10 h-10 rounded-2xl bg-white p-0.5 shadow-md border-2 border-[#06C755] shrink-0 self-start select-none">
+              ${MASCOT_SVGS[msg.sender.avatarKey]}
+            </div>
+          </div>
+        `;
+      } else {
+        wrapper.className = `flex justify-start ${animClass}`;
+        wrapper.innerHTML = `
+          <div class="flex items-end gap-2 max-w-xl">
+            <div class="w-10 h-10 rounded-2xl bg-white p-0.5 shadow-md border-2 border-white shrink-0 self-start select-none">
+              ${MASCOT_SVGS[msg.sender.avatarKey]}
+            </div>
+
+            <div class="flex flex-col items-start">
+              <div class="flex flex-wrap items-center gap-1 mb-1 select-none">
+                <span class="font-cute font-bold text-[11px] text-[#4A3728] bg-white/85 px-2 py-0.2 rounded-full shadow-sm">
+                  #${msg.number} • ${msg.sender.name.split(" ")[1] || msg.sender.name}
+                </span>
+                <span class="text-[9px] font-cute font-bold bg-pink-50 text-pink-900 border border-pink-200 px-1.5 py-0.2 rounded-full">
+                  ${msg.attribute.name.split(" ")[0]} (${msg.scriptureRef})
+                </span>
+              </div>
+
+              <div class="bubble-incoming px-3.5 py-2.5 shadow-bubble text-[#4A3728] text-sm sm:text-[15px] font-semibold leading-relaxed">
+                ${msg.text}
+              </div>
+              ${stickerHtml}
+            </div>
+
+            <div class="text-left text-[10px] font-cute font-bold text-[#4A3728]/80 shrink-0 leading-tight pb-1 select-none flex flex-col items-start">
+              <button onclick="speakMessageById(${msg.index})" class="btn-cute mb-1 w-6 h-6 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-800 flex items-center justify-center shadow-xs" title="Speak Aloud">
+                <i class="ph-fill ph-speaker-high text-xs"></i>
+              </button>
+              <div class="text-[#059669]">Read 10</div>
+              <div>${msg.time}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      container.appendChild(wrapper);
+      updateContextualUI(msg);
+    }
+
+    function clearTypingIndicators() {
+      if (typingTimerId) {
+        clearInterval(typingTimerId);
+        typingTimerId = null;
+      }
+      if (nextMessageDelayId) {
+        clearTimeout(nextMessageDelayId);
+        nextMessageDelayId = null;
+      }
+      isCurrentlyTyping = false;
+
+      document.getElementById("incomingTypingContainer").classList.add("hidden");
+      document.getElementById("selfTypingBadge").classList.add("hidden");
+      document.getElementById("composeInput").value = "";
+
+      PARTICIPANTS.forEach(p => {
+        const badge = document.getElementById(`roster-status-${p.id}`);
+        const row = document.getElementById(`roster-${p.id}`);
+        if (badge) badge.classList.add("hidden");
+        if (row) row.classList.remove("bg-pink-100/80", "border-pink-300");
+      });
+    }
+
+    function simulateNextMessageWithTyping() {
+      if (currentMessageIdx >= MESSAGES.length) {
+        stopAutoPlay();
+        showCuteToast("All 150 messages completed! Glory to God!");
+        return;
+      }
+
+      clearTypingIndicators();
+      isCurrentlyTyping = true;
+
+      const msg = MESSAGES[currentMessageIdx];
+      const speed = getSpeedMultiplier();
+      const fullText = msg.text;
+      let charPos = 0;
+
+      const rosterBadge = document.getElementById(`roster-status-${msg.sender.id}`);
+      const rosterRow = document.getElementById(`roster-${msg.sender.id}`);
+      if (rosterBadge) rosterBadge.classList.remove("hidden");
+      if (rosterRow) rosterRow.classList.add("bg-pink-100/80", "border-pink-300");
+
+      const charsPerTick = Math.max(2, Math.round(2.6 * speed));
+      const tickIntervalMs = Math.max(18, Math.round(44 / speed));
+
+      if (msg.sender.isSelf) {
+        const composeInput = document.getElementById("composeInput");
+        document.getElementById("selfTypingBadge").classList.remove("hidden");
+
+        typingTimerId = setInterval(() => {
+          charPos = Math.min(fullText.length, charPos + charsPerTick);
+          composeInput.value = fullText.slice(0, charPos);
+          composeInput.scrollLeft = composeInput.scrollWidth;
+          playKeystrokeSound(true);
+
+          if (charPos >= fullText.length) {
+            clearInterval(typingTimerId);
+            typingTimerId = null;
+            finishCurrentMessageDelivery(msg);
+          }
+        }, tickIntervalMs);
+
+      } else {
+        const typingBox = document.getElementById("incomingTypingContainer");
+        document.getElementById("typingAvatarBox").innerHTML = MASCOT_SVGS[msg.sender.avatarKey];
+        document.getElementById("typingSenderName").textContent = `${msg.sender.name.split(" ")[0]} (${msg.time})`;
+        document.getElementById("typingGhostPreview").textContent = "";
+        document.getElementById("typingProgressPct").textContent = "0%";
+        typingBox.classList.remove("hidden");
+        scrollToBottom();
+
+        typingTimerId = setInterval(() => {
+          charPos = Math.min(fullText.length, charPos + charsPerTick);
+          const pct = Math.min(100, Math.round((charPos / fullText.length) * 100));
+          document.getElementById("typingGhostPreview").textContent = fullText.slice(0, charPos) + "▍";
+          document.getElementById("typingProgressPct").textContent = `${pct}%`;
+          playKeystrokeSound(false);
+          scrollToBottom();
+
+          if (charPos >= fullText.length) {
+            clearInterval(typingTimerId);
+            typingTimerId = null;
+            finishCurrentMessageDelivery(msg);
+          }
+        }, tickIntervalMs);
+      }
+    }
+
+    function finishCurrentMessageDelivery(msg) {
+      clearTypingIndicators();
+      playNotificationChord(msg.sender.isSelf);
+      appendMessageBubble(msg, true);
+      currentMessageIdx++;
+      scrollToBottom();
+
+      // Hand off to iPad TTS: Speak the message
+      speakMessage(msg, () => {
+        // Callback when speech completes
+        if (stopAfterCurrentMessage) {
+          stopAfterCurrentMessage = false;
+          stopAutoPlay();
+          return;
+        }
+
+        if (isAutoPlaying && currentMessageIdx < MESSAGES.length) {
+          const speed = getSpeedMultiplier();
+          const breathPauseMs = Math.max(250, Math.round(650 / speed));
+          nextMessageDelayId = setTimeout(() => {
+            if (isAutoPlaying) {
+              simulateNextMessageWithTyping();
+            }
+          }, breathPauseMs);
+        } else if (currentMessageIdx >= MESSAGES.length) {
+          stopAutoPlay();
+        }
+      });
+    }
+
+    function toggleAutoPlay() {
+      if (isAutoPlaying) {
+        stopAutoPlay();
+      } else {
+        startAutoPlay();
+      }
+    }
+
+    function startAutoPlay() {
+      if (currentMessageIdx >= MESSAGES.length) {
+        currentMessageIdx = 0;
+        document.getElementById("messagesContainer").innerHTML = "";
+        illuminatedAttributesSet.clear();
+        renderAttributesChecklist();
+      }
+      isAutoPlaying = true;
+      stopAfterCurrentMessage = false;
+      updateAutoPlayButtonUI();
+      if (!isCurrentlyTyping) {
+        simulateNextMessageWithTyping();
+      }
+    }
+
+    function stopAutoPlay() {
+      isAutoPlaying = false;
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      clearTypingIndicators();
+      updateAutoPlayButtonUI();
+    }
+
+    function updateAutoPlayButtonUI() {
+      const btn = document.getElementById("btnAutoPlay");
+      const icon = document.getElementById("iconAutoPlay");
+      const label = document.getElementById("labelAutoPlay");
+
+      if (isAutoPlaying) {
+        btn.className = "btn-cute px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-cute font-bold text-xs flex items-center gap-1.5 shadow-md";
+        icon.className = "ph-fill ph-pause text-sm";
+        label.textContent = "Pause";
+      } else {
+        btn.className = "btn-cute px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#06C755] to-[#12B886] text-white font-cute font-bold text-xs flex items-center gap-1.5 shadow-md";
+        icon.className = "ph-fill ph-play text-sm";
+        label.textContent = "Auto-Play & Speak";
+      }
+    }
+
+    function triggerStepOne() {
+      isAutoPlaying = false;
+      updateAutoPlayButtonUI();
+      stopAfterCurrentMessage = true;
+      simulateNextMessageWithTyping();
+    }
+
+    function triggerInstantOne() {
+      stopAutoPlay();
+      if (currentMessageIdx < MESSAGES.length) {
+        const msg = MESSAGES[currentMessageIdx];
+        playNotificationChord(msg.sender.isSelf);
+        appendMessageBubble(msg, true);
+        currentMessageIdx++;
+        scrollToBottom();
+        speakMessage(msg, null);
+      }
+    }
+
+    function jumpToMessageIndex(targetCount) {
+      stopAutoPlay();
+      const clamped = Math.max(0, Math.min(MESSAGES.length, targetCount));
+      document.getElementById("messagesContainer").innerHTML = "";
+      illuminatedAttributesSet.clear();
+      renderAttributesChecklist();
+
+      for (let i = 0; i < clamped; i++) {
+        appendMessageBubble(MESSAGES[i], false);
+      }
+      currentMessageIdx = clamped;
+      scrollToBottom();
+    }
+
+    function jumpToPhase(startIndex) {
+      jumpToMessageIndex(startIndex);
+      closeDrawers();
+      triggerStepOne();
+    }
+
+    function resetSimulation() {
+      stopAutoPlay();
+      jumpToMessageIndex(0);
+      document.getElementById("liveClockBadge").textContent = "8:00 AM";
+      document.getElementById("messageCounterBadge").textContent = "0 / 150";
+      document.getElementById("timelineSlider").value = 0;
+      showCuteToast("Reset to 8:00 AM!");
+    }
+
+    function toggleAudioMute() {
+      isAudioMuted = !isAudioMuted;
+      const btn = document.getElementById("btnAudioToggle");
+      const icon = document.getElementById("iconAudioToggle");
+      if (isAudioMuted) {
+        btn.className = "btn-cute w-9 h-9 rounded-xl bg-rose-500 text-white flex items-center justify-center shadow-sm";
+        icon.className = "ph-fill ph-bell-slash text-base";
+        showCuteToast("Chimes muted");
+      } else {
+        ensureAudioContext();
+        btn.className = "btn-cute w-9 h-9 rounded-xl bg-[#06C755] text-white flex items-center justify-center shadow-sm";
+        icon.className = "ph-fill ph-bell text-base";
+        playNotificationChord(false);
+        showCuteToast("Chimes active!");
+      }
+    }
+
+    function setWallpaper(theme) {
+      const vp = document.getElementById("chatViewport");
+      vp.classList.remove("chat-wallpaper-sky", "chat-wallpaper-sakura", "chat-wallpaper-meadow", "chat-wallpaper-cream");
+      vp.classList.add(`chat-wallpaper-${theme}`);
+    }
+
+    function scrollToBottom() {
+      const vp = document.getElementById("chatViewport");
+      vp.scrollTop = vp.scrollHeight;
+    }
+
+    /*************************************************************************
+     * 7. TOUCH HIGHLIGHT-TO-SEARCH
+     *************************************************************************/
+    let currentSelectedQuery = "";
+
+    function setupHighlightToSearch() {
+      const popup = document.getElementById("selectionSearchPopup");
+      const preview = document.getElementById("selectedTextPreview");
+
+      function handleSelectionChange() {
+        const sel = window.getSelection();
+        const text = sel ? sel.toString().trim() : "";
+
+        if (text.length >= 2 && text.length <= 160) {
+          currentSelectedQuery = text;
+          preview.textContent = `"${text}"`;
+
+          try {
+            const range = sel.getRangeAt(0);
+            const rect = range.getBoundingClientRect();
+            popup.classList.remove("hidden");
+            const topPos = Math.max(12, rect.top - 54);
+            const leftPos = Math.max(10, Math.min(window.innerWidth - 300, rect.left));
+            popup.style.top = `${topPos}px`;
+            popup.style.left = `${leftPos}px`;
+          } catch (e) {}
+        } else {
+          popup.classList.add("hidden");
+        }
+      }
+
+      document.addEventListener("touchend", () => setTimeout(handleSelectionChange, 120));
+      document.addEventListener("mouseup", () => setTimeout(handleSelectionChange, 20));
+
+      document.getElementById("btnSearchGoogle").addEventListener("click", () => {
+        if (currentSelectedQuery) {
+          openWebSearch(currentSelectedQuery);
+          popup.classList.add("hidden");
+        }
+      });
+
+      document.getElementById("btnSearchBible").addEventListener("click", () => {
+        if (currentSelectedQuery) {
+          const url = `https://www.biblegateway.com/quicksearch/?quicksearch=${encodeURIComponent(currentSelectedQuery)}&version=ESV`;
+          window.open(url, "_blank", "noopener,noreferrer");
+          popup.classList.add("hidden");
+        }
+      });
+
+      document.getElementById("btnCopySelection").addEventListener("click", () => {
+        if (currentSelectedQuery) {
+          copyTextFallback(currentSelectedQuery);
+          showCuteToast(`Copied!`);
+          popup.classList.add("hidden");
+        }
+      });
+    }
+
+    function openWebSearch(query) {
+      const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function copyTextFallback(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch (err) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    function showCuteToast(message) {
+      const toast = document.getElementById("cuteToast");
+      document.getElementById("cuteToastText").textContent = message;
+      toast.classList.remove("hidden");
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 2600);
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
