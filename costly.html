@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>LINE • Costly Submission (Part 1 of 5)</title>
+  <!-- Modern Rounded Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --line-primary-green: #06C755;
+      --line-active-green: #05B34C;
+      --line-subtle-green: #E8F8EE;
+      --line-surface-white: #FFFFFF;
+      --line-chat-canvas: #8CABD9;
+      --bubble-incoming-bg: #FFFFFF;
+      --bubble-incoming-text: #1E232A;
+      --bubble-outgoing-bg: #5FD37E;
+      --bubble-outgoing-text: #053B18;
+      --bubble-meta-timestamp: rgba(255, 255, 255, 0.95);
+      --font-stack: 'Nunito', 'Comfortaa', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: text;
+      -webkit-user-select: text;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background: #0E1621;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* Smartphone Device Frame (Optimized for Mobile Viewports and Desktop Inspection) */
+    .mobile-phone-viewport {
+      width: 100%;
+      max-width: 430px;
+      height: 100vh;
+      height: 100dvh;
+      background: var(--line-chat-canvas);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (min-width: 600px) {
+      .mobile-phone-viewport {
+        height: 92vh;
+        max-height: 890px;
+        border-radius: 44px;
+        border: 9px solid #2B3340;
+        box-shadow: 0 25px 65px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    /* System Status Bar Simulation */
+    .system-status-bar {
+      height: 38px;
+      padding: 0 22px;
+      background: var(--line-surface-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #111111;
+      z-index: 50;
+      flex-shrink: 0;
+    }
+
+    .status-left {
+      letter-spacing: -0.2px;
+    }
+
+    .status-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* LINE Application Header */
+    .line-app-header {
+      height: 56px;
+      background: var(--line-surface-white);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 40;
+      flex-shrink: 0;
+    }
+
+    .header-navigation-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-back-button {
+      background: none;
+      border: none;
+      color: #111111;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: var(--font-stack);
+    }
+
+    .group-identity-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .group-avatar-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background: var(--line-primary-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 900;
+      box-shadow: 0 4px 10px rgba(6, 199, 85, 0.35);
+      flex-shrink: 0;
+    }
+
+    .group-text-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .group-headline {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: #1C232B;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .part-indicator-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      background: var(--line-primary-green);
+      color: #FFFFFF;
+      padding: 1px 6px;
+      border-radius: 8px;
+    }
+
+    .group-subheading {
+      font-size: 0.7rem;
+      color: #7D8B9B;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-icon-button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2D3748;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .action-icon-button:active {
+      background: #F1F4F8;
+    }
+
+    /* Floating Controller Bar */
+    .playback-controller-bar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      z-index: 30;
+      flex-shrink: 0;
+    }
+
+    .primary-step-button {
+      flex: 1;
+      height: 38px;
+      background: var(--line-primary-green);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 19px;
+      font-family: var(--font-stack);
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(6, 199, 85, 0.35);
+      cursor: pointer;
+    }
+
+    .primary-step-button:active {
+      transform: scale(0.97);
+      background: var(--line-active-green);
+    }
+
+    .controller-pill-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-toggle-button {
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 17px;
+      background: #EEF2F6;
+      border: none;
+      color: #334155;
+      font-family: var(--font-stack);
+      font-size: 0.74rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .pill-toggle-button.active {
+      background: #FFDEE7;
+      color: #D60045;
+    }
+
+    /* Linear Progress Bar */
+    .sermon-progress-rail {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.35);
+      width: 100%;
+      position: relative;
+      z-index: 25;
+    }
+
+    .sermon-progress-fill {
+      height: 100%;
+      background: #00FF66;
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    /* Chat Thread Canvas */
+    .chat-messages-container {
+      flex: 1;
+      padding: 14px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .chat-date-separator {
+      align-self: center;
+      background: rgba(0, 0, 0, 0.25);
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 14px;
+      backdrop-filter: blur(6px);
+      margin: 4px 0 8px;
+      letter-spacing: 0.4px;
+    }
+
+    /* Single Sentence Chat Message Item */
+    .message-stream-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      max-width: 88%;
+      animation: messagePopIn 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes messagePopIn {
+      0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .message-stream-row.received {
+      align-self: flex-start;
+    }
+
+    .message-stream-row.sent {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .avatar-wrapper {
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      background: var(--line-surface-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .bubble-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .speaker-display-name {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      margin-left: 2px;
+    }
+
+    .bubble-alignment-box {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .message-stream-row.sent .bubble-alignment-box {
+      flex-direction: row-reverse;
+    }
+
+    .speech-bubble {
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      line-height: 1.48;
+      font-weight: 600;
+      word-break: break-word;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .message-stream-row.received .speech-bubble {
+      background: var(--bubble-incoming-bg);
+      color: var(--bubble-incoming-text);
+      border-top-left-radius: 3px;
+    }
+
+    .message-stream-row.sent .speech-bubble {
+      background: var(--bubble-outgoing-bg);
+      color: var(--bubble-outgoing-text);
+      border-top-right-radius: 3px;
+    }
+
+    .meta-timestamp-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      font-size: 0.63rem;
+      font-weight: 700;
+      color: var(--bubble-meta-timestamp);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .read-confirmation-tag {
+      color: #00FF66;
+      font-size: 0.62rem;
+      font-weight: 900;
+    }
+
+    /* Sticker Card */
+    .embedded-sticker-card {
+      width: 120px;
+      height: 120px;
+      margin: 2px 0;
+    }
+
+    /* Simulated Real-Time Typing Bubble */
+    .typing-row {
+      display: none;
+      align-self: flex-start;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .typing-row.active {
+      display: flex;
+      animation: messagePopIn 0.18s ease;
+    }
+
+    .typing-bubble-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      padding: 8px 14px;
+      border-radius: 16px;
+      border-top-left-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .typing-status-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #5A6D80;
+      margin-right: 2px;
+    }
+
+    .pulsing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--line-primary-green);
+      border-radius: 50%;
+      animation: bouncePulse 1.2s infinite ease-in-out;
+    }
+    .pulsing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .pulsing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bouncePulse {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* Mobile Chat Deck */
+    .chat-input-deck {
+      background: var(--line-surface-white);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 8px 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 40;
+      flex-shrink: 0;
+    }
+
+    .input-dock-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dock-action-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #728190;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .dock-action-button:active {
+      color: var(--line-primary-green);
+      background: #F0F6F2;
+    }
+
+    .user-text-input {
+      flex: 1;
+      height: 40px;
+      background: #F3F5F8;
+      border: 1.5px solid transparent;
+      border-radius: 20px;
+      padding: 0 16px;
+      font-family: var(--font-stack);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1A202C;
+      outline: none;
+    }
+
+    .user-text-input:focus {
+      background: #FFFFFF;
+      border-color: var(--line-primary-green);
+    }
+
+    .send-action-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--line-primary-green);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(6, 199, 85, 0.35);
+    }
+
+    .send-action-button:active {
+      transform: scale(0.94);
+    }
+
+    /* Sticker Tray Drawer */
+    .sticker-tray-grid {
+      display: none;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-height: 160px;
+      overflow-y: auto;
+      padding: 10px 4px;
+      border-top: 1px solid #EEF2F6;
+    }
+
+    .sticker-tray-grid.open {
+      display: grid;
+    }
+
+    .sticker-selection-tile {
+      background: #F8FAFC;
+      border-radius: 12px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #E2E8F0;
+      cursor: pointer;
+    }
+
+    .sticker-selection-tile:active {
+      border-color: var(--line-primary-green);
+      transform: scale(0.96);
+    }
+
+    /* Web Search Tooltip */
+    #searchTooltipFloating {
+      position: fixed;
+      display: none;
+      background: #111822;
+      color: #FFFFFF;
+      border-radius: 24px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+      z-index: 99999;
+      cursor: pointer;
+      align-items: center;
+      gap: 6px;
+      border: 1.5px solid var(--line-primary-green);
+      transform: translate(-50%, -100%);
+      white-space: nowrap;
+    }
+
+    /* Settings & Navigation Modal Drawer */
+    .settings-modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      justify-content: flex-end;
+      flex-direction: column;
+    }
+
+    .settings-modal-overlay.open {
+      display: flex;
+    }
+
+    .settings-modal-sheet {
+      background: var(--line-surface-white);
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 75vh;
+      overflow-y: auto;
+      animation: sheetSlideUp 0.25s ease;
+    }
+
+    @keyframes sheetSlideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header-row {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #111111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preference-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #334155;
+      padding: 8px 0;
+      border-bottom: 1px solid #F1F4F8;
+    }
+
+    .preference-row select {
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1.5px solid #CBD5E1;
+      background: #F8FAFC;
+      font-family: var(--font-stack);
+      font-weight: 700;
+    }
+
+    .completion-banner {
+      background: var(--line-surface-white);
+      border-radius: 18px;
+      padding: 16px;
+      margin: 12px 0;
+      border: 2px solid var(--line-primary-green);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(6, 199, 85, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Viewport Mockup -->
+  <div class="mobile-phone-viewport">
+
+    <!-- Device Status Bar -->
+    <div class="system-status-bar">
+      <div class="status-left">9:41</div>
+      <div class="status-right">
+        <span>5G</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.28 19.57 10.59 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+        <svg width="18" height="10" viewBox="0 0 24 14" fill="currentColor"><rect x="1" y="1" width="19" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="13" height="8" rx="1.5"/><rect x="21" y="4" width="2" height="6" rx="1"/></svg>
+      </div>
+    </div>
+
+    <!-- LINE Application Header -->
+    <header class="line-app-header">
+      <div class="header-navigation-cluster">
+        <button class="header-back-button" id="btnNavigationBack" title="Back to Chat List">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>5</span>
+        </button>
+        <div class="group-identity-box">
+          <div class="group-avatar-badge">L</div>
+          <div class="group-text-meta">
+            <div class="group-headline">
+              <span>Costly Submission</span>
+              <span class="part-indicator-tag">Part 1/5</span>
+            </div>
+            <div class="group-subheading">Art Katz, Cony, Sally, Moon & You</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-icon-button" id="btnLaunchSettings" title="LINE Settings & Audio Options">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Floating Playback & Sentence Controller -->
+    <div class="playback-controller-bar">
+      <button class="primary-step-button" id="btnAdvanceSentence">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon><line x1="19" y1="3" x2="19" y2="21"></line></svg>
+        <span>Next Sentence ❯</span>
+      </button>
+
+      <div class="controller-pill-row">
+        <button class="pill-toggle-button" id="btnTogglePlayback">
+          <svg id="playbackIconGlyph" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span id="playbackStateLabel">Auto</span>
+        </button>
+        <button class="pill-toggle-button" id="btnToggleAudio" title="Toggle Sound">
+          🔊
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="sermon-progress-rail">
+      <div class="sermon-progress-fill" id="progressIndicatorFill"></div>
+    </div>
+
+    <!-- Message Canvas -->
+    <main class="chat-messages-container" id="chatMessageCanvas">
+      <div class="chat-date-separator">PART 1 OF 5 • THE APPOINTED ORDER</div>
+    </main>
+
+    <!-- Typing Simulation Row -->
+    <div class="typing-row" id="realtimeTypingRow">
+      <div class="avatar-wrapper" id="typingAvatarContainer"></div>
+      <div class="typing-bubble-card">
+        <span class="typing-status-label" id="typingStatusLabel">Art Katz is typing</span>
+        <div class="pulsing-dot"></div>
+        <div class="pulsing-dot"></div>
+        <div class="pulsing-dot"></div>
+      </div>
+    </div>
+
+    <!-- Mobile Input Dock -->
+    <footer class="chat-input-deck">
+      <div class="sticker-tray-grid" id="stickerSelectionTray"></div>
+
+      <div class="input-dock-row">
+        <button class="dock-action-button" id="btnToggleStickerPanel" title="LINE Stickers">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+        </button>
+
+        <button class="dock-action-button" id="btnSubmitAmen" title="Quick 'Amen'">
+          🙏
+        </button>
+
+        <input type="text" class="user-text-input" id="userTextInputField" placeholder="Type a message or reflection..." autocomplete="off">
+
+        <button class="send-action-button" id="btnSendUserMessage">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </footer>
+
+    <!-- Settings Overlay -->
+    <div class="settings-modal-overlay" id="settingsModalOverlay">
+      <div class="settings-modal-sheet">
+        <div class="modal-header-row">
+          <span>⚙️ Application Settings</span>
+          <button style="background:none; border:none; font-size:1.2rem; cursor:pointer;" id="btnCloseSettingsModal">✕</button>
+        </div>
+
+        <div class="preference-row">
+          <span>Sermon Series Part</span>
+          <select id="partSelectionDropdown">
+            <option value="1" selected>Part 1 of 5 (The Appointed Order)</option>
+            <option value="2">Part 2 of 5 (Consecration & Submission)</option>
+            <option value="3">Part 3 of 5 (The Reproach of the Cross)</option>
+            <option value="4">Part 4 of 5 (The Nature of God)</option>
+            <option value="5">Part 5 of 5 (The Restoration of Zion)</option>
+          </select>
+        </div>
+
+        <div class="preference-row">
+          <span>Notification Melody</span>
+          <select id="melodySelectionDropdown">
+            <option value="classic">Classic LINE Xylophone</option>
+            <option value="dingdong">Resonant Ding-Dong</option>
+            <option value="waterdrop">Gentle Water Drop</option>
+            <option value="softpop">Subtle Bubble Pop</option>
+          </select>
+        </div>
+
+        <div class="preference-row">
+          <span>Playback Pace</span>
+          <select id="paceSelectionDropdown">
+            <option value="1">1.0x Standard</option>
+            <option value="1.5">1.5x Brisk</option>
+            <option value="2">2.0x Rapid</option>
+            <option value="3.5">Instant Rush</option>
+          </select>
+        </div>
+
+        <div style="font-size:0.75rem; color:#64748B; line-height: 1.5; margin-top: 6px;">
+          💡 <b>Highlight to Search:</b> Long-press or highlight any term within the chat bubbles to immediately initiate a Google search.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Web Search Floating Tooltip -->
+  <div id="searchTooltipFloating">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <span id="searchTooltipText">Search Google</span>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. DATASET: PART 1 OF 5 (GRAMMATICALLY IMMACULATE US ENGLISH)
+       ========================================================================== */
+    const PART_1_CONVERSATION = [
+      {
+        speaker: 'sally',
+        speakerName: 'Scribe Sally (Admin)',
+        text: 'Costly Submission by Art Katz.'
+      },
+      {
+        speaker: 'sally',
+        speakerName: 'Scribe Sally (Admin)',
+        text: "Summary: This sermon emphasizes the importance of honoring one's parents and submitting to authority, explaining how submission is essential for maintaining divine order and authority in society."
+      },
+      {
+        speaker: 'sally',
+        speakerName: 'Scribe Sally (Admin)',
+        text: 'Duration: 1 hour, 29 minutes, and 43 seconds. Topic: Submission.'
+      },
+      {
+        speaker: 'sally',
+        speakerName: 'Scribe Sally (Admin)',
+        text: 'Scripture References: Exodus 20:12, Matthew 6:33, Romans 14:11, Ephesians 6:1, and Philippians 4:13.'
+      },
+      {
+        speaker: 'cony',
+        speakerName: 'Sister Cony',
+        text: 'In this sermon, the speaker emphasizes the vital importance of rendering honor, obedience, and gratitude to fathers and to all who hold positions of authority.'
+      },
+      {
+        speaker: 'cony',
+        speakerName: 'Sister Cony',
+        text: 'He acknowledges that human nature often resists submission because of an innate desire for self-exaltation.'
+      },
+      {
+        speaker: 'cony',
+        speakerName: 'Sister Cony',
+        text: 'The speaker also highlights the significance of using the English language effectively, encouraging the audience to value and employ words that carry meaningful weight.'
+      },
+      {
+        speaker: 'cony',
+        speakerName: 'Sister Cony',
+        text: "Additionally, he references the commandment to honor one's father and mother, emphasizing its prominent placement within the Ten Commandments and its centrality in God's wisdom and understanding."
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Though we endure a minor affliction, all the more, Lord, may whatever weakness it has brought provide an even greater opportunity for the expression of Your strength.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Thus, we are made strong in You, my God, and we are deeply jealous over this word.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I trust that it is Your jealousy, Lord, and that nothing shall be lost to Your people whom You have assembled—and through them to the larger congregation, the Church—so that a continuous statement may proceed from what You granted us yesterday.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'That was truly precious.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I have walked with the Lord for almost forty years.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I would say that yesterday was remarkably precious.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: "We invite You to continue and bring that perspective to a peak, my God, dotting the i's, crossing the t's, and revealing its application, its implications, and whatsoever You will."
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'We are so privileged, Lord.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'What shall we say to You?'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'We are exceedingly privileged.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Come, therefore, and have Your full sway.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Thank You, my God, for Your thoughts that are unspeakably precious, timely, and replete with wisdom and understanding.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Be with this piece of dust, Lord, and grant that Your children may hear not only Your words, but Your voice.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'We thank You and offer You praise in Jesus’ name.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Amen.',
+        stickerId: 'cony_amen'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Among my few indulgences, if I indulge in anything, it is the purchase of books.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Inge often asks, "Are you going to read all of them?"'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: '"When will you ever find the time to read them?"'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I replied, "They are placed there positionally, so that at any moment the Lord may point to whatever He wills, and I will have immediate access to it."'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I cannot adequately express what a privilege it is to possess the complete works of Karl Barth—fourteen volumes of Church Dogmatics that no person could ever read in a single lifetime.',
+        stickerId: 'sally_studying'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Yet, whenever someone cites a particular volume and you desire to investigate that reference, there it stands at your fingertips upon the shelf.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Therefore, I deeply appreciate having that accessibility.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Somehow, my eyes were drawn to a small booklet by Arthur W. Pink.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'How many of you recognize that name?'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'You truly ought to read Arthur Pink’s monumental study on the life of David.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'That is a landmark work.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'He was an esteemed British preacher, teacher, and biblical commentator.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Here lies his concise treatise on the Ten Commandments.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I pondered: what does he have to say regarding the commandment, "Honor thy father and thy mother"?',
+        stickerId: 'brown_pray'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Consider the profound reality that, among all the directives God could have issued, this commandment held sufficient priority in the wisdom and understanding of the Most High to be explicitly included.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'It stands as the fifth commandment, immediately succeeding the fourth regarding the observance of the Sabbath.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Here stand the foundational, thunderous declarations of God, intended not solely for the community of faith, but for all humanity.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'One day, when every knee shall bow and every tongue confess that Jesus Christ is Lord, the entire world will submit to God’s righteous law and commandments, of which this precept shall be a central pillar.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Its very inclusion testifies that it carries an extraordinary weight before God—a weight that we, as earthly creatures, would never naturally assign to it.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The evident proof of our modern failure is that parental authority in our generation is not merely neglected, but actively despised.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'As I share some of his reflections—especially those pertaining to youth—Pink writes, "Let us consider the duties of children to their parents."'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: '"Children are called to love and reverence their parents, harboring a holy dread of offending them out of the profound respect they bear toward them."'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: '"A genuine filial veneration must motivate children to abstain from anything that would grieve or offend their parents."'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Within that single statement lies the entire divine alternative to adolescent promiscuity and the tragedy of children bearing children.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The rampant illegitimacy characterizing our modern era stems directly from promiscuity and the casual ease with which the youth of our generation engage in sexual immorality.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Why has this condition overtaken us?'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'It occurs because they possess no godly fear and feel no concern whatsoever regarding whether they offend their parents.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'When I read that, I marveled at God’s wisdom in providing a holy restraint against the clamoring youthful passions that demand indulgence: "Honor thy father and thy mother."'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'If an action would grieve your parents, you must deny yourself that gratification.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The determination to avoid offending one’s parents—rooted in the divine call to honor them—serves as an effective deterrent against any temptation to indulge the flesh.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Tragically, this sacred veneration is conspicuously absent in our contemporary society.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Under their own self-devised standards, children have become adversaries to their parents.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'They openly mock them.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Consider the confessions surrounding the high school shooting in Colorado, specifically regarding a young woman who was spared and subsequently drawn to the Lord through the steadfast martyrdom of a classmate.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'In her autobiography, she describes a life saturated with rebellion against her parents, occult practices, curses, and voodoo.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'It is astonishing to witness the venomous hatred that this middle-class Protestant girl harbored against loving Christian parents who had given no provocation for such malice.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'This was not an instance of parental neglect or physical abuse.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'These were devoted, affectionate parents, yet she and an acquaintance met in secret to cultivate and brood over demonic hostility against them.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'This reflects the prevailing spirit of the age, which stands in direct opposition to the wisdom and counsel of God.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'We must understand this reality whenever we examine the distressing statistics concerning illegitimate births and children bearing children.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The fundamental root cause is the failure to honor one’s father and mother.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Pink emphasizes that this precept applies not solely to biological parents, but extends to all legitimate authority figures appointed over us.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The ultimate purpose of the commandment is this: because the Lord God desires the preservation of His established order, the degree of preeminence ordained by Him must be preserved inviolate.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I wonder whether you can fully grasp the depth of this statement as it is read aloud.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'It will be preserved on the recording; nonetheless, every profound author writes with such density that it demands deliberate attention.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Another tragedy of our generation is that we have lost an appreciation for substantial words that convey conceptual gravity.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'There is so much frivolous chatter today that when an author speaks with precision, people struggle to comprehend it.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Allow me to read the quotation once more.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'He contends that this commandment is anchored in the absolute necessity of preserving divine order.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'If respect for the structural hierarchy inherent in God’s wise creation is abandoned, the inevitable result is chaos, anarchy, and widespread devastation.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'That is precisely what we are witnessing at every tier of civilization, from the domestic home to civil society, wherever reverence for authority has deteriorated.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'In that vacuum, we behold the rapid collapse of all social and moral order.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Therefore, the objective of the commandment is the safeguarding of the divine order appointed by the Lord Himself.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'This order is not a pragmatic human construct designed merely to maintain functional utility.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'This is the divine order proceeding directly from divine wisdom.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The commandment ordained to safeguard this order is: "Honor thy father and thy mother."'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'The invocation of "father and mother" represents not only one’s biological parents, but every legitimate manifestation of governing authority.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'It encompasses everyone from a police officer and a church elder to a civil judge and the president.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'I do not know whether you have observed how President Bush is routinely caricatured and disfigured in political cartoons.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'While he is an ordinary, presentable gentleman, those illustrations represent a malicious disfigurement.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Furthermore, the process that culminated in Jewish people being slaughtered in ovens began decades earlier with derogatory, anti-Semitic rhetoric in German newspapers that grew increasingly bold until it was brazenly flagrant.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Cartoons portrayed Jewish people with grotesque caricatures—depicting them with horns, hooked noses, and insatiable greed, warning citizens to protect their daughters from such fabricated monsters.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Thus, the disparagement that rendered the Jew subhuman in the popular imagination—making him a candidate for extermination—began through systematic defamation in editorials, commentary, and cartoons.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'We are witnessing that identical demeaning process directed against civil leaders today, as well as against evangelical Christianity.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'Bible-believing Christians are increasingly portrayed as monstrous obstacles to human progress, caricatured until they, too, may become targets for severe persecution.'
+      },
+      {
+        speaker: 'art',
+        speakerName: 'Art Katz',
+        text: 'All of this constitutes a sobering symptom of institutional disorder, pervasive disrespect, and the refusal to honor God’s appointed authority.'
+      }
+    ];
+
+    /* ==========================================================================
+       2. VECTOR GRAPHIC ASSETS (LINE CHARACTERS & STICKERS)
+       ========================================================================== */
+    const SVG_BROWN = `
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <circle cx="24" cy="24" r="14" fill="#7D4E2D"/>
+        <circle cx="24" cy="24" r="7" fill="#F4A261"/>
+        <circle cx="76" cy="24" r="14" fill="#7D4E2D"/>
+        <circle cx="76" cy="24" r="7" fill="#F4A261"/>
+        <circle cx="50" cy="54" r="38" fill="#8D5B36"/>
+        <ellipse cx="50" cy="62" rx="16" ry="12" fill="#E8D5B5"/>
+        <ellipse cx="50" cy="57" rx="5" ry="4" fill="#3D2314"/>
+        <path d="M50 61 v5 M45 68 q5 -2 10 0" stroke="#3D2314" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="37" cy="50" r="3.5" fill="#1A110B"/>
+        <circle cx="63" cy="50" r="3.5" fill="#1A110B"/>
+        <circle cx="30" cy="60" r="6" fill="#FFAAA6" opacity="0.4"/>
+        <circle cx="70" cy="60" r="6" fill="#FFAAA6" opacity="0.4"/>
+      </svg>`;
+
+    const SVG_CONY = `
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <ellipse cx="36" cy="22" rx="8" ry="20" fill="#FFFFFF" stroke="#EAEAEA" stroke-width="2"/>
+        <ellipse cx="36" cy="22" rx="4.5" ry="14" fill="#FFAAA6"/>
+        <ellipse cx="64" cy="22" rx="8" ry="20" fill="#FFFFFF" stroke="#EAEAEA" stroke-width="2"/>
+        <ellipse cx="64" cy="22" rx="4.5" ry="14" fill="#FFAAA6"/>
+        <circle cx="50" cy="58" r="34" fill="#FFFFFF" stroke="#F0F0F0" stroke-width="2"/>
+        <circle cx="38" cy="54" r="3.5" fill="#202020"/>
+        <circle cx="62" cy="54" r="3.5" fill="#202020"/>
+        <ellipse cx="50" cy="61" rx="3.5" ry="2.5" fill="#FFAAA6"/>
+        <path d="M50 63 v3 M44 68 q6 3 12 0" stroke="#444" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="28" cy="62" r="7" fill="#FF8E9E" opacity="0.45"/>
+        <circle cx="72" cy="62" r="7" fill="#FF8E9E" opacity="0.45"/>
+      </svg>`;
+
+    const SVG_SALLY = `
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <circle cx="50" cy="52" r="36" fill="#FFD43B"/>
+        <circle cx="38" cy="46" r="3.5" fill="#1C1C1C"/>
+        <circle cx="62" cy="46" r="3.5" fill="#1C1C1C"/>
+        <ellipse cx="50" cy="58" rx="14" ry="8" fill="#F76707"/>
+        <ellipse cx="50" cy="56" rx="11" ry="5" fill="#FD7E14"/>
+        <circle cx="25" cy="54" r="5" fill="#FFA94D" opacity="0.5"/>
+        <circle cx="75" cy="54" r="5" fill="#FFA94D" opacity="0.5"/>
+        <ellipse cx="50" cy="18" rx="2.5" ry="5" fill="#FFD43B"/>
+      </svg>`;
+
+    const SVG_MOON = `
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <circle cx="50" cy="50" r="38" fill="#FFFFFF" stroke="#DDE3EA" stroke-width="2.5"/>
+        <path d="M32 44 Q40 40 46 45" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M54 45 Q60 40 68 44" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="40" cy="52" r="3" fill="#222"/>
+        <circle cx="60" cy="52" r="3" fill="#222"/>
+        <path d="M42 66 Q50 74 58 66" stroke="#222" stroke-width="2.5" fill="#FF6B6B" stroke-linecap="round"/>
+        <circle cx="26" cy="58" r="6" fill="#FF8787" opacity="0.5"/>
+        <circle cx="74" cy="58" r="6" fill="#FF8787" opacity="0.5"/>
+      </svg>`;
+
+    const SVG_CHOCO = `
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <circle cx="24" cy="26" r="13" fill="#7D4E2D"/>
+        <circle cx="76" cy="26" r="13" fill="#7D4E2D"/>
+        <circle cx="50" cy="56" r="36" fill="#8D5B36"/>
+        <polygon points="50,26 34,16 34,36" fill="#FF6584"/>
+        <polygon points="50,26 66,16 66,36" fill="#FF6584"/>
+        <circle cx="50" cy="26" r="6" fill="#E64980"/>
+        <ellipse cx="50" cy="65" rx="15" ry="11" fill="#E8D5B5"/>
+        <ellipse cx="50" cy="60" rx="4.5" ry="3.5" fill="#3D2314"/>
+        <circle cx="38" cy="52" r="3.2" fill="#1A110B"/>
+        <circle cx="62" cy="52" r="3.2" fill="#1A110B"/>
+      </svg>`;
+
+    const STICKER_CATALOG = [
+      {
+        id: "brown_pray",
+        label: "Humble Submission",
+        svg: `<svg viewBox="0 0 120 120" style="width:100%;height:100%;">
+          <ellipse cx="60" cy="18" rx="24" ry="6" fill="#FFD43B" stroke="#FAB005" stroke-width="2"/>
+          <circle cx="34" cy="40" r="15" fill="#7D4E2D"/><circle cx="86" cy="40" r="15" fill="#7D4E2D"/>
+          <circle cx="60" cy="62" r="38" fill="#8D5B36"/>
+          <ellipse cx="60" cy="70" rx="16" ry="12" fill="#E8D5B5"/>
+          <ellipse cx="60" cy="65" rx="5" ry="4" fill="#3D2314"/>
+          <ellipse cx="54" cy="88" rx="8" ry="12" fill="#7D4E2D"/>
+          <ellipse cx="66" cy="88" rx="8" ry="12" fill="#7D4E2D"/>
+          <circle cx="48" cy="58" r="3" fill="#1A110B"/><circle cx="72" cy="58" r="3" fill="#1A110B"/>
+          <text x="60" y="112" font-family="'Nunito', sans-serif" font-weight="900" font-size="10" fill="#7D4E2D" text-anchor="middle">BOW & SUBMIT 🌿</text>
+        </svg>`
+      },
+      {
+        id: "cony_amen",
+        label: "Amen!",
+        svg: `<svg viewBox="0 0 120 120" style="width:100%;height:100%;">
+          <ellipse cx="44" cy="24" rx="8" ry="20" fill="#FFFFFF" stroke="#EAEAEA" stroke-width="2"/>
+          <ellipse cx="44" cy="24" rx="4.5" ry="14" fill="#FFAAA6"/>
+          <ellipse cx="76" cy="24" rx="8" ry="20" fill="#FFFFFF" stroke="#EAEAEA" stroke-width="2"/>
+          <ellipse cx="76" cy="24" rx="4.5" ry="14" fill="#FFAAA6"/>
+          <circle cx="60" cy="62" r="34" fill="#FFFFFF" stroke="#F0F0F0" stroke-width="2"/>
+          <path d="M46 54 L52 58 L46 62 Z" fill="#E6004C"/>
+          <path d="M74 54 L68 58 L74 62 Z" fill="#E6004C"/>
+          <ellipse cx="60" cy="66" rx="4" ry="3" fill="#FFAAA6"/>
+          <path d="M50 72 Q60 82 70 72" stroke="#444" stroke-width="2" fill="#FF6B6B"/>
+          <text x="60" y="112" font-family="'Nunito', sans-serif" font-weight="900" font-size="12" fill="#E6004C" text-anchor="middle">AMEN! ✨</text>
+        </svg>`
+      },
+      {
+        id: "sally_studying",
+        label: "Deep Word",
+        svg: `<svg viewBox="0 0 120 120" style="width:100%;height:100%;">
+          <circle cx="60" cy="54" r="34" fill="#FFD43B"/>
+          <circle cx="48" cy="48" r="10" fill="none" stroke="#222" stroke-width="2.5"/>
+          <circle cx="72" cy="48" r="10" fill="none" stroke="#222" stroke-width="2.5"/>
+          <line x1="58" y1="48" x2="62" y2="48" stroke="#222" stroke-width="2.5"/>
+          <ellipse cx="60" cy="60" rx="12" ry="7" fill="#F76707"/>
+          <rect x="42" y="78" width="36" height="24" rx="4" fill="#4DABF7" stroke="#1971C2" stroke-width="2"/>
+          <line x1="60" y1="78" x2="60" y2="102" stroke="#1971C2" stroke-width="2"/>
+          <text x="60" y="114" font-family="'Nunito', sans-serif" font-weight="900" font-size="10" fill="#1971C2" text-anchor="middle">TAKING NOTES 📖</text>
+        </svg>`
+      },
+      {
+        id: "moon_wonder",
+        label: "Awe",
+        svg: `<svg viewBox="0 0 120 120" style="width:100%;height:100%;">
+          <circle cx="60" cy="56" r="36" fill="#FFFFFF" stroke="#DDE3EA" stroke-width="2.5"/>
+          <circle cx="46" cy="52" r="5" fill="#222"/>
+          <circle cx="74" cy="52" r="5" fill="#222"/>
+          <ellipse cx="60" cy="72" rx="10" ry="12" fill="#FF6B6B"/>
+          <text x="60" y="112" font-family="'Nunito', sans-serif" font-weight="900" font-size="11" fill="#475569" text-anchor="middle">SO PRIVILEGED 🕊️</text>
+        </svg>`
+      }
+    ];
+
+    /* ==========================================================================
+       3. SYNTHESIZED WEB AUDIO (SOUND EFFECTS & MECHANICAL KEY CLICKS)
+       ========================================================================== */
+    let audioContextInstance = null;
+    let isSoundMuted = false;
+
+    function ensureAudioContext() {
+      if (!audioContextInstance) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioContextInstance = new AudioContextClass();
+      }
+      if (audioContextInstance && audioContextInstance.state === 'suspended') {
+        audioContextInstance.resume();
+      }
+    }
+
+    function triggerMechanicalKeyClick() {
+      if (isSoundMuted || !audioContextInstance) return;
+      try {
+        const oscillator = audioContextInstance.createOscillator();
+        const gainNode = audioContextInstance.createGain();
+        oscillator.type = 'triangle';
+        oscillator.frequency.setValueAtTime(620 + Math.random() * 280, audioContextInstance.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(160, audioContextInstance.currentTime + 0.03);
+        gainNode.gain.setValueAtTime(0.04, audioContextInstance.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContextInstance.currentTime + 0.03);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContextInstance.destination);
+        oscillator.start();
+        oscillator.stop(audioContextInstance.currentTime + 0.035);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
+    function triggerNotificationChime(selectedMelody = 'classic') {
+      if (isSoundMuted || !audioContextInstance) return;
+      try {
+        const timestamp = audioContextInstance.currentTime;
+        if (selectedMelody === 'classic') {
+          const notes = [
+            { freq: 1046.5, time: timestamp, duration: 0.11 },
+            { freq: 1318.5, time: timestamp + 0.10, duration: 0.28 }
+          ];
+          notes.forEach(note => {
+            const osc = audioContextInstance.createOscillator();
+            const gain = audioContextInstance.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(note.freq, note.time);
+            gain.gain.setValueAtTime(0.16, note.time);
+            gain.gain.exponentialRampToValueAtTime(0.001, note.time + note.duration);
+            osc.connect(gain);
+            gain.connect(audioContextInstance.destination);
+            osc.start(note.time);
+            osc.stop(note.time + note.duration);
+          });
+        } else if (selectedMelody === 'dingdong') {
+          const notes = [
+            { freq: 880, time: timestamp, duration: 0.16 },
+            { freq: 587.3, time: timestamp + 0.14, duration: 0.38 }
+          ];
+          notes.forEach(note => {
+            const osc = audioContextInstance.createOscillator();
+            const gain = audioContextInstance.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(note.freq, note.time);
+            gain.gain.setValueAtTime(0.15, note.time);
+            gain.gain.exponentialRampToValueAtTime(0.001, note.time + note.duration);
+            osc.connect(gain);
+            gain.connect(audioContextInstance.destination);
+            osc.start(note.time);
+            osc.stop(note.time + note.duration);
+          });
+        } else if (selectedMelody === 'waterdrop') {
+          const osc = audioContextInstance.createOscillator();
+          const gain = audioContextInstance.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, timestamp);
+          osc.frequency.exponentialRampToValueAtTime(1150, timestamp + 0.10);
+          gain.gain.setValueAtTime(0.18, timestamp);
+          gain.gain.exponentialRampToValueAtTime(0.001, timestamp + 0.14);
+          osc.connect(gain);
+          gain.connect(audioContextInstance.destination);
+          osc.start(timestamp);
+          osc.stop(timestamp + 0.15);
+        } else {
+          const osc = audioContextInstance.createOscillator();
+          const gain = audioContextInstance.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(700, timestamp);
+          osc.frequency.exponentialRampToValueAtTime(220, timestamp + 0.05);
+          gain.gain.setValueAtTime(0.20, timestamp);
+          gain.gain.exponentialRampToValueAtTime(0.001, timestamp + 0.06);
+          osc.connect(gain);
+          gain.connect(audioContextInstance.destination);
+          osc.start(timestamp);
+          osc.stop(timestamp + 0.07);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
+    /* ==========================================================================
+       4. APPLICATION STATE & DISPATCH LOGIC
+       ========================================================================== */
+    let currentMessageCursor = 0;
+    let isAutoPlayActive = false;
+    let autoPlayTimerId = null;
+    let playbackVelocity = 1.0;
+
+    const chatContainer = document.getElementById('chatMessageCanvas');
+    const progressBar = document.getElementById('progressIndicatorFill');
+    const btnAdvance = document.getElementById('btnAdvanceSentence');
+    const btnTogglePlay = document.getElementById('btnTogglePlayback');
+    const playbackLabel = document.getElementById('playbackStateLabel');
+    const playbackIcon = document.getElementById('playbackIconGlyph');
+    const btnToggleSound = document.getElementById('btnToggleAudio');
+    const typingRow = document.getElementById('realtimeTypingRow');
+    const typingAvatarBox = document.getElementById('typingAvatarContainer');
+    const typingNameBox = document.getElementById('typingStatusLabel');
+    const stickerDrawer = document.getElementById('stickerSelectionTray');
+    const btnStickerToggle = document.getElementById('btnToggleStickerPanel');
+    const btnAmenQuick = document.getElementById('btnSubmitAmen');
+    const textInputField = document.getElementById('userTextInputField');
+    const btnSendMessage = document.getElementById('btnSendUserMessage');
+    const settingsOverlay = document.getElementById('settingsModalOverlay');
+    const btnOpenSettingsModal = document.getElementById('btnLaunchSettings');
+    const btnCloseSettingsModal = document.getElementById('btnCloseSettingsModal');
+    const melodySelect = document.getElementById('melodySelectionDropdown');
+    const paceSelect = document.getElementById('paceSelectionDropdown');
+
+    function resolveSpeakerAvatar(speaker) {
+      switch (speaker) {
+        case 'art': return SVG_BROWN;
+        case 'cony': return SVG_CONY;
+        case 'sally': return SVG_SALLY;
+        case 'moon': return SVG_MOON;
+        default: return SVG_CHOCO;
+      }
+    }
+
+    STICKER_CATALOG.forEach(sticker => {
+      const tile = document.createElement('div');
+      tile.className = 'sticker-selection-tile';
+      tile.innerHTML = sticker.svg;
+      tile.onclick = () => {
+        ensureAudioContext();
+        dispatchUserSubmission("", sticker.id);
+        stickerDrawer.classList.remove('open');
+      };
+      stickerDrawer.appendChild(tile);
+    });
+
+    function computeFormattedTimestamp(index) {
+      const baseMinutes = 9 * 60 + 41;
+      const accumulated = baseMinutes + Math.floor(index / 2.5);
+      const hours = Math.floor(accumulated / 60) % 12 || 12;
+      const minutes = accumulated % 60;
+      const meridian = Math.floor(accumulated / 60) >= 12 ? 'PM' : 'AM';
+      return `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${meridian}`;
+    }
+
+    function refreshProgressIndicator() {
+      const percentage = (currentMessageCursor / PART_1_CONVERSATION.length) * 100;
+      progressBar.style.width = `${percentage}%`;
+    }
+
+    function advanceToNextSentence(completionCallback) {
+      if (currentMessageCursor >= PART_1_CONVERSATION.length) {
+        terminateAutoPlay();
+        displayCompletionBanner();
+        return;
+      }
+
+      ensureAudioContext();
+      const messagePayload = PART_1_CONVERSATION[currentMessageCursor];
+
+      typingRow.classList.add('active');
+      typingAvatarBox.innerHTML = resolveSpeakerAvatar(messagePayload.speaker);
+      typingNameBox.textContent = `${messagePayload.speakerName} is typing`;
+
+      let strokeCount = 0;
+      const typingSoundInterval = setInterval(() => {
+        triggerMechanicalKeyClick();
+        strokeCount++;
+        if (strokeCount > 3) clearInterval(typingSoundInterval);
+      }, 65 / playbackVelocity);
+
+      const delayDuration = playbackVelocity >= 3.5 ? 50 : 250 / playbackVelocity;
+
+      setTimeout(() => {
+        clearInterval(typingSoundInterval);
+        typingRow.classList.remove('active');
+
+        renderMessageBubble(messagePayload);
+        triggerNotificationChime(melodySelect.value);
+
+        currentMessageCursor++;
+        refreshProgressIndicator();
+
+        if (currentMessageCursor === PART_1_CONVERSATION.length) {
+          displayCompletionBanner();
+        }
+
+        if (completionCallback) completionCallback();
+      }, delayDuration);
+    }
+
+    function renderMessageBubble(payload) {
+      const rowElement = document.createElement('div');
+      rowElement.className = `message-stream-row ${payload.speaker === 'me' ? 'sent' : 'received'}`;
+
+      const avatarElement = document.createElement('div');
+      avatarElement.className = 'avatar-wrapper';
+      avatarElement.innerHTML = resolveSpeakerAvatar(payload.speaker);
+
+      const stackElement = document.createElement('div');
+      stackElement.className = 'bubble-stack';
+
+      if (payload.speaker !== 'me') {
+        const nameLabel = document.createElement('span');
+        nameLabel.className = 'speaker-display-name';
+        nameLabel.textContent = payload.speakerName;
+        stackElement.appendChild(nameLabel);
+      }
+
+      const alignmentBox = document.createElement('div');
+      alignmentBox.className = 'bubble-alignment-box';
+
+      const speechBubble = document.createElement('div');
+      speechBubble.className = 'speech-bubble';
+
+      if (payload.stickerId) {
+        const stickerObj = STICKER_CATALOG.find(s => s.id === payload.stickerId);
+        if (stickerObj) {
+          const stickerWrap = document.createElement('div');
+          stickerWrap.className = 'embedded-sticker-card';
+          stickerWrap.innerHTML = stickerObj.svg;
+          speechBubble.appendChild(stickerWrap);
+        }
+      }
+
+      if (payload.text) {
+        const textContentNode = document.createElement('div');
+        textContentNode.textContent = payload.text;
+        speechBubble.appendChild(textContentNode);
+      }
+
+      const timestampElement = document.createElement('div');
+      timestampElement.className = 'meta-timestamp-column';
+      timestampElement.innerHTML = `
+        <span class="read-confirmation-tag">Read</span>
+        <span>${computeFormattedTimestamp(currentMessageCursor)}</span>
+      `;
+
+      alignmentBox.appendChild(speechBubble);
+      alignmentBox.appendChild(timestampElement);
+      stackElement.appendChild(alignmentBox);
+
+      rowElement.appendChild(avatarElement);
+      rowElement.appendChild(stackElement);
+
+      chatContainer.appendChild(rowElement);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function displayCompletionBanner() {
+      if (document.getElementById('partCompletionNotice')) return;
+
+      const bannerElement = document.createElement('div');
+      bannerElement.id = 'partCompletionNotice';
+      bannerElement.className = 'completion-banner';
+      bannerElement.innerHTML = `
+        <div style="font-size:1.4rem;">🎉</div>
+        <b style="color:#06C755; font-size:1rem;">Part 1 Completed Successfully</b>
+        <span style="font-size:0.8rem; color:#475569;">
+          You have completed all 89 foundational sentences of Part 1 (The Appointed Order).
+        </span>
+        <button style="margin-top:6px; background:#06C755; color:#fff; border:none; padding:10px 16px; border-radius:18px; font-weight:800; cursor:pointer; font-family:var(--font-stack);" onclick="alert('Part 2 will proceed with Art Katz addressing Adamic resistance, the Tent of Shem, New Zealand land conflicts, and Christ’s submission at Nazareth.')">
+          Proceed to Part 2 of 5 ❯
+        </button>
+      `;
+      chatContainer.appendChild(bannerElement);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function initiateAutoPlay() {
+      if (currentMessageCursor >= PART_1_CONVERSATION.length) return;
+      isAutoPlayActive = true;
+      btnTogglePlay.classList.add('active');
+      playbackLabel.textContent = "Pause";
+      playbackIcon.innerHTML = `<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>`;
+      executeAutoPlayCycle();
+    }
+
+    function terminateAutoPlay() {
+      isAutoPlayActive = false;
+      clearTimeout(autoPlayTimerId);
+      btnTogglePlay.classList.remove('active');
+      playbackLabel.textContent = "Auto";
+      playbackIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
+    }
+
+    function executeAutoPlayCycle() {
+      if (!isAutoPlayActive) return;
+      if (currentMessageCursor >= PART_1_CONVERSATION.length) {
+        terminateAutoPlay();
+        return;
+      }
+
+      advanceToNextSentence(() => {
+        if (!isAutoPlayActive) return;
+        const currentPayload = PART_1_CONVERSATION[currentMessageCursor];
+        const wordCount = currentPayload ? currentPayload.text.split(' ').length : 8;
+        const intervalDuration = Math.max(600, (wordCount * 125)) / playbackVelocity;
+
+        autoPlayTimerId = setTimeout(executeAutoPlayCycle, intervalDuration);
+      });
+    }
+
+    function dispatchUserSubmission(text = "", stickerId = null) {
+      if (!text && !stickerId) return;
+      const userPayload = {
+        speaker: 'me',
+        speakerName: 'You',
+        text: text,
+        stickerId: stickerId
+      };
+      renderMessageBubble(userPayload);
+      triggerNotificationChime(melodySelect.value);
+      textInputField.value = '';
+    }
+
+    /* ==========================================================================
+       5. HIGHLIGHT-TO-SEARCH WEB INTERFACE
+       ========================================================================== */
+    const tooltipElement = document.getElementById('searchTooltipFloating');
+    const tooltipTextElement = document.getElementById('searchTooltipText');
+    let currentlyHighlightedText = "";
+
+    document.addEventListener('selectionchange', () => {
+      const selection = window.getSelection();
+      const stringValue = selection.toString().trim();
+      if (stringValue.length > 0) {
+        currentlyHighlightedText = stringValue;
+        const previewString = stringValue.length > 20 ? stringValue.slice(0, 18) + "…" : stringValue;
+        tooltipTextElement.textContent = `Search Google: "${previewString}"`;
+
+        const range = selection.getRangeAt(0);
+        const bounds = range.getBoundingClientRect();
+        if (bounds && bounds.top > 0) {
+          tooltipElement.style.left = `${bounds.left + bounds.width / 2}px`;
+          tooltipElement.style.top = `${bounds.top - 6}px`;
+          tooltipElement.style.display = 'flex';
+        }
+      } else {
+        tooltipElement.style.display = 'none';
+      }
+    });
+
+    tooltipElement.addEventListener('mousedown', (event) => {
+      event.preventDefault();
+      if (currentlyHighlightedText) {
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(currentlyHighlightedText)}`, '_blank', 'noopener,noreferrer');
+        tooltipElement.style.display = 'none';
+      }
+    });
+
+    /* ==========================================================================
+       6. EVENT BINDINGS & KEYBOARD DISPATCHERS
+       ========================================================================== */
+    btnAdvance.onclick = () => {
+      terminateAutoPlay();
+      advanceToNextSentence();
+    };
+
+    btnTogglePlay.onclick = () => {
+      ensureAudioContext();
+      if (isAutoPlayActive) terminateAutoPlay();
+      else initiateAutoPlay();
+    };
+
+    btnToggleSound.onclick = () => {
+      ensureAudioContext();
+      isSoundMuted = !isSoundMuted;
+      btnToggleSound.textContent = isSoundMuted ? "🔇" : "🔊";
+      btnToggleSound.style.color = isSoundMuted ? "#EF4444" : "#334155";
+    };
+
+    btnStickerToggle.onclick = () => {
+      stickerDrawer.classList.toggle('open');
+    };
+
+    btnAmenQuick.onclick = () => {
+      ensureAudioContext();
+      dispatchUserSubmission("Amen, Lord. Teach us filial veneration and costly submission.", "cony_amen");
+    };
+
+    btnSendMessage.onclick = () => {
+      const text = textInputField.value.trim();
+      if (text) {
+        ensureAudioContext();
+        dispatchUserSubmission(text, null);
+      }
+    };
+
+    textInputField.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        const text = textInputField.value.trim();
+        if (text) {
+          ensureAudioContext();
+          dispatchUserSubmission(text, null);
+        }
+      }
+    });
+
+    btnOpenSettingsModal.onclick = () => settingsOverlay.classList.add('open');
+    btnCloseSettingsModal.onclick = () => settingsOverlay.classList.remove('open');
+
+    paceSelect.onchange = (event) => {
+      playbackVelocity = parseFloat(event.target.value);
+    };
+
+    window.addEventListener('keydown', (event) => {
+      if (document.activeElement === textInputField) return;
+      if (event.key === ' ' || event.key === 'n' || event.key === 'N') {
+        event.preventDefault();
+        terminateAutoPlay();
+        advanceToNextSentence();
+      } else if (event.key === 'p' || event.key === 'P') {
+        event.preventDefault();
+        ensureAudioContext();
+        if (isAutoPlayActive) terminateAutoPlay();
+        else initiateAutoPlay();
+      }
+    });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        advanceToNextSentence();
+      }, 450);
+    });
+  </script>
+</body>
+</html>
